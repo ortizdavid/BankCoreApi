@@ -1,6 +1,6 @@
 namespace BankCoreApi.Models.Accounts
 {
-    public class SavingsAccountData
+    public class AccountData
     {
         
     }

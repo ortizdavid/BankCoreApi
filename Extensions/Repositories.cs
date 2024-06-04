@@ -1,5 +1,6 @@
 using BankCoreApi.Repositories.Accounts;
 using BankCoreApi.Repositories.Customers;
+using BankCoreApi.Repositories.Transactions;
 
 namespace BankCoreApi.Extensions
 {
@@ -8,9 +9,8 @@ namespace BankCoreApi.Extensions
         public static void AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<CustomerRepository>();
-            services.AddScoped<SavingsAccountRepository>();
-            services.AddScoped<CheckingsAccountRepository>();
-        
+            services.AddScoped<AccountRepository>();
+            services.AddScoped<TransactionRepository>();
         }
     }
 }

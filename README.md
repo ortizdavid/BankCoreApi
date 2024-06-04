@@ -10,3 +10,5 @@ REST API with Banking System
 - [ ] Deposit
 - [ ] Withdrawal
 - [ ] Transfer 
+- [ ] Transactions
+- [ ] Reports

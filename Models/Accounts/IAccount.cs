@@ -6,10 +6,9 @@ namespace BankCoreApi.Models.Accounts
         int CustomerId { get; }
         string? AccountNumber { get; }
         string? Iban { get; }
-        AccountStatus Status { get; set; }
-        Guid UniqueId { get; }
-        DateTime CreatedAt { get; set; } 
-        DateTime UpdatedAt { get; set; }
+        string? HolderName { get; }
+        int AccountTypeId { get; set; }
+        int AccountStatusId { get; set; }
         void Deposit(decimal amount);
         void Withdraw(decimal amount);
         void Transfer(decimal amount, IAccount destination);
