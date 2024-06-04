@@ -17,11 +17,11 @@ namespace BankCoreApi.Models.Accounts
 
         [Required]
         [Column("account_status_id")]
-        public int AccountStatusId { get; set; }
+        public AccountStatus AccountStatus { get; set; }
 
         [Required]
         [Column("account_type_id")]
-        public int AccountTypeId { get; set; }
+        public AccountType AccountType { get; set; }
 
         [Required]
         [StringLength(18, ErrorMessage = "Account number must have {1} characters")]
@@ -73,7 +73,7 @@ namespace BankCoreApi.Models.Accounts
             }
             if (amount > Balance)
             {
-                throw new InvalidOperationException("Insuficient balance");
+                throw new InvalidOperationException($"Insufficient funds in account '{AccountNumber}'.");
             }
             Withdraw(amount);
             destination.Deposit(amount);
@@ -87,7 +87,7 @@ namespace BankCoreApi.Models.Accounts
             }
             if (amount > Balance)
             {
-                throw new InvalidOperationException("Insuficient balance");
+                throw new InvalidOperationException($"Insufficient funds in account '{AccountNumber}'.");
             }
             Balance -= amount;
         }

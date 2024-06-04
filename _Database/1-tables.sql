@@ -7,7 +7,7 @@ CREATE DATABASE bank_core_api;
 DROP TABLE IF EXISTS account_status;
 CREATE TABLE account_status (
     status_id SERIAL PRIMARY KEY,
-    status_name VARCHAR(15) UNIQUE NOT NULL,
+    status_name VARCHAR(20) UNIQUE NOT NULL,
     description VARCHAR(150)
 );
 
@@ -15,7 +15,7 @@ CREATE TABLE account_status (
 DROP TABLE IF EXISTS account_type;
 CREATE TABLE account_type (
     type_id SERIAL PRIMARY KEY,
-    type_name VARCHAR(15) UNIQUE NOT NULL,
+    type_name VARCHAR(20) UNIQUE NOT NULL,
     description VARCHAR(150)
 );
 
@@ -23,7 +23,7 @@ CREATE TABLE account_type (
 DROP TABLE IF EXISTS transaction_status;
 CREATE TABLE transaction_status (
     status_id SERIAL PRIMARY KEY,
-    status_name VARCHAR(15) UNIQUE NOT NULL,
+    status_name VARCHAR(20) UNIQUE NOT NULL,
     description VARCHAR(150)
 );
 
@@ -31,7 +31,7 @@ CREATE TABLE transaction_status (
 DROP TABLE IF EXISTS transaction_type;
 CREATE TABLE transaction_type (
     type_id SERIAL PRIMARY KEY,
-    type_name VARCHAR(15) UNIQUE NOT NULL,
+    type_name VARCHAR(20) UNIQUE NOT NULL,
     description VARCHAR(150)
 );
 
@@ -76,11 +76,12 @@ CREATE TABLE IF NOT EXISTS transactions (
     account_id INT NOT NULL,
     transaction_type_id INT NOT NULL,
     transaction_status_id INT NOT NULL,
+    code VARCHAR(30) UNIQUE NOT NULL,
     amount DECIMAL(18, 2) NOT NULL,
-    description VARCHAR(150),
     currency VARCHAR(3),
     balance_before DECIMAL(18, 2) NOT NULL,
     balance_after DECIMAL(18, 2) NOT NULL,
+    description VARCHAR(150),
     transaction_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     unique_id UUID NOT NULL DEFAULT gen_random_uuid(),
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,

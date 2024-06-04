@@ -26,7 +26,7 @@ namespace BankCoreApi.Models.Accounts
         public string? Address { get; set; }
 
         [Required]
-        public int AccountTypeId { get; set; }
+        public AccountType AccountTypeId { get; set; }
 
         [Required]
         [StringLength(3, ErrorMessage = "Currency code can't be longer than {1} characters.")]

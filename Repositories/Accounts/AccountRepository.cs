@@ -14,11 +14,11 @@ namespace BankCoreApi.Repositories.Accounts
         }
 
 
-        public async Task ChangeStatus(Account account, int newStatus)
+        public async Task ChangeStatus(Account account, AccountStatus newStatus)
         {
             try
             {
-                account.AccountStatusId = newStatus;
+                account.AccountStatus = newStatus;
                 await UpdateAsync(account);
             }
             catch (System.Exception)
@@ -95,7 +95,7 @@ namespace BankCoreApi.Repositories.Accounts
             return await _context.Accounts.ToListAsync();
         }
 
-        public async Task<Account?> GetByIbanAsync(string iban)
+        public async Task<Account?> GetByIbanAsync(string? iban)
         {
             return await _context.Accounts
                 .FirstOrDefaultAsync(acc => acc.Iban == iban);

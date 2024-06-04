@@ -15,28 +15,20 @@ namespace BankCoreApi.Models
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)  
         {
-            // Handle Postgres Timestamp
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true); 
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true); // Handle Postgres Timestamp
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // view_account_data
-            modelBuilder.Entity<AccountData>().ToView("view_account_data");
-            modelBuilder.Entity<AccountData>().HasNoKey();
-
+            modelBuilder.Entity<AccountData>().ToView("view_account_data").HasNoKey();
             // view_transaction_data
-            modelBuilder.Entity<TransactionData>().ToView("view_transaction_data");
-            modelBuilder.Entity<TransactionData>().HasNoKey();
-
+            modelBuilder.Entity<TransactionData>().ToView("view_transaction_data").HasNoKey();
             // view_customer_data
-            modelBuilder.Entity<CustomerData>().ToView("view_customer_data");
-            modelBuilder.Entity<CustomerData>().HasNoKey();
-
-            modelBuilder.Entity<Customer>()
-                .Property(c => c.UniqueId)
-                .HasColumnName("unique_id");
-
+            modelBuilder.Entity<CustomerData>().ToView("view_customer_data").HasNoKey();
+           
+            modelBuilder.Entity<Customer>().Property(c => c.UniqueId).HasColumnName("unique_id");
+            modelBuilder.Entity<Account>().Property(acc => acc.UniqueId).HasColumnName("unique_id");
         }
 
     }

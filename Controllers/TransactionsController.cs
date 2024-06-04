@@ -24,6 +24,41 @@ namespace BankCoreApi.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllTransactions()
+        {
+            var transactions = await _transactionRepository.GetAllAsync();
+            if (!transactions.Any())
+            {
+                return NotFound();
+            }
+            return Ok(transactions);
+        }
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTransactionById(int id)
+        {
+            var transaction = await _transactionRepository.GetByIdAsync(id);
+            if (transaction == null)
+            {
+                return NotFound();
+            }
+            return Ok(transaction);
+        }
+
+        [HttpGet("by-uuid/{uniqueId}")]
+        public async Task<IActionResult> GetTransactionByUniqueId(Guid uniqueId)
+        {
+            var transaction = await _transactionRepository.GetByUniqueIdAsync(uniqueId);
+            if (transaction == null)
+            {
+                return NotFound();
+            }
+            return Ok(transaction);
+        }
+
+
         [HttpPost("deposit")]
         public async Task<IActionResult> Deposit([FromBody] DepositRequest request)
         {
@@ -34,9 +69,34 @@ namespace BankCoreApi.Controllers
             try
             {
                 var account = await _accountRepository.GetByNubmerAsync(request.AccountNumber);
+                if (account == null)
+                {
+                    return NotFound($"Account '{account?.AccountNumber}' does not exists");
+                }
+                var balanceBefore = account.Balance;
+                //Deposit
                 account.Deposit(request.Amount);
                 await _accountRepository.UpdateAsync(account);
-                return Ok("Deposit successfuly");
+                
+                var balanceAfter = account.Balance;
+                var message = $"Deposit of {request.Amount} {request.Currency} to account '{request.AccountNumber}' successful.";
+                 //Transaction
+                var transaction = new Transaction()
+                {
+                    AccountId = account.AccountId,
+                    TransactionType = TransactionType.Deposit,
+                    TransactionStatus = TransactionStatus.Completed,
+                    Amount = request.Amount,
+                    Currency = request.Currency,
+                    BalanceBefore = balanceBefore,
+                    BalanceAfter = balanceAfter,
+                    Code = TransactionHelper.GenerateTransactionCode(),
+                    TransactionDate = DateTime.UtcNow,
+                    Description = message,
+                };
+                await _transactionRepository.CreateAsync(transaction);
+                _logger.LogInformation(message);
+                return Ok(message);
             }
             catch (System.Exception ex)
             {
@@ -46,39 +106,196 @@ namespace BankCoreApi.Controllers
         }
         
 
-        [HttpPost("/withdraw")]
+        [HttpPost("withdraw")]
         public async Task<IActionResult> Withdraw([FromBody] WithdrawRequest request)
         {
-            return Ok();
+            if (request == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var account =  await _accountRepository.GetByNubmerAsync(request.AccountNumber);
+                if (account == null)
+                {
+                    return NotFound($"Account '{account?.AccountNumber}' does not exists");
+                }
+                var balanceBefore = account.Balance;
+                //Witdraw
+                account.Withdraw(request.Amount);
+                await _accountRepository.UpdateAsync(account);
+                
+                var balanceAfter = account.Balance;
+                var message = $"Witdrawal of {request.Amount} {request.Currency} to account '{request.AccountNumber}' successful.";
+                //Transaction
+                var transaction = new Transaction()
+                {
+                    AccountId = account.AccountId,
+                    TransactionType = TransactionType.Withdrawal,
+                    TransactionStatus = TransactionStatus.Completed,
+                    Amount = request.Amount,
+                    Currency = request.Currency,
+                    BalanceBefore = balanceBefore,
+                    BalanceAfter = balanceAfter,
+                    Code = TransactionHelper.GenerateTransactionCode(),
+                    TransactionDate = DateTime.UtcNow,
+                    Description = message,
+                };
+                await _transactionRepository.CreateAsync(transaction);
+                _logger.LogInformation(message);
+                return Ok(message);
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
 
-        [HttpPost("/transfer-number")]
+        [HttpPost("transfer-number")]
         public async Task<IActionResult> TranferByNumber([FromBody] TransferNumberRequest request)
         {
-            return Ok();
+            if (request == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var sourceAccount = await _accountRepository.GetByNubmerAsync(request.SourceNumber);
+                var destinationAccount = await _accountRepository.GetByNubmerAsync(request.DestinationNumber);
+                if (sourceAccount == null)
+                {
+                    return NotFound($"Account number '{request.SourceNumber}' does not exists");
+                }
+                if (destinationAccount == null)
+                {
+                    return NotFound($"Account number '{request.DestinationNumber}' does not exists");
+                }
+                if (request.SourceNumber == request.DestinationNumber)
+                {
+                    return Conflict("Transfer failed: same account");
+                }
+                var balanceBefore = sourceAccount.Balance;
+                //Transfer
+                sourceAccount.Transfer(request.Amount, destinationAccount);
+                await _accountRepository.UpdateAsync(sourceAccount);
+                
+                var balanceAfter = sourceAccount.Balance;
+                var message = $"Transfer of {request.Amount} {request.Currency} from '{request.SourceNumber}' to account '{request.DestinationNumber}' successful.";
+                //Transaction
+                var transaction = new Transaction()
+                {
+                    AccountId = sourceAccount.AccountId,
+                    TransactionType = TransactionType.Transfer,
+                    TransactionStatus = TransactionStatus.Completed,
+                    Amount = request.Amount,
+                    Currency = request.Currency,
+                    BalanceBefore = balanceBefore,
+                    BalanceAfter = balanceAfter,
+                    Code = TransactionHelper.GenerateTransactionCode(),
+                    TransactionDate = DateTime.UtcNow,
+                    Description = message,
+                };
+                await _transactionRepository.UpdateAsync(transaction);
+                _logger.LogInformation(message);
+                return Ok(message);
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
 
-        [HttpPost("/transfer-iban")]
+        [HttpPost("transfer-iban")]
         public async Task<IActionResult> TranferByIban([FromBody] TransferIbanRequest request)
         {
-            return Ok();
+            if (request == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var sourceAccount = await _accountRepository.GetByIbanAsync(request.SourceIban);
+                var destinationAccount = await _accountRepository.GetByIbanAsync(request.DestinationIban);
+                if (sourceAccount == null)
+                {
+                    return NotFound($"IBAN '{request.SourceIban}' does not exists");
+                }
+                if (destinationAccount == null)
+                {
+                    return NotFound($"IBAN '{request.DestinationIban}' does not exists");
+                }
+                if (request.SourceIban == request.DestinationIban)
+                {
+                    return Conflict("Transfer failed: same IBAN");
+                }
+                var balanceBefore = sourceAccount.Balance;
+                //Transfer
+                sourceAccount.Transfer(request.Amount, destinationAccount);
+                await _accountRepository.UpdateAsync(sourceAccount);
+                
+                var balanceAfter = sourceAccount.Balance;
+                var message = $"Transfer of {request.Amount} {request.Currency} from '{request.SourceIban}' to account '{request.DestinationIban}' successful.";
+                //Transaction
+                var transaction = new Transaction()
+                {
+                    AccountId = sourceAccount.AccountId,
+                    TransactionType = TransactionType.Transfer,
+                    TransactionStatus = TransactionStatus.Completed,
+                    Amount = request.Amount,
+                    Currency = request.Currency,
+                    BalanceBefore = balanceBefore,
+                    BalanceAfter = balanceAfter,
+                    Code = TransactionHelper.GenerateTransactionCode(),
+                    TransactionDate = DateTime.UtcNow,
+                    Description = message,
+                };
+                await _transactionRepository.UpdateAsync(transaction);
+                _logger.LogInformation(message);
+                return Ok(message);
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
-        [HttpGet("/transactions")]
-        public async Task<IActionResult> GetAllTransactions()
+
+        [HttpGet("by-account-id/{id}")]
+        public async Task<IActionResult> GetAccountTransactionsById(int id)
         {
-            return Ok();
+            var account = await _accountRepository.GetByIdAsync(id);
+            if (account == null)
+            {
+                return NotFound();
+            }
+            var transactions = await _transactionRepository.GetAllByAccountIdAsync(account.AccountId);
+            if (!transactions.Any())
+            {
+                return NotFound();
+            }
+            return Ok(transactions);
         }
 
-        [HttpGet("/transactions/{uniqueId}")]
-        public async Task<IActionResult> GetCustomerTransactions(string uniqueId)
+        [HttpGet("by-account-uuid/{uniqueId}")]
+        public async Task<IActionResult> GetAccountTransactionsByUniqueId(Guid uniqueId)
         {
-            return Ok();
+            var account = await _accountRepository.GetByUniqueIdAsync(uniqueId);
+            if (account == null)
+            {
+                return NotFound();
+            }
+            var transactions = await _transactionRepository.GetAllByAccountIdAsync(account.AccountId);
+            if (!transactions.Any())
+            {
+                return NotFound();
+            }
+            return Ok(transactions);
         }
-
-
 
     }
 }

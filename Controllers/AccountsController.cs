@@ -97,11 +97,11 @@ namespace BankCoreApi.Controllers
                 var account = new Account()
                 {
                     CustomerId = customer.CustomerId,
-                    AccountTypeId = request.AccountTypeId,
-                    AccountStatusId = (int)AccountStatus.Pending,
+                    AccountType = request.AccountTypeId,
+                    AccountStatus = AccountStatus.Pending,
                     HolderName = customer.CustomerName,
-                    AccountNumber = Generator.GenerateAccountNumber(),
-                    Iban = Generator.GenerateIban(),
+                    AccountNumber = AccountHelper.GenerateAccountNumber(),
+                    Iban = AccountHelper.GenerateIban(),
                     Currency = request.Currency,
                 };       
                 await _accountRepository.CreateAsync(account);

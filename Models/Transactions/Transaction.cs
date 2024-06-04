@@ -19,7 +19,7 @@ namespace BankCoreApi.Models.Transactions
 
         [Required]
         [Column("code")]
-        public string? Code { get; }  
+        public string? Code { get; set; }  
 
         [Required]
         [Column("transaction_type_id")]
@@ -30,12 +30,16 @@ namespace BankCoreApi.Models.Transactions
         public TransactionStatus TransactionStatus { get; set; }
 
         [Required]
+        [Column("amount")]
+        public decimal Amount { get; set; }
+
+        [Required]
         [Column("balance_before")]
-        public decimal BalanceBefore { get; }
+        public decimal BalanceBefore { get; set; }
         
         [Required]
         [Column("balance_after")]
-        public decimal BalanceAfter { get; }
+        public decimal BalanceAfter { get; set; }
 
         [Column("currency")]
         public string? Currency { get; set; }
@@ -54,5 +58,6 @@ namespace BankCoreApi.Models.Transactions
 
         [Column("updated_at")]
         public DateTime UpdatedAt { get ; set; } = DateTime.UtcNow;
+        
     }
 }

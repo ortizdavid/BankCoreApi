@@ -4,11 +4,11 @@ using System.Text;
 
 namespace BankCoreApi.Repositories.Accounts
 {
-    public class Generator
+    public class AccountHelper
     {
         private readonly AccountRepository _accountRepository;
 
-        public Generator(AccountRepository accountRepository)
+        public AccountHelper (AccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
         }

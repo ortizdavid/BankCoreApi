@@ -6,6 +6,6 @@ namespace BankCoreApi.Repositories.Accounts
     {
         Task<T?> GetByNubmerAsync(string? number);
         Task<T?> GetByIbanAsync(string iban);
-        Task ChangeStatus(T account, int newStatus);
+        Task ChangeStatus(T account, AccountStatus newStatus);
     }
 }

@@ -18,10 +18,6 @@ namespace Name
         [Required]
         [StringLength(3, ErrorMessage = "Currency must have {1} characters.")]
         public string? Currency { get; set; }
-
-        [Required]
-        [StringLength(150, ErrorMessage = "Description must have {1} characters.")]
-        public string? Description { get; set; }
     }
 
 
@@ -41,10 +37,6 @@ namespace Name
         [Required]
         [StringLength(3, ErrorMessage = "Currency must have {1} characters.")]
         public string? Currency { get; set; }
-
-        [Required]
-        [StringLength(150, ErrorMessage = "Description must have {1} characters.")]
-        public string? Description { get; set; }
     }
 }
 

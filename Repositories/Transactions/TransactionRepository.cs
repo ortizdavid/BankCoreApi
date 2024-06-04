@@ -80,6 +80,11 @@ namespace BankCoreApi.Repositories.Transactions
             return await _context.Transactions.ToListAsync();
         }
 
+        public async Task<List<TransactionData>> GetAllDataAsync()
+        {
+            return await _context.TransactionData.ToListAsync();
+        }
+
         public async Task<Transaction?> GetByIdAsync(int id)
         {
             return await _context.Transactions.FindAsync(id);
@@ -95,6 +100,14 @@ namespace BankCoreApi.Repositories.Transactions
         {
             return _context.Transactions
                 .FirstOrDefaultAsync(t => t.Code == code);
+        }
+
+        
+        public async Task<List<Transaction>> GetAllByAccountIdAsync(int id)
+        {
+            return await _context.Transactions
+                .Where(t => t.AccountId == id)
+                .ToListAsync();
         }
 
 
