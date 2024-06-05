@@ -3,12 +3,12 @@
 REST API with Banking System
 
 ## Tools
-- PostgreSQL
+- SQL Server
 - C#
 
 ## Features
-- [ ] Deposit
-- [ ] Withdrawal
-- [ ] Transfer 
-- [ ] Transactions
+- [x] Deposit
+- [x] Withdrawal
+- [x] Transfer 
+- [x] Transactions
 - [ ] Reports

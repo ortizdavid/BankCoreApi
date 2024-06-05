@@ -1,5 +1,8 @@
+using System.Data;
+using System.Data.SqlClient;
 using BankCoreApi.Models;
 using BankCoreApi.Models.Accounts;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankCoreApi.Repositories.Accounts
@@ -7,10 +10,12 @@ namespace BankCoreApi.Repositories.Accounts
     public class AccountRepository : IRepository<Account>, IAccountRepository<Account>
     {
         private readonly AppDbContext _context;
+        private readonly IDbConnection _dapper;
 
-        public AccountRepository(AppDbContext context)
+        public AccountRepository(AppDbContext context, IDbConnection dapper)
         {
             _context = context;
+            _dapper = dapper;
         }
 
 
@@ -78,16 +83,20 @@ namespace BankCoreApi.Repositories.Accounts
             {
                 return false;
             }
-            var validFieldNames = new List<string> { "iban", "account_number"};
+
+            var validFieldNames = new[] { "Iban", "AccountNumber" };
             if (!validFieldNames.Contains(field))
             {
                 throw new ArgumentException($"Invalid field name {field}");
             }
-            var sql = $"SELECT 1 FROM accounts WHERE {field} = @value LIMIT 1";
-            var exists = await _context.Accounts
-                .FromSqlRaw(sql, new Npgsql.NpgsqlParameter("@value", value))
-                .AnyAsync();
-            return exists;
+
+            var sql = $"SELECT TOP 1 1 FROM Accounts WHERE {field} = @Value";
+
+            await using var conn = new SqlConnection(_context.Database.GetDbConnection().ConnectionString);
+            await conn.OpenAsync();
+
+            var result = await conn.ExecuteScalarAsync<int>(sql, new { Value = value });
+            return result == 1;
         }
 
         public async Task<IEnumerable<Account>> GetAllAsync()

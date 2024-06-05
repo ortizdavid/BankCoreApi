@@ -18,7 +18,7 @@ namespace BankCoreApi.Repositories.Accounts
             Random random = new Random();
             const string chars = "0123456789";
             return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
         public static string GenerateIban(string countryCode = "XX")

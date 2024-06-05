@@ -10,25 +10,22 @@ namespace BankCoreApi.Models
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<CustomerData> CustomerData { get; set; }
-        public DbSet<TransactionData> TransactionData { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)  
         {
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true); // Handle Postgres Timestamp
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // view_account_data
-            modelBuilder.Entity<AccountData>().ToView("view_account_data").HasNoKey();
-            // view_transaction_data
-            modelBuilder.Entity<TransactionData>().ToView("view_transaction_data").HasNoKey();
-            // view_customer_data
-            modelBuilder.Entity<CustomerData>().ToView("view_customer_data").HasNoKey();
-           
-            modelBuilder.Entity<Customer>().Property(c => c.UniqueId).HasColumnName("unique_id");
-            modelBuilder.Entity<Account>().Property(acc => acc.UniqueId).HasColumnName("unique_id");
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Customer>().Property(c => c.UniqueId).HasColumnName("UniqueId");
+            modelBuilder.Entity<Account>().Property(acc => acc.UniqueId).HasColumnName("UniqueId");
+
+            modelBuilder.Entity<Account>().Property(a => a.Balance).HasColumnType("decimal(18, 2)"); 
+            modelBuilder.Entity<Transaction>().Property(t => t.Amount).HasColumnType("decimal(18, 2)"); 
+            modelBuilder.Entity<Transaction>().Property(t => t.BalanceBefore).HasColumnType("decimal(18, 2)"); 
+            modelBuilder.Entity<Transaction>().Property(t => t.BalanceAfter).HasColumnType("decimal(18, 2)");
         }
 
     }

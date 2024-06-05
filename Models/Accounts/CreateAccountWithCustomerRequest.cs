@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BankCoreApi.Models.Accounts
 {
-    public class AccountRequest
+    public class CreateAccountWithCustomerRequest
     {
         [Required]
         [StringLength(150, ErrorMessage = "Customer name can't be longer than {1} characters.")]

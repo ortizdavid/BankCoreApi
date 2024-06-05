@@ -1,5 +1,8 @@
+using System.Data;
+using System.Data.SqlClient;
 using BankCoreApi.Models;
 using BankCoreApi.Models.Customers;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankCoreApi.Repositories.Customers
@@ -7,10 +10,12 @@ namespace BankCoreApi.Repositories.Customers
     public class CustomerRepository : IRepository<Customer>
     {
         private readonly AppDbContext _context;
+        private readonly IDbConnection _dapper;
 
-        public CustomerRepository(AppDbContext context)
+        public CustomerRepository(AppDbContext context, IDbConnection dapper)
         {
             _context = context;
+            _dapper = dapper;
         }
         
         public async Task CreateAsync(Customer customer)
@@ -71,23 +76,29 @@ namespace BankCoreApi.Repositories.Customers
             }
         }
 
+
         public async Task<bool> ExistsRecordAsync(string? field, string? value)
         {
             if (string.IsNullOrEmpty(field) || string.IsNullOrEmpty(value))
             {
                 return false;
             }
-            var validFieldNames = new List<string> { "identification_number", "phone", "email"};
+
+            var validFieldNames = new List<string> { "IdentificationNumber", "Phone", "Email" };
             if (!validFieldNames.Contains(field))
             {
                 throw new ArgumentException("Invalid field name");
             }
-            var sql = $"SELECT 1 FROM customers WHERE {field} = @value LIMIT 1";
-            var exists = await _context.Customers
-                .FromSqlRaw(sql, new Npgsql.NpgsqlParameter("@value", value))
-                .AnyAsync();
-            return exists;
+
+            var sql = $"SELECT TOP 1 1 FROM Customers WHERE {field} = @Value";
+
+            await using var conn = new SqlConnection(_context.Database.GetDbConnection().ConnectionString);
+            await conn.OpenAsync();
+
+            var result = await conn.ExecuteScalarAsync<int>(sql, new { Value = value });
+            return result == 1;
         }
+        
 
         public async Task<IEnumerable<Customer>> GetAllAsync()
         {

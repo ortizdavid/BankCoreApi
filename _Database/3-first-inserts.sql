@@ -1,6 +1,6 @@
 
 -- Account Status
-INSERT INTO account_status (status_name, description) VALUES
+INSERT INTO AccountStatus (StatusName, Description) VALUES
 ('Active', 'The account is open and fully functional.'),
 ('Inactive', 'The account has not been used for a specified period but is still open.'),
 ('Dormant', 'The account has been inactive for a longer period and may require specific actions to reactivate.'),
@@ -15,7 +15,7 @@ INSERT INTO account_status (status_name, description) VALUES
 
 
 -- Account Type
-INSERT INTO account_type (type_name, description) VALUES
+INSERT INTO AccountType (TypeName, Description) VALUES
 ('Savings', 'A savings account with interest accrual.'),
 ('Checking', 'A checking account for daily transactions.'),
 ('Business', 'An account designed for business use.'),
@@ -24,7 +24,7 @@ INSERT INTO account_type (type_name, description) VALUES
 
 
 -- Transaction Status
-INSERT INTO transaction_status (status_name, description) VALUES 
+INSERT INTO TransactionStatus (StatusName, Description) VALUES 
 ('Pending', 'Transaction is pending processing'),
 ('Completed', 'Transaction has been completed successfully'),
 ('Aproved', 'Transaction has been approved by the system'),
@@ -37,7 +37,7 @@ INSERT INTO transaction_status (status_name, description) VALUES
 
 
 -- Transaction Type
-INSERT INTO transaction_type (type_name, description) VALUES 
+INSERT INTO TransactionType (TypeName, Description) VALUES 
 ('Deposit', 'Deposit transaction'),
 ('Withdrawal', 'Withdrawal transaction'),
 ('Transfer', 'Transfer transaction'),

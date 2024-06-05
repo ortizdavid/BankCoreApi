@@ -1,35 +1,39 @@
--- view_customer_data
-DROP VIEW IF EXISTS view_customer_data;
-CREATE VIEW view_customer_data AS 
-SELECT * FROM customers;
+-- ViewCustomerData
+IF OBJECT_ID('ViewCustomerData', 'V') IS NOT NULL
+    DROP VIEW ViewCustomerData;
+GO
+CREATE VIEW ViewCustomerData AS 
+SELECT * FROM Customers;
+GO
 
+-- ViewAccountData
+IF OBJECT_ID('ViewAccountData', 'V') IS NOT NULL
+    DROP VIEW ViewAccountData;
+GO
+CREATE VIEW ViewAccountData AS 
+SELECT * FROM Accounts;
+GO
 
--- view_account_data
-DROP VIEW IF EXISTS view_account_data;
-CREATE VIEW view_account_data AS 
-SELECT * FROM accounts;
-
-
--- view_transaction_data
-DROP VIEW IF EXISTS view_transaction_data;
-CREATE VIEW view_transaction_data AS 
+-- ViewTransactionData
+IF OBJECT_ID('ViewTransactionData', 'V') IS NOT NULL
+    DROP VIEW ViewTransactionData;
+GO
+CREATE VIEW ViewTransactionData AS 
 SELECT 
-    tr.transaction_id, tr.unique_id,
-    tr.code, tr.amount,
-    tr.balance_before,tr.balance_after,
-    tr.currency, tr.description,
-    tr.transaction_date,
-    tr.created_at, tr.updated_at,
-    acc.account_id, acc.account_number,
-    acc.iban,
-    cu.customer_name, cu.identification_number,
-    tt.type_id, tt.type_name,
-    ts.status_id, ts.status_name
-FROM transactions tr
-JOIN accounts acc ON(acc.account_id = tr.account_id)
-JOIN customers cu ON(cu.customer_id = acc.customer_id)
-JOIN transaction_type tt ON(tt.type_id = tr.transaction_type_id)
-JOIN transaction_status ts ON(ts.status_id = tr.transaction_status_id)
-ORDER BY tr.created_at DESC;
-
-
+    tr.TransactionId, tr.UniqueId,
+    tr.Code, tr.Amount,
+    tr.BalanceBefore, tr.BalanceAfter,
+    tr.Currency, tr.Description,
+    tr.TransactionDate,
+    tr.CreatedAt, tr.UpdatedAt,
+    acc.AccountId, acc.AccountNumber,
+    acc.Iban,
+    cu.CustomerName, cu.IdentificationNumber,
+    tt.TypeId, tt.TypeName,
+    ts.StatusId, ts.StatusName
+FROM Transactions tr
+JOIN Accounts acc ON acc.AccountId = tr.AccountId
+JOIN Customers cu ON cu.CustomerId = acc.CustomerId
+JOIN TransactionType tt ON tt.TypeId = tr.TransactionType
+JOIN TransactionStatus ts ON ts.StatusId = tr.TransactionStatus;
+GO

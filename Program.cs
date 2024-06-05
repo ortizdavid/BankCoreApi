@@ -1,4 +1,6 @@
 
+using System.Data;
+using System.Data.SqlClient;
 using BankCoreApi.Extensions;
 using BankCoreApi.Models;
 using Microsoft.EntityFrameworkCore;
@@ -15,8 +17,13 @@ internal class Program
         // Connection String / DbContext
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         builder.Services.AddDbContext<AppDbContext>(
-            options => options.UseNpgsql(connectionString)
+            options => options.UseSqlServer(connectionString)
         );
+        // Dapper
+        builder.Services.AddScoped<IDbConnection>(
+            sp => new SqlConnection(connectionString)
+        );
+
         // Controllers
         builder.Services.AddControllers();
         // Logging

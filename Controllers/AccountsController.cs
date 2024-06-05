@@ -60,8 +60,46 @@ namespace BankCoreApi.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<IActionResult> CreateAccount([FromBody] CreateAccountRequest request)
+        {
+            if (request == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var customer = await _customerRepository.GetByIdAsync(request.CustomerId);
+                if (customer == null)
+                {
+                    return NotFound("Invalid customer");
+                }
+                var account = new Account()
+                {
+                    CustomerId = customer.CustomerId,
+                    AccountType = request.AccountType,
+                    AccountStatus = AccountStatus.Pending,
+                    HolderName = customer.CustomerName,
+                    AccountNumber = AccountHelper.GenerateAccountNumber(),
+                    Iban = AccountHelper.GenerateIban(),
+                    Currency = request.Currency,
+                };
+
+                var message = $"Account '{account.AccountNumber}' created successfully!";
+                _logger.LogInformation(message);
+                return StatusCode(201, message);
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+
         [HttpPost("create-with-customer")]
-        public async Task<IActionResult> CreateAccountAndCustomer([FromBody] AccountRequest request)
+        public async Task<IActionResult> CreateAccountAndCustomer([FromBody] CreateAccountWithCustomerRequest request)
         {
             
             if (request == null)
@@ -71,15 +109,15 @@ namespace BankCoreApi.Controllers
             try
             {
                 //Verify Customer
-                if (await _customerRepository.ExistsRecordAsync("identification_number", request.IdentificationNumber))
+                if (await _customerRepository.ExistsRecordAsync("IdentificationNumber", request.IdentificationNumber))
                 {
                     return Conflict($"Identification number '{request.IdentificationNumber}' already exists");
                 }
-                if (await _customerRepository.ExistsRecordAsync("phone", request.Phone))
+                if (await _customerRepository.ExistsRecordAsync("Phone", request.Phone))
                 {
                     return Conflict($"Phone '{request.Phone}' already exists");
                 }  
-                if (await _customerRepository.ExistsRecordAsync("email", request.Phone))
+                if (await _customerRepository.ExistsRecordAsync("Email", request.Phone))
                 {
                     return Conflict($"Email '{request.Email}' already exists");
                 }
@@ -93,7 +131,6 @@ namespace BankCoreApi.Controllers
                 };
                 await _customerRepository.CreateAsync(customer);   
               
-
                 var account = new Account()
                 {
                     CustomerId = customer.CustomerId,
@@ -105,8 +142,9 @@ namespace BankCoreApi.Controllers
                     Currency = request.Currency,
                 };       
                 await _accountRepository.CreateAsync(account);
-                _logger.LogInformation($"Customer '{customer.CustomerName}', account '{account.AccountNumber}' created successfully!");
-                return StatusCode(21, $"Customer '{customer.CustomerName}', account '{account.AccountNumber}' created successfully!");
+                var message = $"Customer '{customer.CustomerName}', account '{account.AccountNumber}' created successfully!";
+                _logger.LogInformation(message);
+                return StatusCode(201, message);
             }
             catch (System.Exception ex)
             {
@@ -117,10 +155,79 @@ namespace BankCoreApi.Controllers
 
 
         [HttpPut("{uniqueId}")]
-        public async Task<IActionResult> UpdateAccount(int id, [FromBody] Account account)
+        public IActionResult UpdateAccount(int id, [FromBody] Account account)
         {
             return Ok();
         }
+
+
+        [HttpPut("change-status")]
+        public async Task<IActionResult> ChangeAccountStatus([FromBody] ChangeAccountStatusRequest request)
+        {
+            if (request == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var account = await _accountRepository.GetByNubmerAsync(request.AccountNumber);
+                var currentStatus = account?.AccountStatus.ToString();
+                if (account == null)
+                {
+                    return NotFound();
+                }
+                if (request.AccountStatus == account.AccountStatus)
+                {
+                    return Conflict($"The account status '{currentStatus}' is already set.");
+                }
+                account.AccountStatus = request.AccountStatus;
+                account.UpdatedAt = DateTime.UtcNow;
+                await _accountRepository.UpdateAsync(account);
+                var message = $"Account '{request.AccountNumber}', updated from '{currentStatus}' to {request.AccountStatus.ToString()}!";
+                _logger.LogInformation(message);
+                return Ok(message);
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+        [HttpPut("change-type")]
+        public async Task<IActionResult> ChangeAccountType([FromBody] ChangeAccountTypeRequest request)
+        {
+            if (request == null)
+            {
+                return BadRequest();
+            }
+            try
+            {
+                var account = await _accountRepository.GetByNubmerAsync(request.AccountNumber);
+                var currentType =  account?.AccountType.ToString();
+                if (account == null)
+                {
+                    return NotFound();
+                }
+                if (request.AccountType == account.AccountType)
+                {
+                    return Conflict($"Account type '{currentType}' is already set for this account.");
+                }
+                account.AccountType = request.AccountType;
+                account.UpdatedAt = DateTime.UtcNow;
+                await _accountRepository.UpdateAsync(account);
+                var message = $"Account '{request.AccountNumber}', updated from '{currentType}' to '{request.AccountType.ToString()}'!";
+                _logger.LogInformation(message);
+                return Ok(message);
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
+
 
     }
 }

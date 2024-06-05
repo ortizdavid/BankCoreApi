@@ -1,5 +1,8 @@
+using System.Data;
+using System.Data.SqlClient;
 using BankCoreApi.Models;
 using BankCoreApi.Models.Transactions;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankCoreApi.Repositories.Transactions
@@ -7,10 +10,12 @@ namespace BankCoreApi.Repositories.Transactions
     public class TransactionRepository : IRepository<Transaction>
     {
         private readonly AppDbContext _context;
+        private readonly IDbConnection _dapper;
         
-        public TransactionRepository(AppDbContext context)
+        public TransactionRepository(AppDbContext context, IDbConnection dapper)
         {
             _context = context;
+            _dapper = dapper;
         }
 
         public async Task CreateAsync(Transaction transaction)
@@ -63,26 +68,26 @@ namespace BankCoreApi.Repositories.Transactions
             {
                 return false;
             }
+
             var validFieldNames = new List<string> { "transaction_id", "code" };
-            if (!validFieldNames.Contains(field))
+            if (!validFieldNames.Contains(field.ToLower()))
             {
                 throw new ArgumentException("Invalid field name");
             }
-            var sql = $"SELECT 1 FROM customers WHERE {field} = @value LIMIT 1";
-            var exists = await _context.Transactions
-                .FromSqlRaw(sql, new Npgsql.NpgsqlParameter("@value", value))
-                .AnyAsync();
-            return exists;;
+
+            var sql = $"SELECT TOP 1 1 FROM Transactions WHERE {field} = @Value";
+
+            await using var conn = new SqlConnection(_context.Database.GetDbConnection().ConnectionString);
+            await conn.OpenAsync();
+
+            var result = await conn.ExecuteScalarAsync<int>(sql, new { Value = value });
+            return result == 1;
         }
+        
 
         public async Task<IEnumerable<Transaction>> GetAllAsync()
         {
             return await _context.Transactions.ToListAsync();
-        }
-
-        public async Task<List<TransactionData>> GetAllDataAsync()
-        {
-            return await _context.TransactionData.ToListAsync();
         }
 
         public async Task<Transaction?> GetByIdAsync(int id)
@@ -110,7 +115,6 @@ namespace BankCoreApi.Repositories.Transactions
                 .ToListAsync();
         }
 
-
         public async Task UpdateAsync(Transaction transaction)
         {
             try
@@ -123,5 +127,34 @@ namespace BankCoreApi.Repositories.Transactions
                 throw;
             }
         }
+
+        public async Task<IEnumerable<TransactionData>> GetAllDataAsync()
+        {
+            var sql = "SELECT * FROM ViewTransactionData ORDER BY CreatedAt DESC;";
+            return await _dapper.QueryAsync<TransactionData>(sql);
+        }
+
+
+        public async Task<IEnumerable<TransactionData>> GetAllDataByAccountIdAsync(int id)
+        {
+            var sql = "SELECT * FROM ViewTransactionData WHERE AccountId = @AccountId ORDER BY CreatedAt DESC;";
+            return await _dapper.QueryAsync<TransactionData>(sql, new { AccountId = id });
+        }
+
+
+        public async Task<IEnumerable<TransactionData>> GetAllDataByAccountUniqueIdAsync(int id)
+        {
+            var sql = "SELECT * FROM ViewTransactionData WHERE UniqueId = @UniqueId ORDER BY CreatedAt DESC;";
+            return await _dapper.QueryAsync<TransactionData>(sql, new { UniqueId = id });
+        }
+        
+
+        public async Task<TransactionData?> GetDataByIdAsync(int id)
+        {
+           var sql = "SELECT * FROM ViewTransactionData WHERE TransactionId = @TransactionId;";
+            return await _dapper.QueryFirstOrDefaultAsync<TransactionData>(sql, new { TransactionId = id });
+        }
+
+
     }
 }

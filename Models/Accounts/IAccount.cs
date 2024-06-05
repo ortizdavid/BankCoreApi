@@ -12,5 +12,7 @@ namespace BankCoreApi.Models.Accounts
         void Deposit(decimal amount);
         void Withdraw(decimal amount);
         void Transfer(decimal amount, IAccount destination);
+        void CheckAccountStatus();
+        void ValidateAmount(decimal amount);
     }
 }

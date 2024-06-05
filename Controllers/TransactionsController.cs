@@ -27,7 +27,7 @@ namespace BankCoreApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllTransactions()
         {
-            var transactions = await _transactionRepository.GetAllAsync();
+            var transactions = await _transactionRepository.GetAllDataAsync();
             if (!transactions.Any())
             {
                 return NotFound();
@@ -35,17 +35,17 @@ namespace BankCoreApi.Controllers
             return Ok(transactions);
         }
 
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTransactionById(int id)
         {
-            var transaction = await _transactionRepository.GetByIdAsync(id);
+            var transaction = await _transactionRepository.GetDataByIdAsync(id);
             if (transaction == null)
             {
                 return NotFound();
             }
             return Ok(transaction);
         }
+
 
         [HttpGet("by-uuid/{uniqueId}")]
         public async Task<IActionResult> GetTransactionByUniqueId(Guid uniqueId)
@@ -273,13 +273,14 @@ namespace BankCoreApi.Controllers
             {
                 return NotFound();
             }
-            var transactions = await _transactionRepository.GetAllByAccountIdAsync(account.AccountId);
+            var transactions = await _transactionRepository.GetAllDataByAccountIdAsync(account.AccountId);
             if (!transactions.Any())
             {
                 return NotFound();
             }
             return Ok(transactions);
         }
+
 
         [HttpGet("by-account-uuid/{uniqueId}")]
         public async Task<IActionResult> GetAccountTransactionsByUniqueId(Guid uniqueId)
