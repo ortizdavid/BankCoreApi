@@ -80,18 +80,18 @@
 					"response": []
 				},
 				{
-					"name": "Get Accont By Id",
+					"name": "Get Account By Id",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BANK_CORE_API}}/accounts/1",
+							"raw": "{{BANK_CORE_API}}/accounts/2",
 							"host": [
 								"{{BANK_CORE_API}}"
 							],
 							"path": [
 								"accounts",
-								"1"
+								"2"
 							]
 						}
 					},

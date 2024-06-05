@@ -6,13 +6,27 @@ CREATE VIEW ViewCustomerData AS
 SELECT * FROM Customers;
 GO
 
+
 -- ViewAccountData
 IF OBJECT_ID('ViewAccountData', 'V') IS NOT NULL
     DROP VIEW ViewAccountData;
 GO
 CREATE VIEW ViewAccountData AS 
-SELECT * FROM Accounts;
+SELECT 
+    acc.AccountId, acc.UniqueId,
+    acc.AccountNumber, acc.Iban,
+    acc.Balance, acc.Currency,
+    acc.CreatedAt, acc.UpdatedAt,
+    cu.CustomerId, cu.CustomerName, 
+    cu.IdentificationNumber,
+    act.TypeId, act.TypeName,
+    acs.StatusId, acs.StatusName
+FROM Accounts acc
+JOIN Customers cu ON(cu.CustomerId = acc.CustomerId)
+JOIN AccountStatus acs ON(acs.StatusId = acc.AccountStatus)
+JOIN AccountType act ON(act.TypeId = acc.AccountType);
 GO
+
 
 -- ViewTransactionData
 IF OBJECT_ID('ViewTransactionData', 'V') IS NOT NULL

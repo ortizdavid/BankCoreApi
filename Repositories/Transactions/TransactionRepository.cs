@@ -142,10 +142,10 @@ namespace BankCoreApi.Repositories.Transactions
         }
 
 
-        public async Task<IEnumerable<TransactionData>> GetAllDataByAccountUniqueIdAsync(int id)
+        public async Task<IEnumerable<TransactionData>> GetAllDataByAccountUniqueIdAsync(string uniqueId)
         {
             var sql = "SELECT * FROM ViewTransactionData WHERE UniqueId = @UniqueId ORDER BY CreatedAt DESC;";
-            return await _dapper.QueryAsync<TransactionData>(sql, new { UniqueId = id });
+            return await _dapper.QueryAsync<TransactionData>(sql, new { UniqueId = uniqueId });
         }
         
 

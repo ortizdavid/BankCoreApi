@@ -140,5 +140,24 @@ namespace BankCoreApi.Repositories.Accounts
             }
         }
 
+        public async Task<IEnumerable<AccountData>> GetAllDataAsync()
+        {
+            var sql = "SELECT * FROM ViewAccountData ORDER BY CreatedAt DESC;";
+            return await _dapper.QueryAsync<AccountData>(sql);
+        }
+
+        public async Task<AccountData?> GetDataByIdAsync(int id)
+        {
+           var sql = "SELECT * FROM ViewTransactionData WHERE AccountId = @AccountId;";
+            return await _dapper.QueryFirstOrDefaultAsync<AccountData>(sql, new { AccountId = id });
+        }
+
+        public async Task<AccountData?> GetDataByUniqueIdAsync(string unqiueId)
+        {
+           var sql = "SELECT * FROM ViewAccountData WHERE UniqueId = @UnqiueId;";
+            return await _dapper.QueryFirstOrDefaultAsync<AccountData>(sql, new { UniqueId = unqiueId });
+        }
+
+
     }
 }

@@ -27,7 +27,7 @@ namespace BankCoreApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAccounts()
         {
-            var accounts = await _accountRepository.GetAllAsync();
+            var accounts = await _accountRepository.GetAllDataAsync();
             if (!accounts.Any())
             {
                 return NotFound();
@@ -39,7 +39,7 @@ namespace BankCoreApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAccountById(int id)
         {
-            var account = await _accountRepository.GetByIdAsync(id);
+            var account = await _accountRepository.GetDataByIdAsync(id);
             if (account == null)
             {
                 return NotFound();
