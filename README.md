@@ -36,9 +36,38 @@ REST API with Banking System
     - [ ] Account Statistics
     - [ ] Transactions Report
 
+
 ## How to run
 - Download or clone repository: `git clone https://github.com/ortizdavid/BankCoreApi`
 - Copy database scripts from [_Database folder](_Database) to SQL Server
 - Change **__DefaultConnection__** from [appsettings.json](appsettings.json)
 - Import Postman Collections from [_Api_Collections](_Api_Colletions)
 - Run Application: `dotnet run`
+
+
+## Example of endpoints
+
+- Deposit
+`POST /api/transactions/deposit`
+{
+    "accountNumber": "8792529764",
+    "amount": 127000.10,
+    "currency": "USD"
+}
+
+- Withdraw
+`POST /api/transactions/withdraw`
+{
+    "accountNumber": "8792529764",
+    "amount": 1000.95,
+    "currency": "USD"
+}
+
+- Tansafer by Account Number
+`POST /api/transactions/transfer`
+{
+    "sourceNumber": "8792529764",
+    "destinationNumber": "7840163431",
+    "amount": 529.98,
+    "currency": "USD"
+}
