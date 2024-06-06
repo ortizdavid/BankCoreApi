@@ -40,7 +40,7 @@ REST API with Banking System
 ## How to run
 - Download or clone repository: `git clone https://github.com/ortizdavid/BankCoreApi`
 - Copy database scripts from [_Database folder](_Database) to SQL Server
-- Change **__DefaultConnection__** from [appsettings.json](appsettings.json)
+- Change **__DefaultConnection__** from [appsettings.json](appsettings.json) file
 - Import Postman Collections from [_Api_Collections](_Api_Colletions)
 - Run Application: `dotnet run`
 
@@ -48,26 +48,39 @@ REST API with Banking System
 ## Example of endpoints
 
 - Deposit
-`POST /api/transactions/deposit`
+```
+POST /api/transactions/deposit
+```
+
+```json
 {
     "accountNumber": "8792529764",
     "amount": 127000.10,
     "currency": "USD"
 }
+```
 
 - Withdraw
-`POST /api/transactions/withdraw`
+```http
+POST /api/transactions/withdraw
+```
+```json
 {
     "accountNumber": "8792529764",
     "amount": 1000.95,
     "currency": "USD"
 }
+```
 
 - Tansafer by Account Number
-`POST /api/transactions/transfer`
+```http
+POST /api/transactions/transfer
+```
+```json
 {
     "sourceNumber": "8792529764",
     "destinationNumber": "7840163431",
     "amount": 529.98,
     "currency": "USD"
 }
+```
