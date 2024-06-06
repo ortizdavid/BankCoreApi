@@ -48,51 +48,51 @@ REST API with Banking System
 ## Example of endpoints
 
 - Deposit
-```http
-POST /api/transactions/deposit
-```
-```json
-{
-    "accountNumber": "8792529764",
-    "amount": 127000.10,
-    "currency": "USD"
-}
-```
+    ```http
+    POST /api/transactions/deposit
+    ```
+    ```json
+    {
+        "accountNumber": "8792529764",
+        "amount": 127000.10,
+        "currency": "USD"
+    }
+    ```
 
 - Withdraw
-```http
-POST /api/transactions/withdraw
-```
-```json
-{
-    "accountNumber": "8792529764",
-    "amount": 1000.95,
-    "currency": "USD"
-}
-```
+    ```http
+    POST /api/transactions/withdraw
+    ```
+    ```json
+    {
+        "accountNumber": "8792529764",
+        "amount": 1000.95,
+        "currency": "USD"
+    }
+    ```
 
 - Transfer by Account Number
-```http
-POST /api/transactions/transfer
-```
-```json
-{
-    "sourceNumber": "8792529764",
-    "destinationNumber": "7840163431",
-    "amount": 529.98,
-    "currency": "USD"
-}
-```
+    ```http
+    POST /api/transactions/transfer
+    ```
+    ```json
+    {
+        "sourceNumber": "8792529764",
+        "destinationNumber": "7840163431",
+        "amount": 529.98,
+        "currency": "USD"
+    }
+    ```
 
 - Transfer by Iban
-```http
-POST /api/transactions/transfer
-```
-```json
-{
-    "sourceIban": "XX741234565111434546",
-    "destinationIban": "XX481234569540236342",
-    "amount": 12300.98,
-    "currency": "USD"
-}
-```
+    ```http
+    POST /api/transactions/transfer
+    ```
+    ```json
+    {
+        "sourceIban": "XX741234565111434546",
+        "destinationIban": "XX481234569540236342",
+        "amount": 12300.98,
+        "currency": "USD"
+    }
+    ```
