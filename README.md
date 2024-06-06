@@ -48,10 +48,9 @@ REST API with Banking System
 ## Example of endpoints
 
 - Deposit
-```
+```http
 POST /api/transactions/deposit
 ```
-
 ```json
 {
     "accountNumber": "8792529764",
