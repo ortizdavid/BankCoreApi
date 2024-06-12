@@ -1,11 +1,47 @@
 {
 	"info": {
 		"_postman_id": "6af2d5b5-0377-4648-98b3-130f5d8f7c7b",
-		"name": "Dotnet Bank Core API",
+		"name": ".NET Bank Core API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "13144775"
 	},
 	"item": [
+		{
+			"name": "Static Routes",
+			"item": [
+				{
+					"name": "Index",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BANK_CORE_API}}",
+							"host": [
+								"{{BANK_CORE_API}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download Collections",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BANK_CORE_API}}/download-collections",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"download-collections"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "Accounts",
 			"item": [

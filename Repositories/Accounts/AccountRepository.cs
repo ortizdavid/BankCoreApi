@@ -158,6 +158,5 @@ namespace BankCoreApi.Repositories.Accounts
             return await _dapper.QueryFirstOrDefaultAsync<AccountData>(sql, new { UniqueId = unqiueId });
         }
 
-
     }
 }
