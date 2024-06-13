@@ -37,5 +37,6 @@ namespace BankCoreApi.Repositories.Reports
             var sql = "SELECT * FROM ViewTransactionReport WHERE AccountId = @Id AND CAST(TransactionDate AS DATE) = CAST(@Date AS DATE)";
             return await _dapper.QueryAsync<TransactionReport>(sql, new { Id = accountId, Date = date });
         }
+
     }
 }

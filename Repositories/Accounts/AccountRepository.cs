@@ -158,5 +158,12 @@ namespace BankCoreApi.Repositories.Accounts
             return await _dapper.QueryFirstOrDefaultAsync<AccountData>(sql, new { UniqueId = unqiueId });
         }
 
+        public async Task<bool> ExistsAsync(int accountId)
+        {
+            var sql = "SELECT COUNT(*) FROM Accounts WHERE AccountId = @AccountId";
+            var count = await _dapper.ExecuteScalarAsync<int>(sql, new { AccountId = accountId });
+            return count > 0;
+        }
+
     }
 }
