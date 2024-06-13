@@ -68,22 +68,16 @@ namespace BankCoreApi.Repositories.Transactions
             {
                 return false;
             }
-
-            var validFieldNames = new List<string> { "transaction_id", "code" };
+            var validFieldNames = new[] { "TransactionId", "Code" };
             if (!validFieldNames.Contains(field.ToLower()))
             {
                 throw new ArgumentException("Invalid field name");
             }
-
-            var sql = $"SELECT TOP 1 1 FROM Transactions WHERE {field} = @Value";
-
-            await using var conn = new SqlConnection(_context.Database.GetDbConnection().ConnectionString);
-            await conn.OpenAsync();
-
-            var result = await conn.ExecuteScalarAsync<int>(sql, new { Value = value });
-            return result == 1;
+            var sql = $"SELECT COUNT(*) FROM Transactions WHERE {field} = @Value";
+            var count = await _dapper.ExecuteScalarAsync<int>(sql, new { Value = value });
+            return count > 0;
         }
-        
+
 
         public async Task<IEnumerable<Transaction>> GetAllAsync()
         {
@@ -106,9 +100,8 @@ namespace BankCoreApi.Repositories.Transactions
             return _context.Transactions
                 .FirstOrDefaultAsync(t => t.Code == code);
         }
-
         
-        public async Task<List<Transaction>> GetAllByAccountIdAsync(int id)
+        public async Task<List<Transaction>> GetAllBySourceAccountIdAsync(int id)
         {
             return await _context.Transactions
                 .Where(t => t.AccountId == id)
@@ -134,13 +127,11 @@ namespace BankCoreApi.Repositories.Transactions
             return await _dapper.QueryAsync<TransactionData>(sql);
         }
 
-
         public async Task<IEnumerable<TransactionData>> GetAllDataByAccountIdAsync(int id)
         {
-            var sql = "SELECT * FROM ViewTransactionData WHERE AccountId = @AccountId ORDER BY CreatedAt DESC;";
-            return await _dapper.QueryAsync<TransactionData>(sql, new { AccountId = id });
+            var sql = "SELECT * FROM ViewTransactionData WHERE SourceAccountId = @SourceAccountId ORDER BY CreatedAt DESC;";
+            return await _dapper.QueryAsync<TransactionData>(sql, new { SourceAccountId = id });
         }
-
 
         public async Task<IEnumerable<TransactionData>> GetAllDataByAccountUniqueIdAsync(string uniqueId)
         {
@@ -148,13 +139,11 @@ namespace BankCoreApi.Repositories.Transactions
             return await _dapper.QueryAsync<TransactionData>(sql, new { UniqueId = uniqueId });
         }
         
-
         public async Task<TransactionData?> GetDataByIdAsync(int id)
         {
            var sql = "SELECT * FROM ViewTransactionData WHERE TransactionId = @TransactionId;";
             return await _dapper.QueryFirstOrDefaultAsync<TransactionData>(sql, new { TransactionId = id });
         }
-
 
     }
 }

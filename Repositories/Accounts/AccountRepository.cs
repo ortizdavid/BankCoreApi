@@ -83,21 +83,16 @@ namespace BankCoreApi.Repositories.Accounts
             {
                 return false;
             }
-
             var validFieldNames = new[] { "Iban", "AccountNumber" };
             if (!validFieldNames.Contains(field))
             {
                 throw new ArgumentException($"Invalid field name {field}");
             }
-
-            var sql = $"SELECT TOP 1 1 FROM Accounts WHERE {field} = @Value";
-
-            await using var conn = new SqlConnection(_context.Database.GetDbConnection().ConnectionString);
-            await conn.OpenAsync();
-
-            var result = await conn.ExecuteScalarAsync<int>(sql, new { Value = value });
-            return result == 1;
+            var sql = $"SELECT COUNT(*) FROM Accounts WHERE {field} = @Value";
+            var count = await _dapper.ExecuteScalarAsync<int>(sql, new { Value = value });
+            return count > 0;
         }
+
 
         public async Task<IEnumerable<Account>> GetAllAsync()
         {

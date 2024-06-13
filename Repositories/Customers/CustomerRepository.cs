@@ -76,29 +76,22 @@ namespace BankCoreApi.Repositories.Customers
             }
         }
 
-
         public async Task<bool> ExistsRecordAsync(string? field, string? value)
         {
             if (string.IsNullOrEmpty(field) || string.IsNullOrEmpty(value))
             {
                 return false;
             }
-
-            var validFieldNames = new List<string> { "IdentificationNumber", "Phone", "Email" };
+            var validFieldNames = new[] { "IdentificationNumber", "Phone", "Email" };
             if (!validFieldNames.Contains(field))
             {
-                throw new ArgumentException("Invalid field name");
+                throw new ArgumentException($"Invalid field name {field}");
             }
-
-            var sql = $"SELECT TOP 1 1 FROM Customers WHERE {field} = @Value";
-
-            await using var conn = new SqlConnection(_context.Database.GetDbConnection().ConnectionString);
-            await conn.OpenAsync();
-
-            var result = await conn.ExecuteScalarAsync<int>(sql, new { Value = value });
-            return result == 1;
+            var sql = $"SELECT COUNT(*) FROM Customers WHERE {field} = @Value";
+            var count = await _dapper.ExecuteScalarAsync<int>(sql, new { Value = value });
+            return count > 0;
         }
-        
+
 
         public async Task<IEnumerable<Customer>> GetAllAsync()
         {

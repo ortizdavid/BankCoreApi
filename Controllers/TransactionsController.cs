@@ -293,7 +293,7 @@ namespace BankCoreApi.Controllers
             {
                 return NotFound();
             }
-            var transactions = await _transactionRepository.GetAllByAccountIdAsync(account.AccountId);
+            var transactions = await _transactionRepository.GetAllDataByAccountIdAsync(account.AccountId);
             if (!transactions.Any())
             {
                 return NotFound();

@@ -40,13 +40,18 @@ SELECT
     tr.Currency, tr.Description,
     tr.TransactionDate,
     tr.CreatedAt, tr.UpdatedAt,
-    acc.AccountId, acc.AccountNumber,
-    acc.Iban,
+    acc.AccountId AS SourceAccountId, 
+    acc.AccountNumber AS SourceAccountNumber, 
+    acc.Iban AS SourceIban,
+    dest.AccountId AS DestinationAccountId, 
+    dest.AccountNumber AS DestinationAccountNumber, 
+    dest.Iban AS DestinationIban,
     cu.CustomerName, cu.IdentificationNumber,
     tt.TypeId, tt.TypeName,
     ts.StatusId, ts.StatusName
 FROM Transactions tr
 JOIN Accounts acc ON acc.AccountId = tr.AccountId
+JOIN Accounts dest ON dest.AccountId = tr.DestinationId
 JOIN Customers cu ON cu.CustomerId = acc.CustomerId
 JOIN TransactionType tt ON tt.TypeId = tr.TransactionType
 JOIN TransactionStatus ts ON ts.StatusId = tr.TransactionStatus;
