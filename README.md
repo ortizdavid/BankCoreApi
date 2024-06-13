@@ -39,9 +39,9 @@ REST API with Banking System
 
 ## How to run
 - Download or clone repository: `git clone https://github.com/ortizdavid/BankCoreApi`
-- Copy database scripts from [_Database folder](_Database) to SQL Server
+- Copy database scripts from [_Database](_Database) folder to SQL Server
 - Change **__DefaultConnection__** from [appsettings.json](appsettings.json) file
-- Import Postman Collections from [_Api_Collections](_Api_Colletions)
+- Import Postman Collections from [_Api_Collections](_Api_Collections)
 - Run Application: `dotnet run`
 
 
