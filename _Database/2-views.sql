@@ -51,3 +51,27 @@ JOIN Customers cu ON cu.CustomerId = acc.CustomerId
 JOIN TransactionType tt ON tt.TypeId = tr.TransactionType
 JOIN TransactionStatus ts ON ts.StatusId = tr.TransactionStatus;
 GO
+
+
+-- View For REPORTS
+-- ViewTransactionReport
+IF OBJECT_ID('ViewTransactionReport', 'V') IS NOT NULL
+    DROP VIEW ViewTransactionReport;
+GO
+CREATE VIEW ViewTransactionReport AS 
+SELECT 
+    tr.Code, tr.Amount,
+    tr.BalanceBefore, tr.BalanceAfter,
+    tr.Currency, tr.Description,
+    tr.TransactionDate,
+    acc.AccountId, acc.AccountNumber, 
+    acc.Iban,
+    cu.CustomerName, cu.IdentificationNumber,
+    tt.TypeName AS TransactionType, 
+    ts.StatusName AS TransactionStatus
+FROM Transactions tr
+JOIN Accounts acc ON acc.AccountId = tr.AccountId
+JOIN Customers cu ON cu.CustomerId = acc.CustomerId
+JOIN TransactionType tt ON tt.TypeId = tr.TransactionType
+JOIN TransactionStatus ts ON ts.StatusId = tr.TransactionStatus;
+GO

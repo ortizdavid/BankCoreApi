@@ -28,6 +28,7 @@ namespace BankCoreApi.Controllers
                 </head>
                 <body>
                     <h1>Welcome to Bank Core API!</h1>
+                    <p>To Test Api in Swagger, click <a target='_blank' href='/swagger/index.html'>here</a>
                     <p>To test the API in Postman, download the API collections <a target='_blank' href='/api/download-collections'>here</a>.</p>
                 </body>
                 </html>

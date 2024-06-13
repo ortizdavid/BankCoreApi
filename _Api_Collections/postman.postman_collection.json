@@ -245,7 +245,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"accountNumber\": \"8792529764\",\r\n    \"amount\": 1230.98,\r\n    \"currency\": \"USD\"\r\n}",
+							"raw": "{\r\n    \"accountNumber\": \"8792529764\",\r\n    \"amount\": 120.98,\r\n    \"currency\": \"USD\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -454,7 +454,129 @@
 		},
 		{
 			"name": "Reports",
-			"item": []
+			"item": [
+				{
+					"name": "Transactions",
+					"item": [
+						{
+							"name": "Get All Transactions",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BANK_CORE_API}}/TransactionsReport/all-transactions?startDate=2024-06-13&endDate=2024-06-17",
+									"host": [
+										"{{BANK_CORE_API}}"
+									],
+									"path": [
+										"TransactionsReport",
+										"all-transactions"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "2024-06-13"
+										},
+										{
+											"key": "endDate",
+											"value": "2024-06-17"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Transactions by Date",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BANK_CORE_API}}/TransactionsReport/transactions-by-date?date=2024-06-13",
+									"host": [
+										"{{BANK_CORE_API}}"
+									],
+									"path": [
+										"TransactionsReport",
+										"transactions-by-date"
+									],
+									"query": [
+										{
+											"key": "date",
+											"value": "2024-06-13"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get  All Account Transactions",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BANK_CORE_API}}/TransactionsReport/account-transactions?accountId=123&startDate=2023-01-01&endDate=2023-12-31",
+									"host": [
+										"{{BANK_CORE_API}}"
+									],
+									"path": [
+										"TransactionsReport",
+										"account-transactions"
+									],
+									"query": [
+										{
+											"key": "accountId",
+											"value": "123"
+										},
+										{
+											"key": "startDate",
+											"value": "2023-01-01"
+										},
+										{
+											"key": "endDate",
+											"value": "2023-12-31"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Account Transactions by Date",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BANK_CORE_API}}/TransactionsReport/account-transactions-by-date?&accountId=1&date=2024-06-05",
+									"host": [
+										"{{BANK_CORE_API}}"
+									],
+									"path": [
+										"TransactionsReport",
+										"account-transactions-by-date"
+									],
+									"query": [
+										{
+											"key": null,
+											"value": null
+										},
+										{
+											"key": "accountId",
+											"value": "1"
+										},
+										{
+											"key": "date",
+											"value": "2024-06-05"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	]
 }
