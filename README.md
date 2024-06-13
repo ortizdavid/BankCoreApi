@@ -30,11 +30,11 @@ REST API with Banking System
 - Reports
     - [ ] Customers Report
     - [ ] Account Reports
-    - [ ] Transactions Report
+    - [x] Transactions Report
 - Statistics
     - [ ] Customers Statistics
     - [ ] Account Statistics
-    - [ ] Transactions Report
+    - [ ] Transactions Statistics
 
 
 ## How to run
