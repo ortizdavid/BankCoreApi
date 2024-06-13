@@ -82,6 +82,7 @@ GO
 CREATE TABLE Transactions (
     TransactionId INT IDENTITY(1,1) PRIMARY KEY,
     AccountId INT NOT NULL,
+    DestinationId INT NOT NULL,
     TransactionType INT NOT NULL,
     TransactionStatus INT NOT NULL,
     Code VARCHAR(30) UNIQUE NOT NULL,
@@ -95,6 +96,7 @@ CREATE TABLE Transactions (
     CreatedAt DATETIME DEFAULT GETDATE(),
     UpdatedAt DATETIME DEFAULT GETDATE(),
     CONSTRAINT fk_TransactionType FOREIGN KEY(TransactionType) REFERENCES TransactionType(TypeId),
-    CONSTRAINT fk_TransactionStatus FOREIGN KEY(TransactionStatus) REFERENCES TransactionStatus(StatusId)
+    CONSTRAINT fk_TransactionStatus FOREIGN KEY(TransactionStatus) REFERENCES TransactionStatus(StatusId),
+    CONSTRAINT fk_Destination FOREIGN KEY(DestinationId) REFERENCES Accounts(AccountId)
 );
 GO

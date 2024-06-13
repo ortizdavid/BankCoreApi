@@ -19,7 +19,8 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("all-transactions")]
-        public async Task<IActionResult> GetAllTransactions([FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format)
+        public async Task<IActionResult> GetAllTransactions([FromQuery] DateTime startDate, 
+            [FromQuery] DateTime endDate, string format)
         {
             try
             {
@@ -62,7 +63,8 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("account-transactions")]
-        public async Task<IActionResult> GetAllAccountTransactions([FromQuery] int accountId, [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format)
+        public async Task<IActionResult> GetAllAccountTransactions([FromQuery] int accountId, 
+            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format)
         {
             try
             {
@@ -89,7 +91,8 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("account-transactions-by-date")]
-        public async Task<IActionResult> GetAllAccountTransactionsByDate([FromQuery] int accountId, [FromQuery] DateTime date, string format)
+        public async Task<IActionResult> GetAllAccountTransactionsByDate([FromQuery] int accountId, 
+            [FromQuery] DateTime date, string format)
         {
             try
             {

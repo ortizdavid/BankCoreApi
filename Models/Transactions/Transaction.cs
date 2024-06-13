@@ -10,6 +10,8 @@ namespace BankCoreApi.Models.Transactions
         [Key]
         public int TransactionId { get; set; }
         public int AccountId { get; set; }
+
+        public int DestinationId { get; set; }
         public string? Code { get; set; }  
         public TransactionType TransactionType { get; set; } 
         public TransactionStatus TransactionStatus { get; set; }

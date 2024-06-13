@@ -22,7 +22,7 @@ namespace BankCoreApi.Repositories.Reports
 
         public async Task<IEnumerable<TransactionReport>> GetAccountTransactions(int accountId, DateTime startDate, DateTime endDate)
         {
-            var sql = "SELECT * FROM ViewTransactionReport WHERE AccountId = @Id AND TransactionDate BETWEEN @Start AND @End";
+            var sql = "SELECT * FROM ViewTransactionReport WHERE SourceAccountId = @Id AND TransactionDate BETWEEN @Start AND @End";
             return await _dapper.QueryAsync<TransactionReport>(sql, new { Id = accountId, Start = startDate, End = endDate });
         }
 
@@ -34,7 +34,7 @@ namespace BankCoreApi.Repositories.Reports
 
         public async Task<IEnumerable<TransactionReport>> GetAccountTransactionsByDate(int accountId, DateTime date)
         {
-            var sql = "SELECT * FROM ViewTransactionReport WHERE AccountId = @Id AND CAST(TransactionDate AS DATE) = CAST(@Date AS DATE)";
+            var sql = "SELECT * FROM ViewTransactionReport WHERE SourceAccountId = @Id AND CAST(TransactionDate AS DATE) = CAST(@Date AS DATE)";
             return await _dapper.QueryAsync<TransactionReport>(sql, new { Id = accountId, Date = date });
         }
 

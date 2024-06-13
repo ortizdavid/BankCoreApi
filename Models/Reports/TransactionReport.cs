@@ -9,9 +9,17 @@ namespace BankCoreApi.Models.Reports
         public string? Currency { get; }
         public string? Description { get; }
         public DateTime TransactionDate { get; }
-        public int AccountId { get; }
-        public string? AccountNumber { get; }
-        public string? Iban { get; }
+        
+        // Source account details
+        public int SourceAccountId { get; }
+        public string? SourceAccountNumber { get; }
+        public string? SourceIban { get; }
+
+        // Destination account details
+        public int DestinationAccountId { get; }
+        public string? DestinationAccountNumber { get; }
+        public string? DestinationIban { get; }
+
         public string? CustomerName { get; }
         public string? IdentificationNumber { get; }
         public string? TransactionType { get; }

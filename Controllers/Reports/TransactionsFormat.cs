@@ -17,29 +17,31 @@ namespace BankCoreApi.Controllers
                 var worksheet = package.Workbook.Worksheets.Add("Transactions");
                 // Add headers
                 worksheet.Cells["A1"].Value = "Transaction Code";
-                worksheet.Cells["B1"].Value = "Account Number";
-                worksheet.Cells["C1"].Value = "Transaction Date";
-                worksheet.Cells["D1"].Value = "Transaction Type";
-                worksheet.Cells["E1"].Value = "Amount";
-                worksheet.Cells["F1"].Value = "Currency";
-                worksheet.Cells["G1"].Value = "Balance Before";
-                worksheet.Cells["H1"].Value = "Balance After";
-                worksheet.Cells["I1"].Value = "Status";
-                worksheet.Cells["J1"].Value = "Description";
+                worksheet.Cells["B1"].Value = "Source Account";
+                worksheet.Cells["C1"].Value = "Destination Account";
+                worksheet.Cells["D1"].Value = "Transaction Date";
+                worksheet.Cells["E1"].Value = "Transaction Type";
+                worksheet.Cells["F1"].Value = "Amount";
+                worksheet.Cells["G1"].Value = "Currency";
+                worksheet.Cells["H1"].Value = "Balance Before";
+                worksheet.Cells["I1"].Value = "Balance After";
+                worksheet.Cells["J1"].Value = "Status";
+                worksheet.Cells["K1"].Value = "Description";
                 // Add data
                 int row = 2;
                 foreach (var transaction in transactions)
                 {
                     worksheet.Cells[row, 1].Value = transaction.Code;
-                    worksheet.Cells[row, 2].Value = transaction.AccountNumber;
-                    worksheet.Cells[row, 3].Value = transaction.TransactionDate.ToString("yyyy-MM-dd");
-                    worksheet.Cells[row, 4].Value = transaction.TransactionType;
-                    worksheet.Cells[row, 5].Value = transaction.Amount;
-                    worksheet.Cells[row, 6].Value = transaction.Currency;
-                    worksheet.Cells[row, 7].Value = transaction.BalanceBefore;
-                    worksheet.Cells[row, 8].Value = transaction.BalanceAfter;
-                    worksheet.Cells[row, 9].Value = transaction.TransactionStatus;
-                    worksheet.Cells[row, 10].Value = transaction.Description;
+                    worksheet.Cells[row, 2].Value = transaction.SourceAccountNumber;
+                    worksheet.Cells[row, 3].Value = transaction.DestinationAccountNumber;
+                    worksheet.Cells[row, 4].Value = transaction.TransactionDate.ToString("yyyy-MM-dd");
+                    worksheet.Cells[row, 5].Value = transaction.TransactionType;
+                    worksheet.Cells[row, 6].Value = transaction.Amount;
+                    worksheet.Cells[row, 7].Value = transaction.Currency;
+                    worksheet.Cells[row, 8].Value = transaction.BalanceBefore;
+                    worksheet.Cells[row, 9].Value = transaction.BalanceAfter;
+                    worksheet.Cells[row, 10].Value = transaction.TransactionStatus;
+                    worksheet.Cells[row, 11].Value = transaction.Description;
                     row++;
                 }
                 // Auto fit columns for better readability
@@ -56,17 +58,31 @@ namespace BankCoreApi.Controllers
                 using (StreamWriter streamWriter = new StreamWriter(memoryStream, Encoding.UTF8))
                 {
                     // Write headers
-                    streamWriter.WriteLine("Code,AccountNumber,TransactionDate,TransactionType,Amount,Currency,BalanceBefore,BalanceAfter,TransactionStatus,Description");
+                    streamWriter.WriteLine("Code,SourceAccountNumber,DestinationAccountNumber,TransactionDate,TransactionType,Amount,Currency,BalanceBefore,BalanceAfter,TransactionStatus,Description");
                     // Write data
                     foreach (var transaction in transactions)
                     {
-                        streamWriter.WriteLine($"{transaction.Code},{transaction.AccountNumber},{transaction.TransactionDate.ToString("yyyy-MM-dd")},{transaction.TransactionType},{transaction.Amount},{transaction.Currency},{transaction.BalanceBefore},{transaction.BalanceAfter},{transaction.TransactionStatus},{transaction.Description}");
+                        streamWriter.WriteLine(string.Format(
+                            "{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
+                            transaction.Code,
+                            transaction.SourceAccountNumber,
+                            transaction.DestinationAccountNumber,
+                            transaction.TransactionDate.ToString("yyyy-MM-dd"),
+                            transaction.TransactionType,
+                            transaction.Amount,
+                            transaction.Currency,
+                            transaction.BalanceBefore,
+                            transaction.BalanceAfter,
+                            transaction.TransactionStatus,
+                            transaction.Description
+                        ));
                     }
                     streamWriter.Flush();
                 }
                 return memoryStream.ToArray();
             }
         }
+        
 
         public static byte[] GeneratePDF(IEnumerable<TransactionReport> transactions)
         {
