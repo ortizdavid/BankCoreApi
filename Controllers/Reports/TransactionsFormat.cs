@@ -92,30 +92,28 @@ namespace BankCoreApi.Controllers
                 PdfPage page = document.AddPage();
                 XGraphics graphics = XGraphics.FromPdfPage(page);
                 XFont font = new XFont("Arial", 7, XFontStyle.Regular); // Adjusted font size to 7
-
                 // Draw headers
-                graphics.DrawString("Transaction Code", font, XBrushes.Black, new XRect(50, 50, 100, 20), XStringFormats.TopLeft);
-                graphics.DrawString("Transaction Date", font, XBrushes.Black, new XRect(150, 50, 150, 20), XStringFormats.TopLeft);
-                graphics.DrawString("Amount", font, XBrushes.Black, new XRect(300, 50, 100, 20), XStringFormats.TopLeft);
-                graphics.DrawString("Description", font, XBrushes.Black, new XRect(400, 50, 200, 20), XStringFormats.TopLeft);
-
+                graphics.DrawString("Transaction Code", font, XBrushes.Black, new XRect(30, 50, 100, 20), XStringFormats.TopLeft);
+                graphics.DrawString("Source", font, XBrushes.Black, new XRect(150, 50, 100, 20), XStringFormats.TopLeft);
+                graphics.DrawString("Destination", font, XBrushes.Black, new XRect(250, 50, 100, 20), XStringFormats.TopLeft);
+                graphics.DrawString("Transaction Date", font, XBrushes.Black, new XRect(350, 50, 150, 20), XStringFormats.TopLeft);
+                graphics.DrawString("Transaction Type", font, XBrushes.Black, new XRect(450, 50, 150, 20), XStringFormats.TopLeft);
+                graphics.DrawString("Amount", font, XBrushes.Black, new XRect(550, 50, 100, 20), XStringFormats.TopLeft);
                 // Draw data
                 int yPosition = 70;
                 foreach (var transaction in transactions)
                 {
-                    graphics.DrawString(transaction.Code.ToString(), font, XBrushes.Black, new XRect(50, yPosition, 100, 20), XStringFormats.TopLeft);
-                    graphics.DrawString(transaction.TransactionDate.ToString("yyyy-MM-dd"), font, XBrushes.Black, new XRect(150, yPosition, 150, 20), XStringFormats.TopLeft);
-                    graphics.DrawString(transaction.Amount.ToString(), font, XBrushes.Black, new XRect(300, yPosition, 100, 20), XStringFormats.TopLeft);
-                    graphics.DrawString(transaction.Description, font, XBrushes.Black, new XRect(400, yPosition, 200, 20), XStringFormats.TopLeft);
+                    graphics.DrawString(transaction.Code?.ToString(), font, XBrushes.Black, new XRect(30, yPosition, 100, 20), XStringFormats.TopLeft);
+                    graphics.DrawString(transaction.SourceAccountNumber, font, XBrushes.Black, new XRect(150, yPosition, 100, 20), XStringFormats.TopLeft);
+                    graphics.DrawString(transaction.DestinationAccountNumber, font, XBrushes.Black, new XRect(250, yPosition, 100, 20), XStringFormats.TopLeft);
+                    graphics.DrawString(transaction.TransactionDate.ToString("yyyy-MM-dd"), font, XBrushes.Black, new XRect(350, yPosition, 150, 20), XStringFormats.TopLeft);
+                    graphics.DrawString(transaction.TransactionType, font, XBrushes.Black, new XRect(450, yPosition, 150, 20), XStringFormats.TopLeft);
+                    graphics.DrawString(transaction.Amount.ToString(), font, XBrushes.Black, new XRect(550, yPosition, 100, 20), XStringFormats.TopLeft);
                     yPosition += 20;
                 }
-
                 document.Save(memoryStream);
                 return memoryStream.ToArray();
             }
         }
-
-
-
     }
 }

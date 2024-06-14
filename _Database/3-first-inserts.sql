@@ -1,3 +1,19 @@
+-- CustomerStatus
+INSERT INTO CustomerStatus (StatusName, Description) VALUES 
+('Active', 'Customer is currently active and in good standing'),
+('Inactive', 'Customer is not currently active'),
+('Suspended', 'Customer account is temporarily suspended'),
+('Closed', 'Customer account is permanently closed'),
+('Pending', 'Customer application is pending approval');
+
+-- CustomerType
+INSERT INTO CustomerType (TypeName, Description) VALUES 
+('Individual', 'An individual customer'),
+('Business', 'A business customer'),
+('VIP', 'A very important customer with special privileges'),
+('Non-Profit', 'A non-profit organization customer'),
+('Government', 'A government entity customer');
+
 
 -- Account Status
 INSERT INTO AccountStatus (StatusName, Description) VALUES
@@ -12,7 +28,6 @@ INSERT INTO AccountStatus (StatusName, Description) VALUES
 ('Restricted', 'The account has specific limitations placed on it.'),
 ('Verified', 'The account has been verified through a KYC process and is fully functional.'),
 ('Unverified', 'The account has not yet completed the KYC process and may have limitations on its usage.');
-
 
 -- Account Type
 INSERT INTO AccountType (TypeName, Description) VALUES
@@ -34,7 +49,6 @@ INSERT INTO TransactionStatus (StatusName, Description) VALUES
 ('Expired', 'Transaction has expired and cannot be processed'),
 ('Cancelled', 'Transaction was cancelled before processing'),
 ('Refunded', 'Transaction amount was refunded to the customer');
-
 
 -- Transaction Type
 INSERT INTO TransactionType (TypeName, Description) VALUES 

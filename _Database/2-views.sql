@@ -78,7 +78,7 @@ SELECT
     dest.AccountId AS DestinationAccountId, 
     dest.AccountNumber AS DestinationAccountNumber, 
     dest.Iban AS DestinationIban,
-    cu.CustomerName, 
+    cu.CustomerId, cu.CustomerName, 
     cu.IdentificationNumber,
     tt.TypeName AS TransactionType, 
     ts.StatusName AS TransactionStatus

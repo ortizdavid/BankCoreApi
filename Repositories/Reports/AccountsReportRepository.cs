@@ -1,14 +1,15 @@
+using System.Data;
 using BankCoreApi.Models;
 
 namespace BankCoreApi.Repositories.Reports
 {
     public class AccountsReportRepository
     {
-        private readonly AppDbContext _context;
+         private readonly IDbConnection _dapper;
 
-        public AccountsReportRepository(AppDbContext context)
+        public AccountsReportRepository(IDbConnection dapper)
         {
-            _context = context;
+            _dapper = dapper;
         }
     }
 }

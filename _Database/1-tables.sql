@@ -1,3 +1,25 @@
+IF OBJECT_ID('CustomerStatus', 'U') IS NOT NULL
+    DROP TABLE CustomerStatus;
+GO
+CREATE TABLE CustomerStatus (
+    StatusId INT IDENTITY(1,1) PRIMARY KEY,
+    StatusName VARCHAR(20) UNIQUE NOT NULL,
+    Description VARCHAR(150)
+);
+GO
+
+
+IF OBJECT_ID('CustomerType', 'U') IS NOT NULL
+    DROP TABLE CustomerType;
+GO
+CREATE TABLE CustomerType (
+    TypeId INT IDENTITY(1,1) PRIMARY KEY,
+    TypeName VARCHAR(20) UNIQUE NOT NULL,
+    Description VARCHAR(150)
+);
+GO
+
+
 IF OBJECT_ID('AccountStatus', 'U') IS NOT NULL
     DROP TABLE AccountStatus;
 GO
@@ -7,6 +29,7 @@ CREATE TABLE AccountStatus (
     Description VARCHAR(150)
 );
 GO
+
 
 IF OBJECT_ID('AccountType', 'U') IS NOT NULL
     DROP TABLE AccountType;
@@ -18,6 +41,7 @@ CREATE TABLE AccountType (
 );
 GO
 
+
 IF OBJECT_ID('TransactionStatus', 'U') IS NOT NULL
     DROP TABLE TransactionStatus;
 GO
@@ -27,6 +51,7 @@ CREATE TABLE TransactionStatus (
     Description VARCHAR(150)
 );
 GO
+
 
 IF OBJECT_ID('TransactionType', 'U') IS NOT NULL
     DROP TABLE TransactionType;
@@ -38,21 +63,30 @@ CREATE TABLE TransactionType (
 );
 GO
 
+
+
 IF OBJECT_ID('Customers', 'U') IS NOT NULL
     DROP TABLE Customers;
 GO
 CREATE TABLE Customers (
     CustomerId INT IDENTITY(1,1) PRIMARY KEY,
+    CustomerStatus INT NOT NULL,
+    CustomerType INT NOT NULL,
     CustomerName VARCHAR(150) NOT NULL,
+    Gender VARCHAR(6) CHECK (Gender IN ('Male', 'Female')),
+    BirthDate DATE,
     IdentificationNumber VARCHAR(30) UNIQUE NOT NULL,
     Email VARCHAR(150) UNIQUE,
     Phone VARCHAR(20) UNIQUE,
     Address VARCHAR(200),
     UniqueId UNIQUEIDENTIFIER DEFAULT NEWID(),
     CreatedAt DATETIME DEFAULT GETDATE(),
-    UpdatedAt DATETIME DEFAULT GETDATE()
+    UpdatedAt DATETIME DEFAULT GETDATE(),
+    CONSTRAINT FK_CustomerStatus FOREIGN KEY (CustomerStatus) REFERENCES CustomerStatus(StatusId),
+    CONSTRAINT FK_CustomerType FOREIGN KEY (CustomerType) REFERENCES CustomerType(TypeId)
 );
 GO
+
 
 IF OBJECT_ID('Accounts', 'U') IS NOT NULL
     DROP TABLE Accounts;
@@ -75,6 +109,7 @@ CREATE TABLE Accounts (
     CONSTRAINT fk_CustomerAccount FOREIGN KEY(CustomerId) REFERENCES Customers(CustomerId)
 );
 GO
+
 
 IF OBJECT_ID('Transactions', 'U') IS NOT NULL
     DROP TABLE Transactions;

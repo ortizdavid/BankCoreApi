@@ -2,15 +2,15 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankCoreApi.Controllers
-{   
+{  
+    [Route("")] 
     [Route("api")]
     [ApiController]
-    public class RootController : ControllerBase
+    public class ApiRootController : ControllerBase
     {
-
         private readonly IConfiguration _configuration;
 
-        public RootController(IConfiguration configuration)
+        public ApiRootController(IConfiguration configuration)
         {
             _configuration = configuration; 
         }

@@ -7,6 +7,7 @@ using Name;
 namespace BankCoreApi.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class TransactionsController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -34,6 +35,7 @@ namespace BankCoreApi.Controllers
             }
             return Ok(transactions);
         }
+        
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTransactionById(int id)

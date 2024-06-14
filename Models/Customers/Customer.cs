@@ -11,8 +11,18 @@ namespace BankCoreApi.Models.Customers
         public int CustomerId { get; set; }
 
         [Required]
+        public CustomerStatus CustomerStatus { get; set; }
+ 
+        [Required]
+        public CustomerType CustomerType { get; set; }
+
+        [Required]
         [StringLength(150, ErrorMessage = "Name must be between {2} and {1} characters.", MinimumLength = 10)]
         public string? CustomerName { get; set; }
+
+        public string? Gender { get; set; }
+        
+        public DateTime BirthDate { get; set; }
 
         [Required]
         [StringLength(30, ErrorMessage = "Identification must have {1} characters.")]
@@ -35,4 +45,3 @@ namespace BankCoreApi.Models.Customers
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }
 }
-
