@@ -73,7 +73,7 @@
 					"response": []
 				},
 				{
-					"name": "Create and Associate an Account",
+					"name": "Create Account and Associate Customer",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -1027,18 +1027,46 @@
 					"name": "Customers",
 					"item": [
 						{
-							"name": "Count Customers by Gender",
+							"name": "Count Customers by Type",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/CustomersStatistics/count-customers-by-age?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/CustomersStatistics/count-by-type?startDate=2024-06-13&endDate=2024-06-17",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
 									"path": [
 										"CustomersStatistics",
-										"count-customers-by-age"
+										"count-by-type"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "2024-06-13"
+										},
+										{
+											"key": "endDate",
+											"value": "2024-06-17"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Count Customers by Gender",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BANK_CORE_API}}/CustomersStatistics/count-customers-by-gender?startDate=2024-06-13&endDate=2024-06-17",
+									"host": [
+										"{{BANK_CORE_API}}"
+									],
+									"path": [
+										"CustomersStatistics",
+										"count-customers-by-gender"
 									],
 									"query": [
 										{
@@ -1060,13 +1088,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/StatisticsReport/count-customers-by-age?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/StatisticsReport/count-by-age?startDate=2024-06-13&endDate=2024-06-17",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
 									"path": [
 										"StatisticsReport",
-										"count-customers-by-age"
+										"count-by-age"
 									],
 									"query": [
 										{
@@ -1083,46 +1111,18 @@
 							"response": []
 						},
 						{
-							"name": "Total Amount by Customer Transaction Status",
+							"name": "Count Customers by Status",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/StatisticsReport/total-amount-by-client-transaction-status?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/CustomersStatistics/count-by-status?startDate=2024-06-13&endDate=2024-06-17",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
 									"path": [
-										"StatisticsReport",
-										"total-amount-by-client-transaction-status"
-									],
-									"query": [
-										{
-											"key": "startDate",
-											"value": "2024-06-13"
-										},
-										{
-											"key": "endDate",
-											"value": "2024-06-17"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Total Amount by Customer Transaction Type",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{BANK_CORE_API}}/StatisticsReport/total-amount-by-client-transaction-type?startDate=2024-06-13&endDate=2024-06-17",
-									"host": [
-										"{{BANK_CORE_API}}"
-									],
-									"path": [
-										"StatisticsReport",
-										"total-amount-by-client-transaction-type"
+										"CustomersStatistics",
+										"count-by-status"
 									],
 									"query": [
 										{
@@ -1144,18 +1144,18 @@
 					"name": "Transactions",
 					"item": [
 						{
-							"name": "Count Transactions by Type",
+							"name": "Count by Type",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/StatisticsReport/count-transactions-by-type?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/StatisticsReport/count-by-type?startDate=2024-06-13&endDate=2024-06-17",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
 									"path": [
 										"StatisticsReport",
-										"count-transactions-by-type"
+										"count-by-type"
 									],
 									"query": [
 										{
@@ -1172,18 +1172,18 @@
 							"response": []
 						},
 						{
-							"name": "Count Transactions by Status",
+							"name": "Count by Status",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/StatisticsReport/count-transactions-by-status?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/StatisticsReport/count-by-status?startDate=2024-06-13&endDate=2024-06-17",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
 									"path": [
 										"StatisticsReport",
-										"count-transactions-by-status"
+										"count-by-status"
 									],
 									"query": [
 										{
@@ -1200,7 +1200,7 @@
 							"response": []
 						},
 						{
-							"name": "Total Amount by Transactions Status",
+							"name": "Total Amount by Status",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -1228,7 +1228,7 @@
 							"response": []
 						},
 						{
-							"name": "Total Amount by Transactions Type",
+							"name": "Total Amount by Type",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -1259,7 +1259,120 @@
 				},
 				{
 					"name": "Accounts",
-					"item": []
+					"item": [
+						{
+							"name": "Count by Type",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BANK_CORE_API}}/AccountStatistics/count-by-type?startDate=2024-06-13&endDate=2024-06-17",
+									"host": [
+										"{{BANK_CORE_API}}"
+									],
+									"path": [
+										"AccountStatistics",
+										"count-by-type"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "2024-06-13"
+										},
+										{
+											"key": "endDate",
+											"value": "2024-06-17"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Count by Status",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BANK_CORE_API}}/StatisticsReport/count-by-status?startDate=2024-06-13&endDate=2024-06-17",
+									"host": [
+										"{{BANK_CORE_API}}"
+									],
+									"path": [
+										"StatisticsReport",
+										"count-by-status"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "2024-06-13"
+										},
+										{
+											"key": "endDate",
+											"value": "2024-06-17"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Total Balance by Type",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BANK_CORE_API}}/StatisticsReport/total-balance-by-type?startDate=2024-06-13&endDate=2024-06-17",
+									"host": [
+										"{{BANK_CORE_API}}"
+									],
+									"path": [
+										"StatisticsReport",
+										"total-balance-by-type"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "2024-06-13"
+										},
+										{
+											"key": "endDate",
+											"value": "2024-06-17"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Total Balance by Status",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BANK_CORE_API}}/StatisticsReport/total-balance-by-status?startDate=2024-06-13&endDate=2024-06-17",
+									"host": [
+										"{{BANK_CORE_API}}"
+									],
+									"path": [
+										"StatisticsReport",
+										"total-balance-by-status"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "2024-06-13"
+										},
+										{
+											"key": "endDate",
+											"value": "2024-06-17"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}
