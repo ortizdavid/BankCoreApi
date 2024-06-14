@@ -8,7 +8,6 @@ namespace BankCoreApi.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-
         private readonly IConfiguration _configuration;
         private readonly ILogger<CustomersController> _logger;
         private readonly CustomerRepository _customerRepository;

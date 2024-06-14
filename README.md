@@ -96,3 +96,53 @@ REST API with Banking System
         "currency": "USD"
     }
     ```
+
+- Create Account with Customer
+    ```http
+    POST /api/accounts/create-with-customer
+    ```
+    ```json
+    {
+        "customerName": "Anna Maria",
+        "identificationNumber": "05455T5F644",
+        "email": "ana@gmail.com",
+        "phone": "+294678902348",
+        "address": "Luanda, Angola",
+        "accountTypeId": 1,
+        "currency": "USD"
+    }
+    ```
+
+- Create Account And Associate Customer
+    ```http
+    POST /api/accounts
+    ```
+    ```json
+    {
+        "customerId": 5,
+        "accountType": 1,
+        "currency": "USD"
+    }
+    ```
+
+- Change Account Status
+    ```http
+    PUT /api/accounts/change-status
+    ```
+    ```json
+    {
+        "accountNumber": "8792529764",
+        "accountStatus": 6
+    }
+    ```
+
+- Change Account Type
+    ```http
+    PUT /api/accounts/change-type
+    ```
+    ```json
+    {
+        "accountNumber": "8792529764",
+        "accountType": 1
+    }
+    ```
