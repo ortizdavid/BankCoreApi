@@ -85,7 +85,7 @@ namespace BankCoreApi.Controllers
                  //Transaction
                 var transaction = new Transaction()
                 {
-                    AccountId = account.AccountId,
+                    SourceId = account.AccountId,
                     DestinationId = account.AccountId,
                     TransactionType = TransactionType.Deposit,
                     TransactionStatus = TransactionStatus.Completed,
@@ -133,7 +133,7 @@ namespace BankCoreApi.Controllers
                 //Transaction
                 var transaction = new Transaction()
                 {
-                    AccountId = account.AccountId,
+                    SourceId = account.AccountId,
                     DestinationId = account.AccountId,
                     TransactionType = TransactionType.Withdrawal,
                     TransactionStatus = TransactionStatus.Completed,
@@ -191,7 +191,7 @@ namespace BankCoreApi.Controllers
                 //Transaction
                 var transaction = new Transaction()
                 {
-                    AccountId = sourceAccount.AccountId,
+                    SourceId = sourceAccount.AccountId,
                     DestinationId = destinationAccount.AccountId,
                     TransactionType = TransactionType.Transfer,
                     TransactionStatus = TransactionStatus.Completed,
@@ -249,7 +249,7 @@ namespace BankCoreApi.Controllers
                 //Transaction
                 var transaction = new Transaction()
                 {
-                    AccountId = sourceAccount.AccountId,
+                    SourceId = sourceAccount.AccountId,
                     TransactionType = TransactionType.Transfer,
                     TransactionStatus = TransactionStatus.Completed,
                     Amount = request.Amount,

@@ -28,8 +28,8 @@ REST API with Banking System
     - [x] Get All Transactions
     - [x] Get Account Transactions
 - Reports
-    - [ ] Customers Report
-    - [ ] Account Reports
+    - [x] Customers Report
+    - [x] Account Reports
     - [x] Transactions Report
 - Statistics
     - [ ] Customers Statistics

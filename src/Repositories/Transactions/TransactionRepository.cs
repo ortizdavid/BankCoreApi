@@ -104,7 +104,7 @@ namespace BankCoreApi.Repositories.Transactions
         public async Task<List<Transaction>> GetAllBySourceAccountIdAsync(int id)
         {
             return await _context.Transactions
-                .Where(t => t.AccountId == id)
+                .Where(t => t.SourceId == id)
                 .ToListAsync();
         }
 

@@ -449,6 +449,25 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get Customer By Identification Number",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BANK_CORE_API}}/customers/by-identification/2gyaysgahs",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"customers",
+								"by-identification",
+								"2gyaysgahs"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -745,7 +764,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/AccountsReport/all-accounts?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/AccountsReport/all-accounts?startDate=2024-06-01&endDate=2024-06-17",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
@@ -756,7 +775,7 @@
 									"query": [
 										{
 											"key": "startDate",
-											"value": "2024-06-13"
+											"value": "2024-06-01"
 										},
 										{
 											"key": "endDate",
@@ -773,7 +792,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/AccountsReport/active-accounts?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/AccountsReport/active-accounts?startDate=2024-06-01&endDate=2024-06-17",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
@@ -784,7 +803,7 @@
 									"query": [
 										{
 											"key": "startDate",
-											"value": "2024-06-13"
+											"value": "2024-06-01"
 										},
 										{
 											"key": "endDate",
@@ -801,7 +820,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/AccountsReport/accounts-by-type?typeId=1&startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/AccountsReport/accounts-by-type?type=Savings&startDate=2024-06-01&endDate=2024-06-17",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
@@ -811,12 +830,12 @@
 									],
 									"query": [
 										{
-											"key": "typeId",
-											"value": "1"
+											"key": "type",
+											"value": "Savings"
 										},
 										{
 											"key": "startDate",
-											"value": "2024-06-13"
+											"value": "2024-06-01"
 										},
 										{
 											"key": "endDate",
@@ -833,7 +852,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/AccountsReport/accounts-by-status?statusId=1&startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/AccountsReport/accounts-by-status?status=Pending&startDate=2024-06-01&endDate=2024-06-17",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
@@ -843,7 +862,39 @@
 									],
 									"query": [
 										{
-											"key": "statusId",
+											"key": "status",
+											"value": "Pending"
+										},
+										{
+											"key": "startDate",
+											"value": "2024-06-01"
+										},
+										{
+											"key": "endDate",
+											"value": "2024-06-17"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Accounts By Customer",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BANK_CORE_API}}/AccountsReport/accounts-by-status?customerId=1&startDate=2024-06-13&endDate=2024-06-17",
+									"host": [
+										"{{BANK_CORE_API}}"
+									],
+									"path": [
+										"AccountsReport",
+										"accounts-by-status"
+									],
+									"query": [
+										{
+											"key": "customerId",
 											"value": "1"
 										},
 										{
@@ -870,7 +921,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/CustomersReport/all-customers?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/CustomersReport/all-customers?startDate=2024-06-01&endDate=2024-06-17",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
@@ -881,7 +932,7 @@
 									"query": [
 										{
 											"key": "startDate",
-											"value": "2024-06-13"
+											"value": "2024-06-01"
 										},
 										{
 											"key": "endDate",
@@ -898,7 +949,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/CustomersReport/active-customers?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/CustomersReport/active-customers?startDate=2024-06-01&endDate=2024-06-17",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
@@ -909,7 +960,7 @@
 									"query": [
 										{
 											"key": "startDate",
-											"value": "2024-06-13"
+											"value": "2024-06-01"
 										},
 										{
 											"key": "endDate",
@@ -926,7 +977,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/CustomersReport/customers-by-gender?gander=Male&startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/CustomersReport/customers-by-gender?gender=Female&startDate=2024-06-03&endDate=2024-06-17",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
@@ -936,12 +987,12 @@
 									],
 									"query": [
 										{
-											"key": "gander",
-											"value": "Male"
+											"key": "gender",
+											"value": "Female"
 										},
 										{
 											"key": "startDate",
-											"value": "2024-06-13"
+											"value": "2024-06-03"
 										},
 										{
 											"key": "endDate",
@@ -958,22 +1009,22 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/CustomersReport/customers-by-gender?statusId=1&startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/CustomersReport/customers-by-status?status=Active&startDate=2024-06-01&endDate=2024-06-17",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
 									"path": [
 										"CustomersReport",
-										"customers-by-gender"
+										"customers-by-status"
 									],
 									"query": [
 										{
-											"key": "statusId",
-											"value": "1"
+											"key": "status",
+											"value": "Active"
 										},
 										{
 											"key": "startDate",
-											"value": "2024-06-13"
+											"value": "2024-06-01"
 										},
 										{
 											"key": "endDate",
@@ -990,22 +1041,22 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/CustomersReport/customers-by-gender?typeId=1&startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/CustomersReport/customers-by-type?type=Individual&startDate=2024-06-01&endDate=2024-06-17",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
 									"path": [
 										"CustomersReport",
-										"customers-by-gender"
+										"customers-by-type"
 									],
 									"query": [
 										{
-											"key": "typeId",
-											"value": "1"
+											"key": "type",
+											"value": "Individual"
 										},
 										{
 											"key": "startDate",
-											"value": "2024-06-13"
+											"value": "2024-06-01"
 										},
 										{
 											"key": "endDate",
@@ -1039,6 +1090,34 @@
 									"path": [
 										"CustomersStatistics",
 										"count-by-type"
+									],
+									"query": [
+										{
+											"key": "startDate",
+											"value": "2024-06-13"
+										},
+										{
+											"key": "endDate",
+											"value": "2024-06-17"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Count Customers by Status",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BANK_CORE_API}}/CustomersStatistics/count-by-status?startDate=2024-06-13&endDate=2024-06-17",
+									"host": [
+										"{{BANK_CORE_API}}"
+									],
+									"path": [
+										"CustomersStatistics",
+										"count-by-status"
 									],
 									"query": [
 										{
@@ -1095,34 +1174,6 @@
 									"path": [
 										"StatisticsReport",
 										"count-by-age"
-									],
-									"query": [
-										{
-											"key": "startDate",
-											"value": "2024-06-13"
-										},
-										{
-											"key": "endDate",
-											"value": "2024-06-17"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Count Customers by Status",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{BANK_CORE_API}}/CustomersStatistics/count-by-status?startDate=2024-06-13&endDate=2024-06-17",
-									"host": [
-										"{{BANK_CORE_API}}"
-									],
-									"path": [
-										"CustomersStatistics",
-										"count-by-status"
 									],
 									"query": [
 										{

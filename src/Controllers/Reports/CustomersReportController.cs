@@ -1,3 +1,4 @@
+using BankCoreApi.Models.Accounts;
 using BankCoreApi.Repositories.Reports;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,41 +18,67 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("all-customers")]
         public async Task<IActionResult> GetAllCustomers([FromQuery] DateTime startDate, 
-            [FromQuery] DateTime endDate, [FromQuery] string format)
+            [FromQuery] DateTime endDate, string format="")
         {
-            return Ok();
+            var customers = await _repository.GetAllAsync(startDate, endDate);
+            if (!customers.Any())
+            {
+                return NotFound("No records found for this range");
+            }
+            return Ok(customers);
         }
 
 
         [HttpGet("active-customers")]
         public async Task<IActionResult> GetActiveCustomers([FromQuery] DateTime startDate, 
-            [FromQuery] DateTime endDate, [FromQuery] string format)
+            [FromQuery] DateTime endDate, string format="")
         {
-            return Ok();
+
+            var customers = await _repository.GetCustomerByStatusAsync("Active", startDate, endDate);
+            if (!customers.Any())
+            {
+                return NotFound("No records found for this range");
+            }
+            return Ok(customers);
         }
 
 
         [HttpGet("customers-by-status")]
-        public async Task<IActionResult> GetCustomersByStatus([FromQuery] int statusId, [FromQuery] DateTime startDate, 
-            [FromQuery] DateTime endDate, [FromQuery] string format)
+        public async Task<IActionResult> GetCustomersByStatus([FromQuery] string status, [FromQuery] DateTime startDate, 
+            [FromQuery] DateTime endDate, string format="")
         {
-            return Ok();
+            var customers = await _repository.GetCustomerByStatusAsync(status, startDate, endDate);
+            if (!customers.Any())
+            {
+                return NotFound("No records found for this range");
+            }
+            return Ok(customers);
         }
 
 
         [HttpGet("customers-by-type")]
-        public async Task<IActionResult> GetCustomersByType([FromQuery] int typeId, [FromQuery] DateTime startDate, 
-            [FromQuery] DateTime endDate, [FromQuery] string format)
+        public async Task<IActionResult> GetCustomersByType([FromQuery] string type, [FromQuery] DateTime startDate, 
+            [FromQuery] DateTime endDate, string format="")
         {
-            return Ok();
+            var customers = await _repository.GetCustomerByTypeAsync(type, startDate, endDate);
+            if (!customers.Any())
+            {
+                return NotFound("No records found for this range");
+            }
+            return Ok(customers);
         }
 
 
         [HttpGet("customers-by-gender")]
         public async Task<IActionResult> GetCustomersByGender([FromQuery] string gender, [FromQuery] DateTime startDate, 
-            [FromQuery] DateTime endDate, [FromQuery] string format)
+            [FromQuery] DateTime endDate, string format="")
         {
-            return Ok();
+            var customers = await _repository.GetCustomerByGenderAsync(gender, startDate, endDate);
+            if (!customers.Any())
+            {
+                return NotFound("No records found for this range");
+            }
+            return Ok(customers);
         }
 
     }

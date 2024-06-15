@@ -22,7 +22,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("all-transactions")]
         public async Task<IActionResult> GetAllTransactions([FromQuery] DateTime startDate, 
-            [FromQuery] DateTime endDate, [FromQuery] string format)
+            [FromQuery] DateTime endDate, string format)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("transactions-by-date")]
-        public async Task<IActionResult> GetTransactionsByDate([FromQuery] DateTime date, [FromQuery] string format)
+        public async Task<IActionResult> GetTransactionsByDate([FromQuery] DateTime date, string format)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("transactions-by-type")]
         public async Task<IActionResult> GetTransactionsByType(int typeId, [FromQuery] DateTime startDate, 
-            [FromQuery] DateTime endDate, [FromQuery] string format)
+            [FromQuery] DateTime endDate, string format)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("transactions-by-status")]
         public async Task<IActionResult> GetTransactionsByStatus(int statusId, [FromQuery] DateTime startDate, 
-            [FromQuery] DateTime endDate, [FromQuery] string format)
+            [FromQuery] DateTime endDate, string format)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("account-transactions")]
         public async Task<IActionResult> GetAccountTransactions([FromQuery] int accountId, 
-            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, [FromQuery] string format)
+            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format)
         {
             try
             {
@@ -125,7 +125,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("account-transactions-by-date")]
         public async Task<IActionResult> GetAllAccountTransactionsByDate([FromQuery] int accountId, 
-            [FromQuery] DateTime date, [FromQuery] string format)
+            [FromQuery] DateTime date, string format)
         {
             try
             {
@@ -149,7 +149,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("account-transactions-by-type")]
         public async Task<IActionResult> GetAccountTransactionsByType([FromQuery] int accountId, [FromQuery] int typeId, 
-            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, [FromQuery] string format)
+            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format)
         {
             try
             {
@@ -173,7 +173,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("account-transactions-by-status")]
         public async Task<IActionResult> GetAccountTransactionsByStatus([FromQuery] int accountId, [FromQuery] int statusId, 
-            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, [FromQuery] string format)
+            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format)
         {
             try
             {
@@ -197,7 +197,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("account-transactions-by-customer")]
         public async Task<IActionResult> GetAccountTransactionsByCustomer([FromQuery] int customerId, [FromQuery] int accountId, 
-            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, [FromQuery] string format)
+            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format)
         {
             try
             {

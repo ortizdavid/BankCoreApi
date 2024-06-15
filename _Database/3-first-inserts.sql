@@ -14,7 +14,6 @@ INSERT INTO CustomerType (TypeName, Description) VALUES
 ('Non-Profit', 'A non-profit organization customer'),
 ('Government', 'A government entity customer');
 
-
 -- Account Status
 INSERT INTO AccountStatus (StatusName, Description) VALUES
 ('Active', 'The account is open and fully functional.'),
@@ -36,7 +35,6 @@ INSERT INTO AccountType (TypeName, Description) VALUES
 ('Business', 'An account designed for business use.'),
 ('Student', 'A student account with educational benefits.'),
 ('Joint', 'An account shared by two or more individuals.');
-
 
 -- Transaction Status
 INSERT INTO TransactionStatus (StatusName, Description) VALUES 

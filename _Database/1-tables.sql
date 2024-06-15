@@ -64,18 +64,17 @@ CREATE TABLE TransactionType (
 GO
 
 
-
 IF OBJECT_ID('Customers', 'U') IS NOT NULL
     DROP TABLE Customers;
 GO
 CREATE TABLE Customers (
     CustomerId INT IDENTITY(1,1) PRIMARY KEY,
-    CustomerStatus INT NOT NULL,
     CustomerType INT NOT NULL,
+    CustomerStatus INT NOT NULL,
     CustomerName VARCHAR(150) NOT NULL,
+    IdentificationNumber VARCHAR(30) UNIQUE NOT NULL,
     Gender VARCHAR(6) CHECK (Gender IN ('Male', 'Female')),
     BirthDate DATE,
-    IdentificationNumber VARCHAR(30) UNIQUE NOT NULL,
     Email VARCHAR(150) UNIQUE,
     Phone VARCHAR(20) UNIQUE,
     Address VARCHAR(200),
@@ -116,7 +115,7 @@ IF OBJECT_ID('Transactions', 'U') IS NOT NULL
 GO
 CREATE TABLE Transactions (
     TransactionId INT IDENTITY(1,1) PRIMARY KEY,
-    AccountId INT NOT NULL,
+    SourceId INT NOT NULL,
     DestinationId INT NOT NULL,
     TransactionType INT NOT NULL,
     TransactionStatus INT NOT NULL,
@@ -132,6 +131,7 @@ CREATE TABLE Transactions (
     UpdatedAt DATETIME DEFAULT GETDATE(),
     CONSTRAINT fk_TransactionType FOREIGN KEY(TransactionType) REFERENCES TransactionType(TypeId),
     CONSTRAINT fk_TransactionStatus FOREIGN KEY(TransactionStatus) REFERENCES TransactionStatus(StatusId),
+    CONSTRAINT fk_Source FOREIGN KEY(SourceId) REFERENCES Accounts(AccountId),
     CONSTRAINT fk_Destination FOREIGN KEY(DestinationId) REFERENCES Accounts(AccountId)
 );
 GO
