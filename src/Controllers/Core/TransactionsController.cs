@@ -184,6 +184,7 @@ namespace BankCoreApi.Controllers
                 //Transfer
                 sourceAccount.Transfer(request.Amount, destinationAccount);
                 await _accountRepository.UpdateAsync(sourceAccount);
+                await _accountRepository.UpdateAsync(destinationAccount);
                 
                 var balanceAfter = sourceAccount.Balance;
                 var message = $"Transfer of {request.Amount} {request.Currency} from '{request.SourceNumber}' to account '{request.DestinationNumber}' successful.";
@@ -241,6 +242,7 @@ namespace BankCoreApi.Controllers
                 //Transfer
                 sourceAccount.Transfer(request.Amount, destinationAccount);
                 await _accountRepository.UpdateAsync(sourceAccount);
+                await _accountRepository.UpdateAsync(destinationAccount);
                 
                 var balanceAfter = sourceAccount.Balance;
                 var message = $"Transfer of {request.Amount} {request.Currency} from '{request.SourceIban}' to account '{request.DestinationIban}' successful.";
