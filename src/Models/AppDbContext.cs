@@ -20,9 +20,10 @@ namespace BankCoreApi.Models
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Customer>().Property(c => c.UniqueId).HasColumnName("UniqueId");
+            
             modelBuilder.Entity<Account>().Property(acc => acc.UniqueId).HasColumnName("UniqueId");
-
             modelBuilder.Entity<Account>().Property(a => a.Balance).HasColumnType("decimal(18, 2)"); 
+
             modelBuilder.Entity<Transaction>().Property(t => t.Amount).HasColumnType("decimal(18, 2)"); 
             modelBuilder.Entity<Transaction>().Property(t => t.BalanceBefore).HasColumnType("decimal(18, 2)"); 
             modelBuilder.Entity<Transaction>().Property(t => t.BalanceAfter).HasColumnType("decimal(18, 2)");
