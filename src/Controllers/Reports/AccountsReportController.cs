@@ -1,3 +1,4 @@
+using BankCoreApi.Models.Reports;
 using BankCoreApi.Repositories.Reports;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,27 +17,40 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("all-accounts")]
-        public async Task<IActionResult> GeAllAccounts([FromQuery] DateTime startDate,
-             [FromQuery] DateTime endDate, string format="")
+        public async Task<IActionResult> GeAllAccounts([FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
         {
-            var accounts = await _repository.GetAllAsync(startDate, endDate);
-            if (!accounts.Any())
+            try
             {
-                return NotFound("No records found for this range");
+                var accounts = await _repository.GetAllAsync(startDate, endDate);
+                if (!accounts.Any())
+                {
+                    return NotFound("No records found for this range.");
+                }
+                return HandleFormatResponse(accounts, format, "All_Accounts");
             }
-            return Ok(accounts);
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
         }
 
 
         [HttpGet("active-accounts")]
         public async Task<IActionResult> GetActiveAccounts([FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
         {
-            var accounts = await _repository.GetByAccountStatusAsync("Active", startDate, endDate);
-            if (!accounts.Any())
+            try
             {
-                return NotFound("No records found for this range");
+                var accounts = await _repository.GetByAccountStatusAsync("Active", startDate, endDate);
+                if (!accounts.Any())
+                {
+                    return NotFound("No records found for this range.");
+                }
+                return HandleFormatResponse(accounts, format, "Active_Accounts");
             }
-            return Ok(accounts);
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
         }
 
         
@@ -44,12 +58,19 @@ namespace BankCoreApi.Controllers
         public async Task<IActionResult> GetAccountsByStatus([FromQuery] string status, 
             [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
         {
-             var accounts = await _repository.GetByAccountStatusAsync(status, startDate, endDate);
-            if (!accounts.Any())
+            try
             {
-                return NotFound("No records found for this range");
+                var accounts = await _repository.GetByAccountStatusAsync(status, startDate, endDate);
+                if (!accounts.Any())
+                {
+                    return NotFound("No records found for this range.");
+                }
+                return HandleFormatResponse(accounts, format, "Accounts_By_Status");
             }
-            return Ok(accounts);
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
         }
 
 
@@ -57,12 +78,19 @@ namespace BankCoreApi.Controllers
         public async Task<IActionResult> GetAccountsByType([FromQuery] string type, 
             [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
         {
-            var accounts = await _repository.GetByAccountTypeAsync(type, startDate, endDate);
-            if (!accounts.Any())
-            {
-                return NotFound("No records found for this range");
+            try
+            { 
+                var accounts = await _repository.GetByAccountTypeAsync(type, startDate, endDate);
+                if (!accounts.Any())
+                {
+                    return NotFound("No records found for this range.");
+                }
+                return HandleFormatResponse(accounts, format, "Accounts_By_Type");
             }
-            return Ok(accounts);
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
         }
 
 
@@ -70,12 +98,47 @@ namespace BankCoreApi.Controllers
         public async Task<IActionResult> GetAccountsByCustomer([FromQuery] int customerId, 
             [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
         {
-            var accounts = await _repository.GetByCustomerAsync(customerId, startDate, endDate);
-            if (!accounts.Any())
+            try
             {
-                return NotFound("No records found for this range");
+                var accounts = await _repository.GetByCustomerAsync(customerId, startDate, endDate);
+                if (!accounts.Any())
+                {
+                    return NotFound("No records found for this range.");
+                }
+                return HandleFormatResponse(accounts, format, "Accounts_By_Customer");
             }
-            return Ok(accounts);
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
+
+        private IActionResult HandleFormatResponse(IEnumerable<AccountReport> accounts, string format, string fileName)
+        {
+            if (string.IsNullOrEmpty(format) || format.ToLower() == "json")
+            {
+                return Ok(accounts);
+            }
+            else if (format.ToLower() == "excel")
+            {
+                var excelData = AccountsFormat.GenerateExcel(accounts);
+                return File(excelData, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName+"_Report.xlsx");
+            }
+            else if (format.ToLower() == "pdf")
+            {
+                var pdfData = AccountsFormat.GeneratePDF(accounts);
+                return File(pdfData, "application/pdf", fileName+"_report.pdf");
+            }
+            else if (format.ToLower() == "csv")
+            {
+                var csvData = AccountsFormat.GenerateCSV(accounts);
+                return File(csvData, "text/csv", fileName+"_Report.csv");
+            }
+            else
+            {
+                return BadRequest("Unsupported format requested. Supported formats: json, excel, pdf, csv.");
+            }
         }
 
     }

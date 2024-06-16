@@ -22,7 +22,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("all-transactions")]
         public async Task<IActionResult> GetAllTransactions([FromQuery] DateTime startDate, 
-            [FromQuery] DateTime endDate, string format)
+            [FromQuery] DateTime endDate, string format="")
         {
             try
             {
@@ -31,7 +31,7 @@ namespace BankCoreApi.Controllers
                 {
                     return NotFound("No records found for this range.");
                 }
-                return HandleFormatResponse(transactions, format, "all_transactions");
+                return HandleFormatResponse(transactions, format, "All_Transactions");
             }
             catch (Exception ex)
             {
@@ -41,7 +41,7 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("transactions-by-date")]
-        public async Task<IActionResult> GetTransactionsByDate([FromQuery] DateTime date, string format)
+        public async Task<IActionResult> GetTransactionsByDate([FromQuery] DateTime date, string format="")
         {
             try
             {
@@ -50,7 +50,7 @@ namespace BankCoreApi.Controllers
                 {
                     return NotFound("No records found for this date.");
                 }
-                return HandleFormatResponse(transactions, format, "transaction_by_date");
+                return HandleFormatResponse(transactions, format, "Transactions_By_Date");
             }
             catch (Exception ex)
             {
@@ -61,7 +61,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("transactions-by-type")]
         public async Task<IActionResult> GetTransactionsByType(int typeId, [FromQuery] DateTime startDate, 
-            [FromQuery] DateTime endDate, string format)
+            [FromQuery] DateTime endDate, string format="")
         {
             try
             {
@@ -70,7 +70,7 @@ namespace BankCoreApi.Controllers
                 {
                     return NotFound("No records found for this date.");
                 }
-                return HandleFormatResponse(transactions, format, "transaction_by_type");
+                return HandleFormatResponse(transactions, format, "Transactions_By_Type");
             }
             catch (Exception ex)
             {
@@ -81,7 +81,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("transactions-by-status")]
         public async Task<IActionResult> GetTransactionsByStatus(int statusId, [FromQuery] DateTime startDate, 
-            [FromQuery] DateTime endDate, string format)
+            [FromQuery] DateTime endDate, string format="")
         {
             try
             {
@@ -90,7 +90,7 @@ namespace BankCoreApi.Controllers
                 {
                     return NotFound("No records found for this date.");
                 }
-                return HandleFormatResponse(transactions, format, "transaction_by_status");
+                return HandleFormatResponse(transactions, format, "Transactions_By_Status");
             }
             catch (Exception ex)
             {
@@ -101,7 +101,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("account-transactions")]
         public async Task<IActionResult> GetAccountTransactions([FromQuery] int accountId, 
-            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format)
+            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
         {
             try
             {
@@ -114,7 +114,7 @@ namespace BankCoreApi.Controllers
                 {
                     return NotFound("No records found for this account and date range.");
                 }
-                return HandleFormatResponse(transactions, format, "account_transactions");
+                return HandleFormatResponse(transactions, format, "Account_Transactions");
             }
             catch (Exception ex)
             {
@@ -125,7 +125,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("account-transactions-by-date")]
         public async Task<IActionResult> GetAllAccountTransactionsByDate([FromQuery] int accountId, 
-            [FromQuery] DateTime date, string format)
+            [FromQuery] DateTime date, string format="")
         {
             try
             {
@@ -138,7 +138,7 @@ namespace BankCoreApi.Controllers
                 {
                     return NotFound("No records found for this account and date.");
                 }
-                return HandleFormatResponse(transactions, format, "account_transactions_by_date");
+                return HandleFormatResponse(transactions, format, "Account_Transactions_By_Date");
             }
             catch (Exception ex)
             {
@@ -149,7 +149,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("account-transactions-by-type")]
         public async Task<IActionResult> GetAccountTransactionsByType([FromQuery] int accountId, [FromQuery] int typeId, 
-            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format)
+            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
         {
             try
             {
@@ -162,7 +162,7 @@ namespace BankCoreApi.Controllers
                 {
                     return NotFound("No records found for this account and date range.");
                 }
-                return HandleFormatResponse(transactions, format, "account_transactions_by_type");
+                return HandleFormatResponse(transactions, format, "Account_Rransactions_By_Type");
             }
             catch (Exception ex)
             {
@@ -173,7 +173,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("account-transactions-by-status")]
         public async Task<IActionResult> GetAccountTransactionsByStatus([FromQuery] int accountId, [FromQuery] int statusId, 
-            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format)
+            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
         {
             try
             {
@@ -186,7 +186,7 @@ namespace BankCoreApi.Controllers
                 {
                     return NotFound("No records found for this account and date range.");
                 }
-                return HandleFormatResponse(transactions, format, "account_transactions_by_status");
+                return HandleFormatResponse(transactions, format, "Account_Transactions_By_Sstatus");
             }
             catch (Exception ex)
             {
@@ -197,7 +197,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("account-transactions-by-customer")]
         public async Task<IActionResult> GetAccountTransactionsByCustomer([FromQuery] int customerId, [FromQuery] int accountId, 
-            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format)
+            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
         {
             try
             {
@@ -214,7 +214,7 @@ namespace BankCoreApi.Controllers
                 {
                     return NotFound("No records found for this account and date.");
                 }
-                return HandleFormatResponse(transactions, format, "account_transactions_by_customer");
+                return HandleFormatResponse(transactions, format, "Account_Transactions_By_Customer");
             }
             catch (Exception ex)
             {
@@ -232,17 +232,17 @@ namespace BankCoreApi.Controllers
             else if (format.ToLower() == "excel")
             {
                 var excelData = TransactionsFormat.GenerateExcel(transactions);
-                return File(excelData, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName+"_report.xlsx");
+                return File(excelData, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName+"_Report.xlsx");
             }
             else if (format.ToLower() == "pdf")
             {
                 var pdfData = TransactionsFormat.GeneratePDF(transactions);
-                return File(pdfData, "application/pdf", fileName+"_report.pdf");
+                return File(pdfData, "application/pdf", fileName+"_Report.pdf");
             }
             else if (format.ToLower() == "csv")
             {
                 var csvData = TransactionsFormat.GenerateCSV(transactions);
-                return File(csvData, "text/csv", fileName+"_report.csv");
+                return File(csvData, "text/csv", fileName+"_Report.csv");
             }
             else
             {
