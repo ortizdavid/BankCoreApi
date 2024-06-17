@@ -14,37 +14,52 @@ namespace BankCoreApi.Controllers
             _repository = repository;
         }
 
-    
+
         [HttpGet("count-by-type")]
-        public async Task<IActionResult> CountCustomersByType([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        public async Task<IActionResult> CountAccountsByType()
         {
-            return Ok();
+            var statistics = await _repository.CountByTypeAsync();
+            if (!statistics.Any())
+            {
+                return NotFound("No record for statistics found");
+            }
+            return Ok(statistics);
         }
+
+
+        [HttpGet("count-by-status")]
+        public async Task<IActionResult> CountAccountsByStatus()
+        {
+            var statistics = await _repository.CountByTypeAsync();
+            if (!statistics.Any())
+            {
+                return NotFound("No record for statistics found");
+            }
+            return Ok(statistics);
+        }
+
+        
+        [HttpGet("count-by-gender")]
+        public async Task<IActionResult> CountAccountsByGender()
+        {
+            var statistics = await _repository.CountByGenderAsync();
+            if (!statistics.Any())
+            {
+                return NotFound("No record for statistics found");
+            }
+            return Ok(statistics);
+        }
+
 
         [HttpGet("count-by-age")]
-        public async Task<IActionResult> CountCustomersByAge([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        public async Task<IActionResult> CountAccountsByAge()
         {
-            return Ok();
-        }
-
-        [HttpGet("count-by-gender")]
-        public async Task<IActionResult> CountCustomersByGender([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
-        {
-            return Ok();
-        }
-
-
-        [HttpGet("total-by-type")]
-        public async Task<IActionResult> TotalBalanceByType([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
-        {
-            return Ok();
-        }
-
-
-        [HttpGet("total-by-status")]
-        public async Task<IActionResult> TotalBalanceByStatus([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
-        {
-            return Ok();
+            var statistics = await _repository.CountByAgeAsync();
+            if (!statistics.Any())
+            {
+                return NotFound("No record for statistics found");
+            }
+            return Ok(statistics);
         }
 
     }

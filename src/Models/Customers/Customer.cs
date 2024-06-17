@@ -4,7 +4,6 @@ using BankCoreApi.Helpers;
 
 namespace BankCoreApi.Models.Customers
 {
-    [Table("Customers")]
     public class Customer
     {
         [Key]

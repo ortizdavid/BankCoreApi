@@ -2,6 +2,7 @@ using BankCoreApi.Models.Accounts;
 using BankCoreApi.Models.Customers;
 using BankCoreApi.Repositories.Accounts;
 using BankCoreApi.Repositories.Customers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankCoreApi.Controllers
@@ -24,7 +25,7 @@ namespace BankCoreApi.Controllers
             _customerRepository = customerRepository;
         }
 
-
+       
         [HttpGet]
         public async Task<IActionResult> GetAllAccounts()
         {
@@ -124,18 +125,20 @@ namespace BankCoreApi.Controllers
                 }
                 var customer = new Customer()
                 {
+                    CustomerType = request.CustomerType,
                     CustomerName = request.CustomerName,
                     IdentificationNumber = request.IdentificationNumber,
                     Phone = request.Phone,
                     Email = request.Email,
                     Address = request.Address,
+                    CustomerStatus = CustomerStatus.Pending,
                 };
                 await _customerRepository.CreateAsync(customer);   
               
                 var account = new Account()
                 {
                     CustomerId = customer.CustomerId,
-                    AccountType = request.AccountTypeId,
+                    AccountType = request.AccountType,
                     AccountStatus = AccountStatus.Pending,
                     HolderName = customer.CustomerName,
                     AccountNumber = AccountHelper.GenerateAccountNumber(),

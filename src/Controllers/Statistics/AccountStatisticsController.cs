@@ -14,31 +14,53 @@ namespace BankCoreApi.Controllers
             _repository = repository;
         }
 
+
         [HttpGet("count-by-type")]
-        public async Task<IActionResult> CountAccountsByType([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        public async Task<IActionResult> CountCustomersByType()
         {
-            return Ok();
+            var statistics = await _repository.CountByTypeAsync();
+            if (!statistics.Any())
+            {
+                return NotFound("No record for statistics found");
+            }
+            return Ok(statistics);
         }
+        
 
         [HttpGet("count-by-status")]
-        public async Task<IActionResult> CountAccountsByStatus([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        public async Task<IActionResult> CountCustomersByStatus()
         {
-            return Ok();
+            var statistics = await _repository.CountByStatusAsync();
+            if (!statistics.Any())
+            {
+                return NotFound("No record for statistics found");
+            }
+            return Ok(statistics);
         }
 
-        
-        [HttpGet("count-by-gender")]
-        public async Task<IActionResult> CountAccountsByGender([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+
+        [HttpGet("total-balance-by-type")]
+        public async Task<IActionResult> TotalBalanceByType()
         {
-            return Ok();
+            var statistics = await _repository.TotalBalanceByTypeAsync();
+            if (!statistics.Any())
+            {
+                return NotFound("No record for statistics found");
+            }
+            return Ok(statistics);
         }
 
 
-        [HttpGet("count-by-age")]
-        public async Task<IActionResult> CountAccountsByAge([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        [HttpGet("total-balance-by-status")]
+        public async Task<IActionResult> TotalBalanceByStatus()
         {
-            return Ok();
+            var statistics = await _repository.TotalBalanceByStatusAsync();
+            if (!statistics.Any())
+            {
+                return NotFound("No record for statistics found");
+            }
+            return Ok(statistics);
         }
-
     }
+
 }

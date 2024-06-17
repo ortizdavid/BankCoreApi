@@ -13,28 +13,28 @@ namespace BankCoreApi.Repositories.Statistics
             _dapper = dapper;
         }
 
-        public async Task<IEnumerable<TransactionStatisticsCountByType>> CountByTypeAsync(DateTime startDate, DateTime endDate)
+        public async Task<IEnumerable<TransactionStatisticsCountByType>> CountByTypeAsync()
         {
-            var sql = "SELECT * FROM ViewTransactionStatisticsCountByType WHERE CreatedAt BETWEEN @Start AND @End";
-            return await _dapper.QueryAsync<TransactionStatisticsCountByType>(sql, new { Start = startDate, End = endDate });
+            var sql = "SELECT * FROM ViewTransactionStatisticsCountByType";
+            return await _dapper.QueryAsync<TransactionStatisticsCountByType>(sql);
         }
 
-        public async Task<IEnumerable<TransactionStatisticsCountByStatus>> CountByStatusAsync(DateTime startDate, DateTime endDate)
+        public async Task<IEnumerable<TransactionStatisticsCountByStatus>> CountByStatusAsync()
         {
-            var sql = "SELECT * FROM ViewTransactionStatisticsCountByStatus WHERE CreatedAt BETWEEN @Start AND @End";
-            return await _dapper.QueryAsync<TransactionStatisticsCountByStatus>(sql, new { Start = startDate, End = endDate });
+            var sql = "SELECT * FROM ViewTransactionStatisticsCountByStatus";
+            return await _dapper.QueryAsync<TransactionStatisticsCountByStatus>(sql);
         }
 
-        public async Task<IEnumerable<TransactionStatisticsTotalAmountByType>> TotalAmountByType(DateTime startDate, DateTime endDate)
+        public async Task<IEnumerable<TransactionStatisticsTotalAmountByType>> TotalAmountByType()
         {
-            var sql = "SELECT * FROM ViewTransactionStatisticsTotalAmountByType WHERE CreatedAt BETWEEN @Start AND @End";
-            return await _dapper.QueryAsync<TransactionStatisticsTotalAmountByType>(sql, new { Start = startDate, End = endDate });
+            var sql = "SELECT * FROM ViewTransactionStatisticsTotalAmountByType";
+            return await _dapper.QueryAsync<TransactionStatisticsTotalAmountByType>(sql);
         }
 
-        public async Task<IEnumerable<TransactionStatisticsTotalAmountByStatus>> TotalAmountByStatus(DateTime startDate, DateTime endDate)
+        public async Task<IEnumerable<TransactionStatisticsTotalAmountByStatus>> TotalAmountByStatus()
         {
-            var sql = "SELECT * FROM ViewTransactionStatisticsTotalAmountByStatus WHERE CreatedAt BETWEEN @Start AND @End";
-            return await _dapper.QueryAsync<TransactionStatisticsTotalAmountByStatus>(sql, new { Start = startDate, End = endDate });
+            var sql = "SELECT * FROM ViewTransactionStatisticsTotalAmountByStatus";
+            return await _dapper.QueryAsync<TransactionStatisticsTotalAmountByStatus>(sql);
         }
     }
 }

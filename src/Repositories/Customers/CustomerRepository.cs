@@ -98,6 +98,12 @@ namespace BankCoreApi.Repositories.Customers
             return await _context.Customers.ToListAsync();
         }
 
+        public async Task<IEnumerable<CustomerData>> GetAllDataAsync()
+        {
+            var sql = "SELECT * FROM ViewCustomerData ORDER BY CreatedAt DESC;";
+            return await _dapper.QueryAsync<CustomerData>(sql);
+        }
+
         public async Task<Customer?> GetByIdAsync(int id)
         {
             return await _context.Customers.FindAsync(id);

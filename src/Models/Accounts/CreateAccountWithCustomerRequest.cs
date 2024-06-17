@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using BankCoreApi.Models.Customers;
 
 namespace BankCoreApi.Models.Accounts
 {
@@ -26,7 +27,10 @@ namespace BankCoreApi.Models.Accounts
         public string? Address { get; set; }
 
         [Required]
-        public AccountType AccountTypeId { get; set; }
+        public CustomerType CustomerType { get; set; }
+
+        [Required]
+        public AccountType AccountType { get; set; }
 
         [Required]
         [StringLength(3, ErrorMessage = "Currency code can't be longer than {1} characters.")]

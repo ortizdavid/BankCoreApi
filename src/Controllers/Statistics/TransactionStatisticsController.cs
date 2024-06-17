@@ -14,36 +14,52 @@ namespace BankCoreApi.Controllers
             _repository = repository;
         }
 
+
         [HttpGet("count-by-type")]
-        public async Task<IActionResult> CountTransactionsByType([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        public async Task<IActionResult> CountTransactionsByType()
         {
-            return Ok();
-        }
-
-        [HttpGet("count-by-age")]
-        public async Task<IActionResult> CountTransactionsByAge([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
-        {
-            return Ok();
-        }
-
-        [HttpGet("count-by-gender")]
-        public async Task<IActionResult> CountTransactionsByGender([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
-        {
-            return Ok();
+            var statistics = await _repository.CountByTypeAsync();
+            if (!statistics.Any())
+            {
+                return NotFound("No record for statistics found");
+            }
+            return Ok(statistics);
         }
 
 
-        [HttpGet("total-by-type")]
-        public async Task<IActionResult> TotalAmountByType([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        [HttpGet("count-by-status")]
+        public async Task<IActionResult> CountTransactionsByStatus()
         {
-            return Ok();
+            var statistics = await _repository.CountByStatusAsync();
+            if (!statistics.Any())
+            {
+                return NotFound("No record for statistics found");
+            }
+            return Ok(statistics);
         }
 
 
-        [HttpGet("total-by-status")]
-        public async Task<IActionResult> TotalAmountByStatus([FromQuery] DateTime startDate, [FromQuery] DateTime endDate)
+        [HttpGet("total-amount-by-type")]
+        public async Task<IActionResult> TotalAmountByType()
         {
-            return Ok();
+            var statistics = await _repository.TotalAmountByType();
+            if (!statistics.Any())
+            {
+                return NotFound("No record for statistics found");
+            }
+            return Ok(statistics);
+        }
+
+
+        [HttpGet("total-amount-by-status")]
+        public async Task<IActionResult> TotalAmountByStatus()
+        {
+            var statistics = await _repository.TotalAmountByStatus();
+            if (!statistics.Any())
+            {
+                return NotFound("No record for statistics found");
+            }
+            return Ok(statistics);
         }
     }
 }

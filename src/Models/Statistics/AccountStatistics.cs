@@ -2,29 +2,25 @@ namespace BankCoreApi.Models.Statistics
 {
     public class AccountStatisticsCountByType
     {
-        public string? AccountType { get; set; }
-        public int Count { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string? AccountType { get; }
+        public int Count { get; }
     }
 
     public class AccountStatisticsCountByStatus
     {
-        public string? AccountStatus { get; set; }
-        public int Count { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string? AccountStatus { get; }
+        public int Count { get; }
     }
 
     public class AccountStatisticsTotalBalanceByType
     {
-        public string? AccountType { get; set; }
-        public decimal TotalBalance { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string? AccountType { get; }
+        public decimal TotalBalance { get; }
     }
 
     public class AccountStatisticsTotalBalanceByStatus
     {
-        public string? AccountStatus { get; set; }
-        public decimal TotalBalance { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string? AccountStatus { get; }
+        public decimal TotalBalance { get; }
     }
 }

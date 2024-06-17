@@ -24,7 +24,7 @@ namespace BankCoreApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllCustomers()
         {
-            var customers = await _customerRepository.GetAllAsync();
+            var customers = await _customerRepository.GetAllDataAsync();
             if (!customers.Any())
             {
                 return NotFound();

@@ -108,7 +108,8 @@ REST API with Banking System
         "email": "ana@gmail.com",
         "phone": "+294678902348",
         "address": "Luanda, Angola",
-        "accountTypeId": 1,
+        "customerType": 1,
+        "accountType": 3,
         "currency": "USD"
     }
     ```

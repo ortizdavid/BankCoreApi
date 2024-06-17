@@ -2,29 +2,25 @@ namespace BankCoreApi.Models.Statistics
 {
     public class CustomerStatisticsCountByType
     {
-        public string? CustomerType { get; set; }
-        public int Count { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string? CustomerType { get; }
+        public int Count { get; }
     }
 
     public class CustomerStatisticsCountByStatus
     {
-        public string? CustomerStatus { get; set; }
-        public int Count { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string? CustomerStatus { get; }
+        public int Count { get; }
     }
 
     public class CustomerStatisticsCountByGender
     {
-        public string? Gender { get; set; }
-        public int Count { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string? Gender { get; }
+        public int Count { get; }
     }
 
     public class CustomerStatisticsCountByAge
     {
-        public int AgeGroup { get; set; }
-        public int Count { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string? AgeRange { get; }
+        public int Count { get; }
     }
 }
