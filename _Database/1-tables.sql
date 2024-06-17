@@ -63,6 +63,32 @@ CREATE TABLE TransactionType (
 );
 GO
 
+IF OBJECT_ID('Roles', 'U') IS NOT NULL
+    DROP TABLE Roles;
+GO
+CREATE TABLE Roles (
+    RoleId INT IDENTITY PRIMARY KEY,
+    RoleName VARCHAR(100) UNIQUE NOT NULL,
+    Description VARCHAR(200)
+);
+
+IF OBJECT_ID('Users', 'U') IS NOT NULL
+    DROP TABLE Users;
+GO
+CREATE TABLE Users (
+    UserId INT IDENTITY PRIMARY KEY,
+    UserRole INT NOT NULL, 
+    UserName VARCHAR(150) UNIQUE NOT NULL,
+    Password VARCHAR(250) NOT NULL,
+    Image VARCHAR(100),
+    IsActive BIT NOT NULL,
+    Token VARCHAR(200) UNIQUE,
+    UniqueId UNIQUEIDENTIFIER DEFAULT NEWID(),
+    CreatedAt DATETIME DEFAULT GETDATE(), 
+    UpdatedAt DATETIME DEFAULT GETDATE(),
+    CONSTRAINT FK_User_Role FOREIGN KEY (UserRole) REFERENCES Roles(RoleId)
+);
+
 
 IF OBJECT_ID('Customers', 'U') IS NOT NULL
     DROP TABLE Customers;

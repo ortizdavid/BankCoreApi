@@ -1,4 +1,5 @@
 using BankCoreApi.Models.Accounts;
+using BankCoreApi.Models.Auth;
 using BankCoreApi.Models.Customers;
 using BankCoreApi.Models.Transactions;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ namespace BankCoreApi.Models
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)  
         {

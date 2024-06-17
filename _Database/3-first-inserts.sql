@@ -5,6 +5,7 @@ INSERT INTO CustomerStatus (StatusName, Description) VALUES
 ('Suspended', 'Customer account is temporarily suspended'),
 ('Closed', 'Customer account is permanently closed'),
 ('Pending', 'Customer application is pending approval');
+GO
 
 -- CustomerType
 INSERT INTO CustomerType (TypeName, Description) VALUES 
@@ -13,6 +14,7 @@ INSERT INTO CustomerType (TypeName, Description) VALUES
 ('VIP', 'A very important customer with special privileges'),
 ('Non-Profit', 'A non-profit organization customer'),
 ('Government', 'A government entity customer');
+GO
 
 -- Account Status
 INSERT INTO AccountStatus (StatusName, Description) VALUES
@@ -27,6 +29,7 @@ INSERT INTO AccountStatus (StatusName, Description) VALUES
 ('Restricted', 'The account has specific limitations placed on it.'),
 ('Verified', 'The account has been verified through a KYC process and is fully functional.'),
 ('Unverified', 'The account has not yet completed the KYC process and may have limitations on its usage.');
+GO
 
 -- Account Type
 INSERT INTO AccountType (TypeName, Description) VALUES
@@ -35,6 +38,7 @@ INSERT INTO AccountType (TypeName, Description) VALUES
 ('Business', 'An account designed for business use.'),
 ('Student', 'A student account with educational benefits.'),
 ('Joint', 'An account shared by two or more individuals.');
+GO
 
 -- Transaction Status
 INSERT INTO TransactionStatus (StatusName, Description) VALUES 
@@ -47,6 +51,7 @@ INSERT INTO TransactionStatus (StatusName, Description) VALUES
 ('Expired', 'Transaction has expired and cannot be processed'),
 ('Cancelled', 'Transaction was cancelled before processing'),
 ('Refunded', 'Transaction amount was refunded to the customer');
+GO
 
 -- Transaction Type
 INSERT INTO TransactionType (TypeName, Description) VALUES 
@@ -59,5 +64,20 @@ INSERT INTO TransactionType (TypeName, Description) VALUES
 ('Expense', 'Expense withdrawal transaction'),
 ('Loan', 'Loan transaction'),
 ('Interest', 'Interest transaction');
+GO
+
+INSERT INTO Roles (RoleName, Description) VALUES 
+('Administrator', 'Responsible for overall system administration and maintenance.'),
+('BranchManager', 'Manages the operations of a specific bank branch.'),
+('CustomerServiceRepresentative', 'Assists customers with their banking needs and queries.'),
+('LoanOfficer', 'Evaluates, authorizes, or recommends approval of loan applications.'),
+('Teller', 'Handles customer transactions, including deposits and withdrawals.'),
+('Accountant', 'Manages financial records and transactions.'),
+('Auditor', 'Conducts audits to ensure compliance and accuracy in financial operations.'),
+('ITSupport', 'Provides technical support and maintains IT systems.'),
+('RiskManager', 'Identifies, assesses, and mitigates risks for the bank.'),
+('MarketingManager', 'Develops and implements marketing strategies to attract customers.'),
+('Customer', 'Regular customer of the bank using its services.');
+GO
 
 

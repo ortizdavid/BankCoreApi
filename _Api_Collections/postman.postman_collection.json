@@ -43,6 +43,401 @@
 			]
 		},
 		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"admin01\",\r\n    \"password\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BANK_CORE_API}}/auth/login",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BANK_CORE_API}}/auth/logout",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"\",\r\n    \"password\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BANK_CORE_API}}/auth/refresh-token",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BANK_CORE_API}}/users",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BANK_CORE_API}}/users/1",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By Username",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BANK_CORE_API}}/users/admin01",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"users",
+								"admin01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"admin01\",\r\n    \"password\": \"12345678\",\r\n    \"userRole\": 11\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BANK_CORE_API}}/users",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Role to User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"newRole\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BANK_CORE_API}}/users/1/assign-role",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"users",
+								"1",
+								"assign-role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"newPassword\": \"12345678\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BANK_CORE_API}}/users/1/change-password",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"users",
+								"1",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activate User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BANK_CORE_API}}/users/1/activate",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"users",
+								"1",
+								"activate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deactivate User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BANK_CORE_API}}/users/1/deactivate",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"users",
+								"1",
+								"deactivate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BANK_CORE_API}}/users/1",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Create Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BANK_CORE_API}}/customers",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BANK_CORE_API}}/customers",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BANK_CORE_API}}/customers/1",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer By Identification Number",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BANK_CORE_API}}/customers/by-identification/2gyaysgahs",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"customers",
+								"by-identification",
+								"2gyaysgahs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer By UniqueId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BANK_CORE_API}}/customers/by-uuid/89f64391-d7c5-403d-b341-aa9b46495af1",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"customers",
+								"by-uuid",
+								"89f64391-d7c5-403d-b341-aa9b46495af1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Accounts",
 			"item": [
 				{
@@ -52,7 +447,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"customerName\": \"jAnna Maria\",\r\n    \"identificationNumber\": \"05455T5F644\",\r\n    \"email\": \"a@gmail.com\",\r\n    \"phone\": \"+294678902348\",\r\n    \"address\": \"Luanda, Angola\",\r\n    \"accountTypeId\": 1,\r\n    \"currency\": \"USD\"\r\n}",
+							"raw": "{\r\n    \"customerName\": \"Jacira Madeira\",\r\n    \"identificationNumber\": \"10455T5F644\",\r\n    \"email\": \"jacira@gmail.com\",\r\n    \"phone\": \"+29789023438\",\r\n    \"address\": \"Luanda, Angola\",\r\n    \"customerType\": 1,\r\n    \"accountType\": 2,\r\n    \"currency\": \"USD\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -369,101 +764,6 @@
 								"transactions",
 								"by-account-id",
 								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Customer",
-			"item": [
-				{
-					"name": "Create Customer",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{BANK_CORE_API}}/customers",
-							"host": [
-								"{{BANK_CORE_API}}"
-							],
-							"path": [
-								"customers"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get All Customers",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BANK_CORE_API}}/customers",
-							"host": [
-								"{{BANK_CORE_API}}"
-							],
-							"path": [
-								"customers"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Customer By Id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BANK_CORE_API}}/customers/1",
-							"host": [
-								"{{BANK_CORE_API}}"
-							],
-							"path": [
-								"customers",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Customer By UniqueId",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BANK_CORE_API}}/customers/by-uuid/89f64391-d7c5-403d-b341-aa9b46495af1",
-							"host": [
-								"{{BANK_CORE_API}}"
-							],
-							"path": [
-								"customers",
-								"by-uuid",
-								"89f64391-d7c5-403d-b341-aa9b46495af1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Customer By Identification Number",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{BANK_CORE_API}}/customers/by-identification/2gyaysgahs",
-							"host": [
-								"{{BANK_CORE_API}}"
-							],
-							"path": [
-								"customers",
-								"by-identification",
-								"2gyaysgahs"
 							]
 						}
 					},
@@ -1083,23 +1383,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/CustomersStatistics/count-by-type?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/CustomerStatistics/count-by-type",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
 									"path": [
-										"CustomersStatistics",
+										"CustomerStatistics",
 										"count-by-type"
-									],
-									"query": [
-										{
-											"key": "startDate",
-											"value": "2024-06-13"
-										},
-										{
-											"key": "endDate",
-											"value": "2024-06-17"
-										}
 									]
 								}
 							},
@@ -1111,23 +1401,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/CustomersStatistics/count-by-status?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/CustomerStatistics/count-by-status",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
 									"path": [
-										"CustomersStatistics",
+										"CustomerStatistics",
 										"count-by-status"
-									],
-									"query": [
-										{
-											"key": "startDate",
-											"value": "2024-06-13"
-										},
-										{
-											"key": "endDate",
-											"value": "2024-06-17"
-										}
 									]
 								}
 							},
@@ -1139,23 +1419,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/CustomersStatistics/count-customers-by-gender?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/CustomerStatistics/count-by-gender",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
 									"path": [
-										"CustomersStatistics",
-										"count-customers-by-gender"
-									],
-									"query": [
-										{
-											"key": "startDate",
-											"value": "2024-06-13"
-										},
-										{
-											"key": "endDate",
-											"value": "2024-06-17"
-										}
+										"CustomerStatistics",
+										"count-by-gender"
 									]
 								}
 							},
@@ -1167,140 +1437,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/StatisticsReport/count-by-age?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/CustomerStatistics/count-by-age",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
 									"path": [
-										"StatisticsReport",
+										"CustomerStatistics",
 										"count-by-age"
-									],
-									"query": [
-										{
-											"key": "startDate",
-											"value": "2024-06-13"
-										},
-										{
-											"key": "endDate",
-											"value": "2024-06-17"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Transactions",
-					"item": [
-						{
-							"name": "Count by Type",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{BANK_CORE_API}}/StatisticsReport/count-by-type?startDate=2024-06-13&endDate=2024-06-17",
-									"host": [
-										"{{BANK_CORE_API}}"
-									],
-									"path": [
-										"StatisticsReport",
-										"count-by-type"
-									],
-									"query": [
-										{
-											"key": "startDate",
-											"value": "2024-06-13"
-										},
-										{
-											"key": "endDate",
-											"value": "2024-06-17"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Count by Status",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{BANK_CORE_API}}/StatisticsReport/count-by-status?startDate=2024-06-13&endDate=2024-06-17",
-									"host": [
-										"{{BANK_CORE_API}}"
-									],
-									"path": [
-										"StatisticsReport",
-										"count-by-status"
-									],
-									"query": [
-										{
-											"key": "startDate",
-											"value": "2024-06-13"
-										},
-										{
-											"key": "endDate",
-											"value": "2024-06-17"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Total Amount by Status",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{BANK_CORE_API}}/StatisticsReport/total-amount-by-status?startDate=2024-06-13&endDate=2024-06-17",
-									"host": [
-										"{{BANK_CORE_API}}"
-									],
-									"path": [
-										"StatisticsReport",
-										"total-amount-by-status"
-									],
-									"query": [
-										{
-											"key": "startDate",
-											"value": "2024-06-13"
-										},
-										{
-											"key": "endDate",
-											"value": "2024-06-17"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Total Amount by Type",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{BANK_CORE_API}}/StatisticsReport/total-amount-by-type?startDate=2024-06-13&endDate=2024-06-17",
-									"host": [
-										"{{BANK_CORE_API}}"
-									],
-									"path": [
-										"StatisticsReport",
-										"total-amount-by-type"
-									],
-									"query": [
-										{
-											"key": "startDate",
-											"value": "2024-06-13"
-										},
-										{
-											"key": "endDate",
-											"value": "2024-06-17"
-										}
 									]
 								}
 							},
@@ -1317,23 +1460,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/AccountStatistics/count-by-type?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/AccountStatistics/count-by-type",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
 									"path": [
 										"AccountStatistics",
 										"count-by-type"
-									],
-									"query": [
-										{
-											"key": "startDate",
-											"value": "2024-06-13"
-										},
-										{
-											"key": "endDate",
-											"value": "2024-06-17"
-										}
 									]
 								}
 							},
@@ -1345,23 +1478,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/StatisticsReport/count-by-status?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/AccountStatistics/count-by-status",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
 									"path": [
-										"StatisticsReport",
+										"AccountStatistics",
 										"count-by-status"
-									],
-									"query": [
-										{
-											"key": "startDate",
-											"value": "2024-06-13"
-										},
-										{
-											"key": "endDate",
-											"value": "2024-06-17"
-										}
 									]
 								}
 							},
@@ -1373,23 +1496,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/StatisticsReport/total-balance-by-type?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/AccountStatistics/total-balance-by-type",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
 									"path": [
-										"StatisticsReport",
+										"AccountStatistics",
 										"total-balance-by-type"
-									],
-									"query": [
-										{
-											"key": "startDate",
-											"value": "2024-06-13"
-										},
-										{
-											"key": "endDate",
-											"value": "2024-06-17"
-										}
 									]
 								}
 							},
@@ -1401,23 +1514,90 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{BANK_CORE_API}}/StatisticsReport/total-balance-by-status?startDate=2024-06-13&endDate=2024-06-17",
+									"raw": "{{BANK_CORE_API}}/AccountStatistics/total-balance-by-status",
 									"host": [
 										"{{BANK_CORE_API}}"
 									],
 									"path": [
-										"StatisticsReport",
+										"AccountStatistics",
 										"total-balance-by-status"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Transactions",
+					"item": [
+						{
+							"name": "Count by Type",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BANK_CORE_API}}/TransactionStatistics/count-by-type",
+									"host": [
+										"{{BANK_CORE_API}}"
 									],
-									"query": [
-										{
-											"key": "startDate",
-											"value": "2024-06-13"
-										},
-										{
-											"key": "endDate",
-											"value": "2024-06-17"
-										}
+									"path": [
+										"TransactionStatistics",
+										"count-by-type"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Count by Status",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BANK_CORE_API}}/TransactionStatistics/count-by-status",
+									"host": [
+										"{{BANK_CORE_API}}"
+									],
+									"path": [
+										"TransactionStatistics",
+										"count-by-status"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Total Amount by Status",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BANK_CORE_API}}/TransactionStatistics/total-amount-by-status",
+									"host": [
+										"{{BANK_CORE_API}}"
+									],
+									"path": [
+										"TransactionStatistics",
+										"total-amount-by-status"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Total Amount by Type",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BANK_CORE_API}}/TransactionStatistics/total-amount-by-type",
+									"host": [
+										"{{BANK_CORE_API}}"
+									],
+									"path": [
+										"TransactionStatistics",
+										"total-amount-by-type"
 									]
 								}
 							},
