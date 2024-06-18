@@ -94,9 +94,12 @@ namespace BankCoreApi.Repositories.Accounts
         }
 
 
-        public async Task<IEnumerable<Account>> GetAllAsync()
+        public async Task<IEnumerable<Account>> GetAllAsync(int limit, int offset)
         {
-            return await _context.Accounts.ToListAsync();
+            return await _context.Accounts
+                .Skip(offset)
+                .Take(limit)
+                .ToListAsync();
         }
 
         public async Task<Account?> GetByIbanAsync(string? iban)
@@ -135,10 +138,17 @@ namespace BankCoreApi.Repositories.Accounts
             }
         }
 
-        public async Task<IEnumerable<AccountData>> GetAllDataAsync()
+        public async Task<IEnumerable<AccountData>> GetAllDataAsync(int limit, int offset)
         {
-            var sql = "SELECT * FROM ViewAccountData ORDER BY CreatedAt DESC;";
+            var sql = "SELECT * FROM ViewAccountData ORDER BY CreatedAt DESC "+
+                    $"OFFSET {offset} ROWS FETCH NEXT {limit} ROWS ONLY;";
             return await _dapper.QueryAsync<AccountData>(sql);
+        }
+
+        public async Task<int> GetTotalDataAsync()
+        {
+            var sql = "SELECT COUNT(*) FROM ViewAccountData;";
+            return await _dapper.ExecuteScalarAsync<int>(sql);
         }
 
         public async Task<AccountData?> GetDataByIdAsync(int id)

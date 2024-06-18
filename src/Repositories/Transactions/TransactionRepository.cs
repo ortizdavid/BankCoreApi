@@ -79,9 +79,12 @@ namespace BankCoreApi.Repositories.Transactions
         }
 
 
-        public async Task<IEnumerable<Transaction>> GetAllAsync()
+        public async Task<IEnumerable<Transaction>> GetAllAsync(int limit, int offset)
         {
-            return await _context.Transactions.ToListAsync();
+            return await _context.Transactions
+                .Skip(offset)
+                .Take(limit)
+                .ToListAsync();
         }
 
         public async Task<Transaction?> GetByIdAsync(int id)
@@ -121,21 +124,30 @@ namespace BankCoreApi.Repositories.Transactions
             }
         }
 
-        public async Task<IEnumerable<TransactionData>> GetAllDataAsync()
+        public async Task<IEnumerable<TransactionData>> GetAllDataAsync(int limit, int offset)
         {
-            var sql = "SELECT * FROM ViewTransactionData ORDER BY CreatedAt DESC;";
+            var sql = "SELECT * FROM ViewTransactionData ORDER BY CreatedAt DESC " +
+                $"OFFSET {offset} ROWS FETCH NEXT {limit} ROWS ONLY;";
             return await _dapper.QueryAsync<TransactionData>(sql);
         }
 
-        public async Task<IEnumerable<TransactionData>> GetAllDataByAccountIdAsync(int id)
+        public async Task<int> GetTotalDataAsync()
         {
-            var sql = "SELECT * FROM ViewTransactionData WHERE SourceAccountId = @SourceAccountId ORDER BY CreatedAt DESC;";
+            var sql = "SELECT COUNT(*) FROM ViewTransactionData;";
+            return await _dapper.ExecuteScalarAsync<int>(sql);
+        }
+
+        public async Task<IEnumerable<TransactionData>> GetAllDataByAccountIdAsync(int id, int limit, int offset)
+        {
+            var sql = "SELECT * FROM ViewTransactionData WHERE SourceAccountId = @SourceAccountId ORDER BY CreatedAt DESC " +
+                $"OFFSET {offset} ROWS FETCH NEXT {limit} ROWS ONLY;";;
             return await _dapper.QueryAsync<TransactionData>(sql, new { SourceAccountId = id });
         }
 
-        public async Task<IEnumerable<TransactionData>> GetAllDataByAccountUniqueIdAsync(string uniqueId)
+        public async Task<IEnumerable<TransactionData>> GetAllDataByAccountUniqueIdAsync(Guid uniqueId, int limit, int offset)
         {
-            var sql = "SELECT * FROM ViewTransactionData WHERE UniqueId = @UniqueId ORDER BY CreatedAt DESC;";
+            var sql = "SELECT * FROM ViewTransactionData WHERE UniqueId = @UniqueId ORDER BY CreatedAt DESC " +
+                $"OFFSET {offset} ROWS FETCH NEXT {limit} ROWS ONLY;";
             return await _dapper.QueryAsync<TransactionData>(sql, new { UniqueId = uniqueId });
         }
         

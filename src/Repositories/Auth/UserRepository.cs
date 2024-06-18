@@ -1,5 +1,7 @@
+using System.Data;
 using BankCoreApi.Models;
 using BankCoreApi.Models.Auth;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankCoreApi.Repositories.Auth
@@ -7,10 +9,12 @@ namespace BankCoreApi.Repositories.Auth
     public class UserRepository
     {
         private readonly AppDbContext _context;
+        private readonly IDbConnection _dapper;
 
-        public UserRepository(AppDbContext context)
+        public UserRepository(AppDbContext context, IDbConnection dapper)
         {
             _context = context;
+            _dapper = dapper;
         }
 
         public async Task CreateAsync(User entity)
@@ -68,9 +72,12 @@ namespace BankCoreApi.Repositories.Auth
             return user != null;
         }
 
-        public async Task<IEnumerable<User>> GetAllAsync()
+        public async Task<IEnumerable<User>> GetAllAsync(int limit, int offset)
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users
+                .Skip(offset)
+                .Take(limit)
+                .ToListAsync();;
         }
 
         public async Task<User?> GetByIdAsync(int id)
@@ -106,6 +113,19 @@ namespace BankCoreApi.Repositories.Auth
             {
                 throw;
             }
+        }
+
+        public async Task<IEnumerable<UserData>> GetAllDataAsync(int limit, int offset)
+        {
+            var sql = "SELECT * FROM ViewUserData ORDER BY CreatedAt DESC " + 
+                       $"OFFSET {offset} ROWS FETCH NEXT {limit} ROWS ONLY;";
+            return await _dapper.QueryAsync<UserData>(sql);
+        }
+
+        public async Task<int> GetTotalDataAsync()
+        {
+            var sql = "SELECT COUNT(*) FROM ViewUserData;";
+            return await _dapper.ExecuteScalarAsync<int>(sql);
         }
     }
 }

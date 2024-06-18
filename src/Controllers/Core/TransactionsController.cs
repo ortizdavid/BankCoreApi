@@ -1,3 +1,4 @@
+using BankCoreApi.Helpers;
 using BankCoreApi.Models.Transactions;
 using BankCoreApi.Repositories.Accounts;
 using BankCoreApi.Repositories.Transactions;
@@ -12,28 +13,40 @@ namespace BankCoreApi.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger<TransactionsController> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly TransactionRepository _transactionRepository;
         private readonly AccountRepository _accountRepository;
        
         public TransactionsController(IConfiguration configuration, ILogger<TransactionsController> logger,
-            TransactionRepository transactionRepository, AccountRepository accountRepository)    
+            TransactionRepository transactionRepository, AccountRepository accountRepository, IHttpContextAccessor httpContextAccessor)    
         {
             _configuration = configuration;
             _logger = logger;
             _transactionRepository = transactionRepository;
             _accountRepository = accountRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAllTransactions()
+        public async Task<IActionResult> GetAllTransactions(int pageIndex = 1, int pageSize = 10)
         {
-            var transactions = await _transactionRepository.GetAllDataAsync();
-            if (!transactions.Any())
+            try
             {
-                return NotFound();
+                var count = await _transactionRepository.GetTotalDataAsync();
+                if (count == 0)
+                {
+                    return NotFound("No transactions found.");
+                }
+                var transactions = await _transactionRepository.GetAllDataAsync(pageSize, pageIndex);
+                var pagination = new Pagination<TransactionData>(transactions, count, pageIndex, pageSize, _httpContextAccessor);
+                return Ok(pagination);
             }
-            return Ok(transactions);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
         
 
@@ -273,36 +286,46 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("by-account-id/{id}")]
-        public async Task<IActionResult> GetAccountTransactionsById(int id)
+        public async Task<IActionResult> GetAccountTransactionsById(int id, int pageIndex = 1, int pageSize = 10)
         {
-            var account = await _accountRepository.GetByIdAsync(id);
-            if (account == null)
+            try
             {
-                return NotFound();
+                var count = await _transactionRepository.GetTotalDataAsync();
+                if (count == 0)
+                {
+                    return NotFound("No transactions found.");
+                }
+                var transactions = await _transactionRepository.GetAllDataByAccountIdAsync(id, pageSize, pageIndex);
+                var pagination = new Pagination<TransactionData>(transactions, count, pageIndex, pageSize, _httpContextAccessor);
+                return Ok(pagination);
             }
-            var transactions = await _transactionRepository.GetAllDataByAccountIdAsync(account.AccountId);
-            if (!transactions.Any())
+            catch (Exception ex)
             {
-                return NotFound();
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
             }
-            return Ok(transactions);
         }
 
 
         [HttpGet("by-account-uuid/{uniqueId}")]
-        public async Task<IActionResult> GetAccountTransactionsByUniqueId(Guid uniqueId)
+        public async Task<IActionResult> GetAccountTransactionsByUniqueId(Guid uniqueId, int pageIndex = 1, int pageSize = 10) 
         {
-            var account = await _accountRepository.GetByUniqueIdAsync(uniqueId);
-            if (account == null)
+            try
             {
-                return NotFound();
+                var count = await _transactionRepository.GetTotalDataAsync();
+                if (count == 0)
+                {
+                    return NotFound("No transactions found.");
+                }
+                var transactions = await _transactionRepository.GetAllDataByAccountUniqueIdAsync(uniqueId, pageSize, pageIndex);
+                var pagination = new Pagination<TransactionData>(transactions, count, pageIndex, pageSize, _httpContextAccessor);
+                return Ok(pagination);
             }
-            var transactions = await _transactionRepository.GetAllDataByAccountIdAsync(account.AccountId);
-            if (!transactions.Any())
+            catch (Exception ex)
             {
-                return NotFound();
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
             }
-            return Ok(transactions);
         }
 
     }

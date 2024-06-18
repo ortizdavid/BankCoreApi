@@ -1,3 +1,4 @@
+using BankCoreApi.Helpers;
 using BankCoreApi.Models.Accounts;
 using BankCoreApi.Models.Customers;
 using BankCoreApi.Repositories.Accounts;
@@ -13,28 +14,40 @@ namespace BankCoreApi.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger<AccountsController> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly AccountRepository _accountRepository;
         private readonly CustomerRepository _customerRepository;
 
         public AccountsController(IConfiguration configuration, ILogger<AccountsController> logger,
-            AccountRepository accountRepository, CustomerRepository customerRepository)    
+            AccountRepository accountRepository, CustomerRepository customerRepository, IHttpContextAccessor httpContextAccessor)    
         {
             _configuration = configuration;
             _logger = logger;
             _accountRepository = accountRepository;
             _customerRepository = customerRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
        
         [HttpGet]
-        public async Task<IActionResult> GetAllAccounts()
+        public async Task<ActionResult<IEnumerable<AccountData>>> GetAllAccounts(int pageIndex = 1, int pageSize = 10)
         {
-            var accounts = await _accountRepository.GetAllDataAsync();
-            if (!accounts.Any())
+            try
             {
-                return NotFound();
+                var count = await _accountRepository.GetTotalDataAsync();
+                if (count == 0)
+                {
+                    return NotFound("No accounts found.");
+                }
+                var accounts = await _accountRepository.GetAllDataAsync(pageSize, pageIndex);
+                var pagination = new Pagination<AccountData>(accounts, count, pageIndex, pageSize, _httpContextAccessor);
+                return Ok(pagination);
             }
-            return Ok(accounts);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
 
@@ -103,7 +116,6 @@ namespace BankCoreApi.Controllers
         [HttpPost("create-with-customer")]
         public async Task<IActionResult> CreateAccountAndCustomer([FromBody] CreateAccountWithCustomerRequest request)
         {
-            
             if (request == null)
             {
                 return BadRequest();

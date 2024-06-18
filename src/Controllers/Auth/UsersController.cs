@@ -12,24 +12,37 @@ namespace BankCoreApi.Controllers
         private readonly UserRepository _repository;
         private readonly ILogger<UsersController> _logger;
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly int _tokenLength = 50;
 
-        public UsersController(UserRepository repository, ILogger<UsersController> logger, IConfiguration configuration) 
+        public UsersController(UserRepository repository, ILogger<UsersController> logger, IConfiguration configuration,
+            IHttpContextAccessor httpContextAccessor) 
         {
             _repository = repository;
             _logger = logger;
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAllUsers(int pageIndex = 1, int pageSize = 10)
         {
-            var users = await _repository.GetAllAsync();
-            if (!users.Any())
+            try
             {
-                return NotFound("Users not found");
+                var count = await _repository.GetTotalDataAsync();
+                if (count == 0)
+                {
+                    return NotFound("No users found.");
+                }
+                var accounts = await _repository.GetAllDataAsync(pageSize, pageIndex);
+                var pagination = new Pagination<UserData>(accounts, count, pageIndex, pageSize, _httpContextAccessor);
+                return Ok(pagination);
             }
-            return Ok(users);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpPost]

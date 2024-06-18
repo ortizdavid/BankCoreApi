@@ -1,3 +1,4 @@
+using BankCoreApi.Helpers;
 using BankCoreApi.Models.Customers;
 using BankCoreApi.Repositories.Customers;
 using Microsoft.AspNetCore.Mvc;
@@ -10,26 +11,38 @@ namespace BankCoreApi.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly ILogger<CustomersController> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly CustomerRepository _customerRepository;
 
         public CustomersController(IConfiguration configuration, ILogger<CustomersController> logger,
-            CustomerRepository customerRepository)
+            CustomerRepository customerRepository, IHttpContextAccessor httpContextAccessor)
         {
             _configuration = configuration;
             _logger = logger;
             _customerRepository = customerRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAllCustomers()
+        public async Task<IActionResult> GetAllCustomers(int pageIndex = 1, int pageSize = 10)
         {
-            var customers = await _customerRepository.GetAllDataAsync();
-            if (!customers.Any())
+            try
             {
-                return NotFound();
+                var count = await _customerRepository.GetTotalDataAsync();
+                if (count == 0)
+                {
+                    return NotFound("No customers found.");
+                }
+                var customers = await _customerRepository.GetAllDataAsync(pageSize, pageIndex);
+                var pagination = new Pagination<CustomerData>(customers, count, pageIndex, pageSize, _httpContextAccessor);
+                return Ok(pagination);
             }
-            return Ok(customers);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
 

@@ -24,6 +24,8 @@ internal class Program
             sp => new SqlConnection(connectionString)
         );
 
+        builder.Services.AddHttpContextAccessor();
+
         // Controllers
         builder.Services.AddControllers();
         // Logging

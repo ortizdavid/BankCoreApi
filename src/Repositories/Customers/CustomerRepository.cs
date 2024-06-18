@@ -93,15 +93,25 @@ namespace BankCoreApi.Repositories.Customers
         }
 
 
-        public async Task<IEnumerable<Customer>> GetAllAsync()
+        public async Task<IEnumerable<Customer>> GetAllAsync(int limit, int offset)
         {
-            return await _context.Customers.ToListAsync();
+            return await _context.Customers
+                .Skip(offset)
+                .Take(limit)
+                .ToListAsync();
         }
 
-        public async Task<IEnumerable<CustomerData>> GetAllDataAsync()
+        public async Task<IEnumerable<CustomerData>> GetAllDataAsync(int limit, int offset)
         {
-            var sql = "SELECT * FROM ViewCustomerData ORDER BY CreatedAt DESC;";
+            var sql = "SELECT * FROM ViewCustomerData ORDER BY CreatedAt DESC " + 
+                       $"OFFSET {offset} ROWS FETCH NEXT {limit} ROWS ONLY;";
             return await _dapper.QueryAsync<CustomerData>(sql);
+        }
+
+        public async Task<int> GetTotalDataAsync()
+        {
+            var sql = "SELECT COUNT(*) FROM ViewCustomerData;";
+            return await _dapper.ExecuteScalarAsync<int>(sql);
         }
 
         public async Task<Customer?> GetByIdAsync(int id)

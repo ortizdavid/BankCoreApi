@@ -14,6 +14,5 @@ namespace BankCoreApi.Helpers
         {
             return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
         }   
-
     }
 }

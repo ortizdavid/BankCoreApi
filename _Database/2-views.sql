@@ -1,3 +1,20 @@
+-- ViewUserData
+IF OBJECT_ID('ViewUserData', 'V') IS NOT NULL
+    DROP VIEW ViewUserData;
+GO
+CREATE VIEW ViewUserData AS 
+SELECT
+    us.UserId, us.UniqueId,
+    us.UserName, us.Password,
+    us.Image, us.IsActive,
+    us.Token, us.CreatedAt,
+    us.UpdatedAt,
+    ro.RoleId, ro.RoleName
+FROM Users us
+JOIN Roles ro ON us.UserRole = ro.RoleId
+GO
+
+
 -- ViewCustomerData
 IF OBJECT_ID('ViewCustomerData', 'V') IS NOT NULL
     DROP VIEW ViewCustomerData;
