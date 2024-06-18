@@ -32,9 +32,9 @@ REST API with Banking System
     - [x] Account Reports
     - [x] Transactions Report
 - Statistics
-    - [ ] Customers Statistics
-    - [ ] Account Statistics
-    - [ ] Transactions Statistics
+    - [x] Customers Statistics
+    - [x] Account Statistics
+    - [x] Transactions Statistics
 
 
 ## How to run
