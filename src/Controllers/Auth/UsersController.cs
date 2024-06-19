@@ -25,7 +25,7 @@ namespace BankCoreApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllUsers(int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAllUsers(int pageIndex = 0, int pageSize = 10)
         {
             try
             {

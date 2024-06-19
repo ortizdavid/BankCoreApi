@@ -128,7 +128,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BANK_CORE_API}}/users?pageIndex=1&pageSize=5",
+							"raw": "{{BANK_CORE_API}}/users?pageIndex=0&pageSize=5",
 							"host": [
 								"{{BANK_CORE_API}}"
 							],
@@ -138,7 +138,7 @@
 							"query": [
 								{
 									"key": "pageIndex",
-									"value": "1"
+									"value": "0"
 								},
 								{
 									"key": "pageSize",
@@ -353,7 +353,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"customerType\": 1,\r\n    \"customerName\": \"Orson David\",\r\n    \"identificationNumber\": \"9865FS672HOA\",\r\n    \"gender\": \"Male\",\r\n    \"birthDate\": \"2003-06-08\",\r\n    \"email\": \"orson@gmail.com\",\r\n    \"phone\": \"945098765\",\r\n    \"address\": \"Luanda, Viana, Zango\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -378,7 +378,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BANK_CORE_API}}/customers?pageIndex=1&pageSize=5",
+							"raw": "{{BANK_CORE_API}}/customers?pageIndex=0&pageSize=10",
 							"host": [
 								"{{BANK_CORE_API}}"
 							],
@@ -388,11 +388,11 @@
 							"query": [
 								{
 									"key": "pageIndex",
-									"value": "1"
+									"value": "0"
 								},
 								{
 									"key": "pageSize",
-									"value": "5"
+									"value": "10"
 								}
 							]
 						}
@@ -405,13 +405,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BANK_CORE_API}}/customers/1",
+							"raw": "{{BANK_CORE_API}}/customers/1009",
 							"host": [
 								"{{BANK_CORE_API}}"
 							],
 							"path": [
 								"customers",
-								"1"
+								"1009"
 							]
 						}
 					},
@@ -450,6 +450,60 @@
 								"customers",
 								"by-uuid",
 								"89f64391-d7c5-403d-b341-aa9b46495af1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Status",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identificationNumber\": \"9865FS672HOA\",\r\n    \"newStatus\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BANK_CORE_API}}/customers/change-status",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"customers",
+								"change-status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Type",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identificationNumber\": \"9865FS672HOA\",\r\n    \"newType\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BANK_CORE_API}}/customers/change-type",
+							"host": [
+								"{{BANK_CORE_API}}"
+							],
+							"path": [
+								"customers",
+								"change-type"
 							]
 						}
 					},
@@ -584,7 +638,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"accountNumber\": \"8792529764\",\r\n    \"accountStatus\": 6\r\n}",
+							"raw": "{\r\n    \"accountNumber\": \"8792529764\",\r\n    \"newStatus\": 6\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -611,7 +665,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"accountNumber\": \"8792529764\",\r\n    \"accountType\": 1\r\n}",
+							"raw": "{\r\n    \"accountNumber\": \"8792529764\",\r\n    \"newType\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -750,7 +804,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BANK_CORE_API}}/transactions?pageIndex=1&pageSize=5",
+							"raw": "{{BANK_CORE_API}}/transactions?pageIndex=0&pageSize=5",
 							"host": [
 								"{{BANK_CORE_API}}"
 							],
@@ -760,7 +814,7 @@
 							"query": [
 								{
 									"key": "pageIndex",
-									"value": "1"
+									"value": "0"
 								},
 								{
 									"key": "pageSize",
@@ -777,7 +831,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BANK_CORE_API}}/transactions/by-account-uuid/98f5f74d-d4a7-4f72-b5e3-32bae59870e9?pageIndex=1&pageSize=5",
+							"raw": "{{BANK_CORE_API}}/transactions/by-account-uuid/98f5f74d-d4a7-4f72-b5e3-32bae59870e9?pageIndex=0&pageSize=5",
 							"host": [
 								"{{BANK_CORE_API}}"
 							],
@@ -789,7 +843,7 @@
 							"query": [
 								{
 									"key": "pageIndex",
-									"value": "1"
+									"value": "0"
 								},
 								{
 									"key": "pageSize",
@@ -806,7 +860,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BANK_CORE_API}}/transactions/by-account-id/1?pageIndex=1&pageSize=3",
+							"raw": "{{BANK_CORE_API}}/transactions/by-account-id/1?pageIndex=0&pageSize=3",
 							"host": [
 								"{{BANK_CORE_API}}"
 							],
@@ -818,7 +872,7 @@
 							"query": [
 								{
 									"key": "pageIndex",
-									"value": "1"
+									"value": "0"
 								},
 								{
 									"key": "pageSize",

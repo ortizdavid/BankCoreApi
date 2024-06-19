@@ -31,19 +31,7 @@ namespace BankCoreApi.Repositories.Customers
            }
         }
 
-        public async Task<int> CreateAsyncV2(Customer customer)
-        {
-           try
-           {
-                await _context.Customers.AddAsync(customer);
-                await _context.SaveChangesAsync();
-                return customer.CustomerId;
-           }
-           catch (System.Exception)
-           {
-                throw;
-           }
-        }
+
 
         public async Task CreateBatchAsync(IEnumerable<Customer> customers)
         {
@@ -119,17 +107,30 @@ namespace BankCoreApi.Repositories.Customers
             return await _context.Customers.FindAsync(id);
         }
 
+        public async Task<CustomerData> GetDataByIdAsync(int id)
+        {
+            var sql = "SELECT * FROM ViewCustomerData WHERE CustomerId = @Id";
+            return await _dapper.QueryFirstAsync<CustomerData>(sql, new { @Id = id });
+        }
+
         public async Task<Customer?> GetByUniqueIdAsync(Guid uniqueId)
         {
             return await _context.Customers
                 .FirstOrDefaultAsync(cu => cu.UniqueId == uniqueId);
         }
 
+        public async Task<Customer?> GetByIdentNumberAsync(string? identNumber)
+        {
+            return await _context.Customers
+                .FirstOrDefaultAsync(cu => cu.IdentificationNumber == identNumber);
+        }
+
         public async Task UpdateAsync(Customer customer)
         {
             try
             {
-                await _context.Customers.AddAsync(customer);
+                _context.Customers.Update(customer);
+                await _context.SaveChangesAsync();
             }
             catch (System.Exception)
             {

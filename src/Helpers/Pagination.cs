@@ -19,9 +19,13 @@ namespace BankCoreApi.Helpers
         {
             _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
             // Validate pageIndex and pageSize
-            if (pageIndex < 1 || pageSize < 1)
+            if (pageIndex < 0)
             {
-                throw new ArgumentException("Invalid pageIndex or pageSize.");
+                throw new ArgumentException("Invalid pageIndex: must be >= 0.");
+            }
+            if (pageSize < 1)
+            {
+                throw new ArgumentException("Invalid pageSize: must be > 0.");
             }
             Items = items;
             TotalItems = count;

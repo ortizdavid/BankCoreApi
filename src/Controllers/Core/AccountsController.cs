@@ -30,7 +30,7 @@ namespace BankCoreApi.Controllers
 
        
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AccountData>>> GetAllAccounts(int pageIndex = 1, int pageSize = 10)
+        public async Task<ActionResult<IEnumerable<AccountData>>> GetAllAccounts(int pageIndex = 0, int pageSize = 10)
         {
             try
             {
@@ -112,7 +112,6 @@ namespace BankCoreApi.Controllers
         }
 
 
-
         [HttpPost("create-with-customer")]
         public async Task<IActionResult> CreateAccountAndCustomer([FromBody] CreateAccountWithCustomerRequest request)
         {
@@ -170,13 +169,6 @@ namespace BankCoreApi.Controllers
         }
 
 
-        [HttpPut("{uniqueId}")]
-        public IActionResult UpdateAccount(int id, [FromBody] Account account)
-        {
-            return Ok();
-        }
-
-
         [HttpPut("change-status")]
         public async Task<IActionResult> ChangeAccountStatus([FromBody] ChangeAccountStatusRequest request)
         {
@@ -192,14 +184,18 @@ namespace BankCoreApi.Controllers
                 {
                     return NotFound();
                 }
-                if (request.AccountStatus == account.AccountStatus)
+                if (!Enum.IsDefined(typeof(AccountStatus), request.NewStatus))
+                {
+                    return BadRequest("Invalid Customer Status.");
+                }
+                if (request.NewStatus == account.AccountStatus)
                 {
                     return Conflict($"The account status '{currentStatus}' is already set.");
                 }
-                account.AccountStatus = request.AccountStatus;
+                account.AccountStatus = request.NewStatus;
                 account.UpdatedAt = DateTime.UtcNow;
                 await _accountRepository.UpdateAsync(account);
-                var message = $"Account '{request.AccountNumber}', updated from '{currentStatus}' to {request.AccountStatus.ToString()}!";
+                var message = $"Account '{request.AccountNumber}', updated from '{currentStatus}' to {request.NewStatus.ToString()}!";
                 _logger.LogInformation(message);
                 return Ok(message);
             }
@@ -226,14 +222,18 @@ namespace BankCoreApi.Controllers
                 {
                     return NotFound();
                 }
-                if (request.AccountType == account.AccountType)
+                if (!Enum.IsDefined(typeof(AccountType), request.NewType))
+                {
+                    return BadRequest("Invalid Customer Type.");
+                }
+                if (request.NewType == account.AccountType)
                 {
                     return Conflict($"Account type '{currentType}' is already set for this account.");
                 }
-                account.AccountType = request.AccountType;
+                account.AccountType = request.NewType;
                 account.UpdatedAt = DateTime.UtcNow;
                 await _accountRepository.UpdateAsync(account);
-                var message = $"Account '{request.AccountNumber}', updated from '{currentType}' to '{request.AccountType.ToString()}'!";
+                var message = $"Account '{request.AccountNumber}', updated from '{currentType}' to '{request.NewType.ToString()}'!";
                 _logger.LogInformation(message);
                 return Ok(message);
             }

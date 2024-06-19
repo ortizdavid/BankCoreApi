@@ -29,7 +29,7 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAllTransactions(int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAllTransactions(int pageIndex = 0, int pageSize = 10)
         {
             try
             {
@@ -286,7 +286,7 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("by-account-id/{id}")]
-        public async Task<IActionResult> GetAccountTransactionsById(int id, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> GetAccountTransactionsById(int id, int pageIndex = 0, int pageSize = 10)
         {
             try
             {
@@ -308,7 +308,7 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("by-account-uuid/{uniqueId}")]
-        public async Task<IActionResult> GetAccountTransactionsByUniqueId(Guid uniqueId, int pageIndex = 1, int pageSize = 10) 
+        public async Task<IActionResult> GetAccountTransactionsByUniqueId(Guid uniqueId, int pageIndex = 0, int pageSize = 10) 
         {
             try
             {

@@ -97,6 +97,23 @@ REST API with Banking System
     }
     ```
 
+- Create a Customer
+    ```http
+    POST /api/customers
+    ```
+    ```json
+    {
+        "customerType": 1,
+        "customerName": "Orson David",
+        "identificationNumber": "9865FS672HOA",
+        "gender": "Male",
+        "birthDate": "2003-06-08",
+        "email": "orson@gmail.com",
+        "phone": "945098765",
+        "address": "Luanda, Viana, Zango"
+    }
+    ```
+
 - Create Account with Customer
     ```http
     POST /api/accounts/create-with-customer
@@ -133,7 +150,7 @@ REST API with Banking System
     ```json
     {
         "accountNumber": "8792529764",
-        "accountStatus": 6
+        "newStatus": 6
     }
     ```
 
@@ -144,6 +161,28 @@ REST API with Banking System
     ```json
     {
         "accountNumber": "8792529764",
-        "accountType": 1
+        "newType": 1
+    }
+    ```
+
+- Change Customer Status
+    ```http
+    PUT /api/customers/change-status
+    ```
+    ```json
+    {
+        "identificationNumber": "9865FS672HOA",
+        "newStatus": 1
+    }
+    ```
+
+- Change Customer Type
+    ```http
+    PUT /api/customers/change-type
+    ```
+    ```json
+    {
+        "identificationNumber": "9865FS672HOA",
+        "newType": 2
     }
     ```
