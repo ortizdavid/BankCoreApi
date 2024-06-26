@@ -25,7 +25,7 @@ namespace BankCoreApi.Helpers
             }
             if (pageSize < 1)
             {
-                throw new ArgumentException("Invalid pageSize: must be > 0.");
+                throw new ArgumentException("Invalid pageSize: must be >= 1.");
             }
             Items = items;
             TotalItems = count;

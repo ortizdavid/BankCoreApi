@@ -27,7 +27,7 @@ namespace BankCoreApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerRequest request)
         {
-            if (request == null)
+            if (request is null)
             {
                 return BadRequest();
             }
@@ -100,7 +100,7 @@ namespace BankCoreApi.Controllers
         public async Task<IActionResult> GetCustomerById(int id)
         {
             var customer = await _customerRepository.GetDataByIdAsync(id);
-            if (customer == null)
+            if (customer is null)
             {
                 return NotFound();
             }
@@ -112,7 +112,7 @@ namespace BankCoreApi.Controllers
         public async Task<IActionResult> GetCustomerByUniqueId(Guid uniqueId)
         {
             var customer = await _customerRepository.GetByUniqueIdAsync(uniqueId);
-            if (customer == null)
+            if (customer is null)
             {
                 return NotFound();
             }
@@ -123,14 +123,14 @@ namespace BankCoreApi.Controllers
         [HttpPut("change-status")]
         public async Task<IActionResult> ChangeCustomerStatus([FromBody] ChangeCustomerStatusRequest request)
         {
-            if (request == null)
+            if (request is null)
             {
                 return BadRequest();
             }
             try
             {
                 var customer = await _customerRepository.GetByIdentNumberAsync(request.IdentificationNumber);
-                if (customer == null)
+                if (customer is null)
                 {
                     return NotFound("Invalid customer");
                 }
@@ -160,14 +160,14 @@ namespace BankCoreApi.Controllers
         [HttpPut("change-type")]
         public async Task<IActionResult> ChangeCustomerType([FromBody] ChangeCustomerTypeRequest request)
         {
-            if (request == null)
+            if (request is null)
             {
                 return BadRequest();
             }
             try
             {
                 var customer = await _customerRepository.GetByIdentNumberAsync(request.IdentificationNumber);
-                if (customer == null)
+                if (customer is null)
                 {
                     return NotFound("Invalid customer");
                 }

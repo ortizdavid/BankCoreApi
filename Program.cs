@@ -25,7 +25,6 @@ internal class Program
         );
 
         builder.Services.AddHttpContextAccessor();
-
         // Controllers
         builder.Services.AddControllers();
         // Logging

@@ -55,7 +55,7 @@ namespace BankCoreApi.Controllers
         public async Task<IActionResult> GetAccountById(int id)
         {
             var account = await _accountRepository.GetDataByIdAsync(id);
-            if (account == null)
+            if (account is null)
             {
                 return NotFound();
             }
@@ -67,7 +67,7 @@ namespace BankCoreApi.Controllers
         public async Task<IActionResult> GetAccountByUniqueId(Guid uniqueId)
         {
             var account = await _accountRepository.GetByUniqueIdAsync(uniqueId);
-            if (account == null)
+            if (account is null)
             {
                 return NotFound();
             }
@@ -78,14 +78,14 @@ namespace BankCoreApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAccount([FromBody] CreateAccountRequest request)
         {
-            if (request == null)
+            if (request is null)
             {
                 return BadRequest();
             }
             try
             {
                 var customer = await _customerRepository.GetByIdAsync(request.CustomerId);
-                if (customer == null)
+                if (customer is null)
                 {
                     return NotFound("Invalid customer");
                 }
@@ -115,7 +115,7 @@ namespace BankCoreApi.Controllers
         [HttpPost("create-with-customer")]
         public async Task<IActionResult> CreateAccountAndCustomer([FromBody] CreateAccountWithCustomerRequest request)
         {
-            if (request == null)
+            if (request is null)
             {
                 return BadRequest();
             }
@@ -172,7 +172,7 @@ namespace BankCoreApi.Controllers
         [HttpPut("change-status")]
         public async Task<IActionResult> ChangeAccountStatus([FromBody] ChangeAccountStatusRequest request)
         {
-            if (request == null)
+            if (request is null)
             {
                 return BadRequest();
             }
@@ -180,7 +180,7 @@ namespace BankCoreApi.Controllers
             {
                 var account = await _accountRepository.GetByNubmerAsync(request.AccountNumber);
                 var currentStatus = account?.AccountStatus.ToString();
-                if (account == null)
+                if (account is null)
                 {
                     return NotFound();
                 }
@@ -210,7 +210,7 @@ namespace BankCoreApi.Controllers
         [HttpPut("change-type")]
         public async Task<IActionResult> ChangeAccountType([FromBody] ChangeAccountTypeRequest request)
         {
-            if (request == null)
+            if (request is null)
             {
                 return BadRequest();
             }
@@ -218,7 +218,7 @@ namespace BankCoreApi.Controllers
             {
                 var account = await _accountRepository.GetByNubmerAsync(request.AccountNumber);
                 var currentType =  account?.AccountType.ToString();
-                if (account == null)
+                if (account is null)
                 {
                     return NotFound();
                 }

@@ -54,7 +54,7 @@ namespace BankCoreApi.Controllers
         public async Task<IActionResult> GetTransactionById(int id)
         {
             var transaction = await _transactionRepository.GetDataByIdAsync(id);
-            if (transaction == null)
+            if (transaction is null)
             {
                 return NotFound();
             }
@@ -66,7 +66,7 @@ namespace BankCoreApi.Controllers
         public async Task<IActionResult> GetTransactionByUniqueId(Guid uniqueId)
         {
             var transaction = await _transactionRepository.GetByUniqueIdAsync(uniqueId);
-            if (transaction == null)
+            if (transaction is null)
             {
                 return NotFound();
             }
@@ -77,14 +77,14 @@ namespace BankCoreApi.Controllers
         [HttpPost("deposit")]
         public async Task<IActionResult> Deposit([FromBody] DepositRequest request)
         {
-            if (request == null)
+            if (request is null)
             {
                 return BadRequest();
             }
             try
             {
                 var account = await _accountRepository.GetByNubmerAsync(request.AccountNumber);
-                if (account == null)
+                if (account is null)
                 {
                     return NotFound($"Account '{account?.AccountNumber}' does not exists");
                 }
@@ -125,14 +125,14 @@ namespace BankCoreApi.Controllers
         [HttpPost("withdraw")]
         public async Task<IActionResult> Withdraw([FromBody] WithdrawRequest request)
         {
-            if (request == null)
+            if (request is null)
             {
                 return BadRequest();
             }
             try
             {
                 var account =  await _accountRepository.GetByNubmerAsync(request.AccountNumber);
-                if (account == null)
+                if (account is null)
                 {
                     return NotFound($"Account '{account?.AccountNumber}' does not exists");
                 }
@@ -173,7 +173,7 @@ namespace BankCoreApi.Controllers
         [HttpPost("transfer-number")]
         public async Task<IActionResult> TranferByNumber([FromBody] TransferNumberRequest request)
         {
-            if (request == null)
+            if (request is null)
             {
                 return BadRequest();
             }
@@ -181,11 +181,11 @@ namespace BankCoreApi.Controllers
             {
                 var sourceAccount = await _accountRepository.GetByNubmerAsync(request.SourceNumber);
                 var destinationAccount = await _accountRepository.GetByNubmerAsync(request.DestinationNumber);
-                if (sourceAccount == null)
+                if (sourceAccount is null)
                 {
                     return NotFound($"Account number '{request.SourceNumber}' does not exists");
                 }
-                if (destinationAccount == null)
+                if (destinationAccount is null)
                 {
                     return NotFound($"Account number '{request.DestinationNumber}' does not exists");
                 }
@@ -231,7 +231,7 @@ namespace BankCoreApi.Controllers
         [HttpPost("transfer-iban")]
         public async Task<IActionResult> TranferByIban([FromBody] TransferIbanRequest request)
         {
-            if (request == null)
+            if (request is null)
             {
                 return BadRequest();
             }
@@ -239,11 +239,11 @@ namespace BankCoreApi.Controllers
             {
                 var sourceAccount = await _accountRepository.GetByIbanAsync(request.SourceIban);
                 var destinationAccount = await _accountRepository.GetByIbanAsync(request.DestinationIban);
-                if (sourceAccount == null)
+                if (sourceAccount is null)
                 {
                     return NotFound($"IBAN '{request.SourceIban}' does not exists");
                 }
-                if (destinationAccount == null)
+                if (destinationAccount is null)
                 {
                     return NotFound($"IBAN '{request.DestinationIban}' does not exists");
                 }
