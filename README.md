@@ -9,47 +9,59 @@ REST API with Banking System
 
 
 ## Features
-### Customers
+- **Customers**
     - [x] Create Customer
     - [x] Get All Customers
     - [x] Get Account
-### Accounts
+- **Accounts**
     - [x] Create Account with Customer
     - [x] Create and Associate an Account
     - [x] Get All Accounts
     - [x] Get Account
     - [x] Change Account Status
     - [x] Change Account Type
-### Transactions
+- **Transactions**
     - [x] Deposit
     - [x] Withdrawal
     - [x] Transfer By Account Number and Iban
     - [x] Create Transaction
     - [x] Get All Transactions
     - [x] Get Account Transactions
-### Reports
+- **Reports**
     - [x] Customers Report
     - [x] Account Reports
     - [x] Transactions Report
-### Statistics
+- **Statistics**
     - [x] Customers Statistics
     - [x] Account Statistics
     - [x] Transactions Statistics
 
 
 ## How to run
-- Download or clone repository: `git clone https://github.com/ortizdavid/BankCoreApi`
-- Open project directory `cd BankCoreApi`
+- Download or clone repository: 
+    ```sh
+    git clone https://github.com/ortizdavid/BankCoreApi
+    ```
+- Open project directory 
+    ```sh
+    cd BankCoreApi
+    ```
 - Copy database scripts from [_Database](_Database) folder to SQL Server
 - Change **__DefaultConnection__** from [appsettings.json](appsettings.json) file
 - Import Postman Collections from [_Api_Collections](_Api_Collections)
-- Install Packages: `dotnet restore`
-- Run Application: `dotnet run`
+- Install Packages: 
+    ```sh
+    dotnet restore
+    ```
+- Run Application: 
+    ```sh
+    dotnet run
+    ```
 
 
 ## Example of endpoints
 
-- Deposit
+- **Deposit**
     ```http
     POST /api/transactions/deposit
     ```
@@ -61,7 +73,7 @@ REST API with Banking System
     }
     ```
 
-- Withdraw
+- **Withdraw**
     ```http
     POST /api/transactions/withdraw
     ```
@@ -73,7 +85,7 @@ REST API with Banking System
     }
     ```
 
-- Transfer by Account Number
+- **Transfer by Account Number**
     ```http
     POST /api/transactions/transfer
     ```
@@ -86,7 +98,7 @@ REST API with Banking System
     }
     ```
 
-- Transfer by Iban
+- **Transfer by Iban**
     ```http
     POST /api/transactions/transfer
     ```
@@ -99,7 +111,7 @@ REST API with Banking System
     }
     ```
 
-- Create a Customer
+- **Create a Customer**
     ```http
     POST /api/customers
     ```
@@ -116,7 +128,7 @@ REST API with Banking System
     }
     ```
 
-- Create Account with Customer
+- **Create Account with Customer**
     ```http
     POST /api/accounts/create-with-customer
     ```
@@ -133,7 +145,7 @@ REST API with Banking System
     }
     ```
 
-- Create Account And Associate Customer
+- **Create Account And Associate Customer**
     ```http
     POST /api/accounts
     ```
@@ -145,7 +157,7 @@ REST API with Banking System
     }
     ```
 
-- Change Account Status
+- **Change Account Status**
     ```http
     PUT /api/accounts/change-status
     ```
@@ -156,7 +168,7 @@ REST API with Banking System
     }
     ```
 
-- Change Account Type
+- **Change Account Type**
     ```http
     PUT /api/accounts/change-type
     ```
@@ -167,7 +179,7 @@ REST API with Banking System
     }
     ```
 
-- Change Customer Status
+- **Change Customer Status**
     ```http
     PUT /api/customers/change-status
     ```
@@ -178,7 +190,7 @@ REST API with Banking System
     }
     ```
 
-- Change Customer Type
+- **Change Customer Type**
     ```http
     PUT /api/customers/change-type
     ```
