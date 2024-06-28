@@ -19,7 +19,8 @@ namespace BankCoreApi.Controllers
         private readonly CustomerRepository _customerRepository;
 
         public AccountsController(IConfiguration configuration, ILogger<AccountsController> logger,
-            AccountRepository accountRepository, CustomerRepository customerRepository, IHttpContextAccessor httpContextAccessor)    
+            AccountRepository accountRepository, CustomerRepository customerRepository, 
+            IHttpContextAccessor httpContextAccessor)    
         {
             _configuration = configuration;
             _logger = logger;
