@@ -26,9 +26,9 @@ namespace BankCoreApi.Controllers.Auth
 
         
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequest login)
+        public async Task<IActionResult> Login([FromBody] LoginRequest login)
         {
-            if (!IsValidUser(login.Username, login.Password))
+            if (!await IsValidUser(login.Username, login.Password))
             {
                 return Unauthorized("Username or Password incorrect!");
             }
@@ -68,13 +68,13 @@ namespace BankCoreApi.Controllers.Auth
         }
 
 
-        private bool IsValidUser(string? userName, string? password)
+        private async Task<bool> IsValidUser(string? userName, string? password)
         {
             if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
             {
                 return false;
             }
-            var user = _userRepository.GetByUserName(userName);
+            var user = await _userRepository.GetByUserNameAsync(userName);
             if (user == null)
             {
                 return false;

@@ -7,7 +7,7 @@ using BankCoreApi.Repositories.Auth;
 
 namespace BankCoreApi.Extensions
 {
-    public static class Repositories
+    public static class RepositoryExtensions
     {
         public static void AddRepositories(this IServiceCollection services)
         {

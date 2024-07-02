@@ -91,11 +91,6 @@ namespace BankCoreApi.Repositories.Auth
                 .FirstOrDefaultAsync(u => u.UserName == userName);
         }
 
-        public User? GetByUserName(string? userName)
-        {
-            return _context.Users.FirstOrDefault(u => u.UserName == userName);
-        }
-
         public async Task<User?> GetByUniqueIdAsync(Guid uniqueId)
         {
             return await _context.Users
