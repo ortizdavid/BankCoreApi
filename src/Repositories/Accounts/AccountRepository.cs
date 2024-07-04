@@ -79,15 +79,6 @@ namespace BankCoreApi.Repositories.Accounts
 
         public async Task<bool> ExistsRecordAsync(string? field, string? value)
         {
-            if (string.IsNullOrEmpty(field) || string.IsNullOrEmpty(value))
-            {
-                return false;
-            }
-            var validFieldNames = new[] { "Iban", "AccountNumber" };
-            if (!validFieldNames.Contains(field))
-            {
-                throw new ArgumentException($"Invalid field name {field}");
-            }
             var sql = $"SELECT COUNT(*) FROM Accounts WHERE {field} = @Value";
             var count = await _dapper.ExecuteScalarAsync<int>(sql, new { Value = value });
             return count > 0;
