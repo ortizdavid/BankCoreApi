@@ -131,7 +131,7 @@ namespace BankCoreApi.Repositories.Transactions
         public async Task<IEnumerable<TransactionData>> GetAllDataByAccountIdAsync(int id, int limit, int offset)
         {
             var sql = "SELECT * FROM ViewTransactionData WHERE SourceAccountId = @SourceAccountId ORDER BY CreatedAt DESC " +
-                $"OFFSET {offset} ROWS FETCH NEXT {limit} ROWS ONLY;";;
+                $"OFFSET {offset} ROWS FETCH NEXT {limit} ROWS ONLY;";
             return await _dapper.QueryAsync<TransactionData>(sql, new { SourceAccountId = id });
         }
 

@@ -12,8 +12,11 @@ namespace BankCoreApi.Helpers
         public int PageIndex { get; private set; }
         public int TotalPages { get; private set; }
         public int TotalItems { get; private set; }
-        public string? NextPageUrl { get; private set; }
+        public string? FirstPageUrl { get; private set; }
+        public string? LastPageUrl { get; private set; }
         public string? PreviousPageUrl { get; private set; }
+        public string? NextPageUrl { get; private set; }
+        
 
         public Pagination(IEnumerable<T> items, int count, int pageIndex, int pageSize, IHttpContextAccessor httpContextAccessor)
         {
@@ -37,14 +40,16 @@ namespace BankCoreApi.Helpers
         private void CalculateUrls(int pageIndex, int pageSize)
         {
             var httpContext = _httpContextAccessor?.HttpContext;
+            FirstPageUrl = GetPageUrl(httpContext, pageSize, 0);
             if (pageIndex < TotalPages)
             {
                 NextPageUrl = GetPageUrl(httpContext, pageSize, pageIndex + 1);
             }
-            if (pageIndex > 1)
+            if (pageIndex > 0)
             {
                 PreviousPageUrl = GetPageUrl(httpContext, pageSize, pageIndex - 1);
             }
+            LastPageUrl = GetPageUrl(httpContext, pageSize, TotalPages);
         }
 
         private string GetPageUrl(HttpContext? httpContext, int pageSize, int pageNumber)
