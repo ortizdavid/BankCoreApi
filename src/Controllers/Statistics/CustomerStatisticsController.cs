@@ -14,7 +14,6 @@ namespace BankCoreApi.Controllers
             _repository = repository;
         }
 
-
         [HttpGet("count-by-type")]
         public async Task<IActionResult> CountAccountsByType()
         {
@@ -26,7 +25,6 @@ namespace BankCoreApi.Controllers
             return Ok(statistics);
         }
 
-
         [HttpGet("count-by-status")]
         public async Task<IActionResult> CountAccountsByStatus()
         {
@@ -37,7 +35,6 @@ namespace BankCoreApi.Controllers
             }
             return Ok(statistics);
         }
-
         
         [HttpGet("count-by-gender")]
         public async Task<IActionResult> CountAccountsByGender()
@@ -49,7 +46,6 @@ namespace BankCoreApi.Controllers
             }
             return Ok(statistics);
         }
-
 
         [HttpGet("count-by-age")]
         public async Task<IActionResult> CountAccountsByAge()

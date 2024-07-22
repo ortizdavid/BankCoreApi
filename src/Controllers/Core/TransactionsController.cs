@@ -1,6 +1,8 @@
+using BankCoreApi.Exceptions;
 using BankCoreApi.Helpers;
 using BankCoreApi.Models.Transactions;
 using BankCoreApi.Repositories.Core;
+using BankCoreApi.Services.Core;
 using Microsoft.AspNetCore.Mvc;
 using Name;
 
@@ -10,37 +12,29 @@ namespace BankCoreApi.Controllers
     [ApiController]
     public class TransactionsController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly ILogger<TransactionsController> _logger;
-        private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly TransactionRepository _transactionRepository;
-        private readonly AccountRepository _accountRepository;
-       
-        public TransactionsController(IConfiguration configuration, ILogger<TransactionsController> logger,
-            TransactionRepository transactionRepository, AccountRepository accountRepository, 
-            IHttpContextAccessor httpContextAccessor)    
+        private readonly TransactionService _service;
+        
+
+        public TransactionsController(ILogger<TransactionsController> logger,TransactionService service)    
         {
-            _configuration = configuration;
             _logger = logger;
-            _transactionRepository = transactionRepository;
-            _accountRepository = accountRepository;
-            _httpContextAccessor = httpContextAccessor;
+            _service = service;
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> GetAllTransactions(int pageIndex = 0, int pageSize = 10)
+        public async Task<IActionResult> GetAllTransactions([FromQuery] PaginationParam param)
         {
             try
             {
-                var count = await _transactionRepository.GetTotalDataAsync();
-                if (count == 0)
-                {
-                    return NotFound("No transactions found.");
-                }
-                var transactions = await _transactionRepository.GetAllDataAsync(pageSize, pageIndex);
-                var pagination = new Pagination<TransactionData>(transactions, count, pageIndex, pageSize, _httpContextAccessor);
-                return Ok(pagination);
+               var transactions = await _service.GetAllTransactions(param);
+               return StatusCode(200, transactions);
+            }
+            catch (ApiException ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(ex.StatusCode, ex.Message);
             }
             catch (Exception ex)
             {
@@ -53,66 +47,59 @@ namespace BankCoreApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTransactionById(int id)
         {
-            var transaction = await _transactionRepository.GetDataByIdAsync(id);
-            if (transaction is null)
+            try
             {
-                return NotFound();
+               var transaction = await _service.GetTransactionById(id);
+               return StatusCode(200, transaction);
             }
-            return Ok(transaction);
+            catch (ApiException ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(ex.StatusCode, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
 
         [HttpGet("by-uuid/{uniqueId}")]
         public async Task<IActionResult> GetTransactionByUniqueId(Guid uniqueId)
         {
-            var transaction = await _transactionRepository.GetByUniqueIdAsync(uniqueId);
-            if (transaction is null)
+            try
             {
-                return NotFound();
+               var transaction = await _service.GetTransactionByUniqueId(uniqueId);
+               return StatusCode(200, transaction);
             }
-            return Ok(transaction);
+            catch (ApiException ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(ex.StatusCode, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
 
         [HttpPost("deposit")]
         public async Task<IActionResult> Deposit([FromBody] DepositRequest request)
         {
-            if (request is null)
-            {
-                return BadRequest();
-            }
             try
             {
-                var account = await _accountRepository.GetByNubmerAsync(request.AccountNumber);
-                if (account is null)
-                {
-                    return NotFound($"Account '{account?.AccountNumber}' does not exists");
-                }
-                var balanceBefore = account.Balance;
-                //Deposit
-                account.Deposit(request.Amount);
-                await _accountRepository.UpdateAsync(account);
-                
-                var balanceAfter = account.Balance;
+                await _service.Deposit(request);	
                 var message = $"Deposit of {request.Amount} {request.Currency} to account '{request.AccountNumber}' successful.";
-                 //Transaction
-                var transaction = new Transaction()
-                {
-                    SourceId = account.AccountId,
-                    DestinationId = account.AccountId,
-                    TransactionType = TransactionType.Deposit,
-                    TransactionStatus = TransactionStatus.Completed,
-                    Amount = request.Amount,
-                    Currency = request.Currency,
-                    BalanceBefore = balanceBefore,
-                    BalanceAfter = balanceAfter,
-                    Code = TransactionHelper.GenerateTransactionCode(),
-                    TransactionDate = DateTime.UtcNow,
-                    Description = message,
-                };
-                await _transactionRepository.CreateAsync(transaction);
                 _logger.LogInformation(message);
                 return Ok(message);
+            }
+            catch (ApiException ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(ex.StatusCode, ex.Message);
             }
             catch (System.Exception ex)
             {
@@ -125,42 +112,17 @@ namespace BankCoreApi.Controllers
         [HttpPost("withdraw")]
         public async Task<IActionResult> Withdraw([FromBody] WithdrawRequest request)
         {
-            if (request is null)
-            {
-                return BadRequest();
-            }
             try
             {
-                var account =  await _accountRepository.GetByNubmerAsync(request.AccountNumber);
-                if (account is null)
-                {
-                    return NotFound($"Account '{account?.AccountNumber}' does not exists");
-                }
-                var balanceBefore = account.Balance;
-                //Witdraw
-                account.Withdraw(request.Amount);
-                await _accountRepository.UpdateAsync(account);
-                
-                var balanceAfter = account.Balance;
+                await _service.Withdraw(request);
                 var message = $"Witdrawal of {request.Amount} {request.Currency} to account '{request.AccountNumber}' successful.";
-                //Transaction
-                var transaction = new Transaction()
-                {
-                    SourceId = account.AccountId,
-                    DestinationId = account.AccountId,
-                    TransactionType = TransactionType.Withdrawal,
-                    TransactionStatus = TransactionStatus.Completed,
-                    Amount = request.Amount,
-                    Currency = request.Currency,
-                    BalanceBefore = balanceBefore,
-                    BalanceAfter = balanceAfter,
-                    Code = TransactionHelper.GenerateTransactionCode(),
-                    TransactionDate = DateTime.UtcNow,
-                    Description = message,
-                };
-                await _transactionRepository.CreateAsync(transaction);
                 _logger.LogInformation(message);
                 return Ok(message);
+            }
+            catch (ApiException ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(ex.StatusCode, ex.Message);
             }
             catch (System.Exception ex)
             {
@@ -171,54 +133,19 @@ namespace BankCoreApi.Controllers
 
 
         [HttpPost("transfer-number")]
-        public async Task<IActionResult> TranferByNumber([FromBody] TransferNumberRequest request)
+        public async Task<IActionResult> TranferByNumber([FromBody] TransferByNumberRequest request)
         {
-            if (request is null)
-            {
-                return BadRequest();
-            }
             try
             {
-                var sourceAccount = await _accountRepository.GetByNubmerAsync(request.SourceNumber);
-                var destinationAccount = await _accountRepository.GetByNubmerAsync(request.DestinationNumber);
-                if (sourceAccount is null)
-                {
-                    return NotFound($"Account number '{request.SourceNumber}' does not exists");
-                }
-                if (destinationAccount is null)
-                {
-                    return NotFound($"Account number '{request.DestinationNumber}' does not exists");
-                }
-                if (request.SourceNumber == request.DestinationNumber)
-                {
-                    return Conflict("Transfer failed: same account");
-                }
-                var balanceBefore = sourceAccount.Balance;
-                //Transfer
-                sourceAccount.Transfer(request.Amount, destinationAccount);
-                await _accountRepository.UpdateAsync(sourceAccount);
-                await _accountRepository.UpdateAsync(destinationAccount);
-                
-                var balanceAfter = sourceAccount.Balance;
+                await _service.TransferByNumber(request);
                 var message = $"Transfer of {request.Amount} {request.Currency} from '{request.SourceNumber}' to account '{request.DestinationNumber}' successful.";
-                //Transaction
-                var transaction = new Transaction()
-                {
-                    SourceId = sourceAccount.AccountId,
-                    DestinationId = destinationAccount.AccountId,
-                    TransactionType = TransactionType.Transfer,
-                    TransactionStatus = TransactionStatus.Completed,
-                    Amount = request.Amount,
-                    Currency = request.Currency,
-                    BalanceBefore = balanceBefore,
-                    BalanceAfter = balanceAfter,
-                    Code = TransactionHelper.GenerateTransactionCode(),
-                    TransactionDate = DateTime.UtcNow,
-                    Description = message,
-                };
-                await _transactionRepository.UpdateAsync(transaction);
                 _logger.LogInformation(message);
                 return Ok(message);
+            }
+            catch (ApiException ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(ex.StatusCode, ex.Message);
             }
             catch (System.Exception ex)
             {
@@ -229,53 +156,19 @@ namespace BankCoreApi.Controllers
 
 
         [HttpPost("transfer-iban")]
-        public async Task<IActionResult> TranferByIban([FromBody] TransferIbanRequest request)
+        public async Task<IActionResult> TranferByIban([FromBody] TransferByIbanRequest request)
         {
-            if (request is null)
-            {
-                return BadRequest();
-            }
             try
             {
-                var sourceAccount = await _accountRepository.GetByIbanAsync(request.SourceIban);
-                var destinationAccount = await _accountRepository.GetByIbanAsync(request.DestinationIban);
-                if (sourceAccount is null)
-                {
-                    return NotFound($"IBAN '{request.SourceIban}' does not exists");
-                }
-                if (destinationAccount is null)
-                {
-                    return NotFound($"IBAN '{request.DestinationIban}' does not exists");
-                }
-                if (request.SourceIban == request.DestinationIban)
-                {
-                    return Conflict("Transfer failed: same IBAN");
-                }
-                var balanceBefore = sourceAccount.Balance;
-                //Transfer
-                sourceAccount.Transfer(request.Amount, destinationAccount);
-                await _accountRepository.UpdateAsync(sourceAccount);
-                await _accountRepository.UpdateAsync(destinationAccount);
-                
-                var balanceAfter = sourceAccount.Balance;
+                await _service.TransferByIban(request);
                 var message = $"Transfer of {request.Amount} {request.Currency} from '{request.SourceIban}' to account '{request.DestinationIban}' successful.";
-                //Transaction
-                var transaction = new Transaction()
-                {
-                    SourceId = sourceAccount.AccountId,
-                    TransactionType = TransactionType.Transfer,
-                    TransactionStatus = TransactionStatus.Completed,
-                    Amount = request.Amount,
-                    Currency = request.Currency,
-                    BalanceBefore = balanceBefore,
-                    BalanceAfter = balanceAfter,
-                    Code = TransactionHelper.GenerateTransactionCode(),
-                    TransactionDate = DateTime.UtcNow,
-                    Description = message,
-                };
-                await _transactionRepository.UpdateAsync(transaction);
                 _logger.LogInformation(message);
                 return Ok(message);
+            }
+            catch (ApiException ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(ex.StatusCode, ex.Message);
             }
             catch (System.Exception ex)
             {
@@ -286,18 +179,17 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("by-account-id/{id}")]
-        public async Task<IActionResult> GetAccountTransactionsById(int id, int pageIndex = 0, int pageSize = 10)
+        public async Task<IActionResult> GetAccountTransactionsById(int id, PaginationParam param)
         {
             try
             {
-                var count = await _transactionRepository.GetTotalDataAsync();
-                if (count == 0)
-                {
-                    return NotFound("No transactions found.");
-                }
-                var transactions = await _transactionRepository.GetAllDataByAccountIdAsync(id, pageSize, pageIndex);
-                var pagination = new Pagination<TransactionData>(transactions, count, pageIndex, pageSize, _httpContextAccessor);
-                return Ok(pagination);
+                var transactions = await _service.GetAccountTransactionsById(id, param);
+                return StatusCode(200, param);
+            }
+            catch (ApiException ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(ex.StatusCode, ex.Message);
             }
             catch (Exception ex)
             {
@@ -308,18 +200,17 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("by-account-uuid/{uniqueId}")]
-        public async Task<IActionResult> GetAccountTransactionsByUniqueId(Guid uniqueId, int pageIndex = 0, int pageSize = 10) 
+        public async Task<IActionResult> GetAccountTransactionsByUniqueId(Guid uniqueId, PaginationParam param) 
         {
             try
             {
-                var count = await _transactionRepository.GetTotalDataAsync();
-                if (count == 0)
-                {
-                    return NotFound("No transactions found.");
-                }
-                var transactions = await _transactionRepository.GetAllDataByAccountUniqueIdAsync(uniqueId, pageSize, pageIndex);
-                var pagination = new Pagination<TransactionData>(transactions, count, pageIndex, pageSize, _httpContextAccessor);
-                return Ok(pagination);
+                var transactions = await _service.GetAccountTransactionsByUniqueId(uniqueId, param);    
+                return StatusCode(200, transactions);
+            }
+            catch (ApiException ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(ex.StatusCode, ex.Message);
             }
             catch (Exception ex)
             {

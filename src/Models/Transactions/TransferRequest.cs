@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Name
 {
-    public class TransferIbanRequest
+    public class TransferByIbanRequest
     {
         [Required]
         [StringLength(31, ErrorMessage = "Source IBAN must have {1} characters.")]
@@ -21,7 +21,7 @@ namespace Name
     }
 
 
-    public class TransferNumberRequest
+    public class TransferByNumberRequest
     {
         [Required]
         [StringLength(18, ErrorMessage = "Source Number must have {1} characters.")]

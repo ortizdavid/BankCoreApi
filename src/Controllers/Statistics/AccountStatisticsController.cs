@@ -14,7 +14,6 @@ namespace BankCoreApi.Controllers
             _repository = repository;
         }
 
-
         [HttpGet("count-by-type")]
         public async Task<IActionResult> CountCustomersByType()
         {
@@ -26,7 +25,6 @@ namespace BankCoreApi.Controllers
             return Ok(statistics);
         }
         
-
         [HttpGet("count-by-status")]
         public async Task<IActionResult> CountCustomersByStatus()
         {
@@ -38,7 +36,6 @@ namespace BankCoreApi.Controllers
             return Ok(statistics);
         }
 
-
         [HttpGet("total-balance-by-type")]
         public async Task<IActionResult> TotalBalanceByType()
         {
@@ -49,7 +46,6 @@ namespace BankCoreApi.Controllers
             }
             return Ok(statistics);
         }
-
 
         [HttpGet("total-balance-by-status")]
         public async Task<IActionResult> TotalBalanceByStatus()

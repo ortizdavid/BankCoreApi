@@ -11,15 +11,11 @@ namespace BankCoreApi.Controllers
     [ApiController]
     public class CustomersController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly ILogger<CustomersController> _logger;
         private readonly CustomerService _service;
 
-        public CustomersController(IConfiguration configuration, 
-            ILogger<CustomersController> logger,
-            CustomerService service)
+        public CustomersController(ILogger<CustomersController> logger, CustomerService service)
         {
-            _configuration = configuration;
             _logger = logger;
             _service = service;
         }

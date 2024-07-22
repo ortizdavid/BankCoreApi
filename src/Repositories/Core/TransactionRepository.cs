@@ -148,5 +148,11 @@ namespace BankCoreApi.Repositories.Core
             return await _dapper.QueryFirstOrDefaultAsync<TransactionData>(sql, new { TransactionId = id });
         }
 
+        public async Task<TransactionData?> GetDataByUniqueIdAsync(Guid uniqueId)
+        {
+           var sql = "SELECT * FROM ViewTransactionData WHERE UniqueId = @UniqueId;";
+            return await _dapper.QueryFirstOrDefaultAsync<TransactionData>(sql, new { UniqueId = uniqueId });
+        }
+
     }
 }
