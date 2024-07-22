@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Text;
 
-namespace BankCoreApi.Repositories.Accounts
+namespace BankCoreApi.Repositories.Core
 {
     public class AccountHelper
     {

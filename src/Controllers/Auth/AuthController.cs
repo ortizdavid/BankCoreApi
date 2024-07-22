@@ -7,7 +7,7 @@ using BankCoreApi.Repositories.Auth;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BankCoreApi.Controllers.Auth
+namespace BankCoreApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

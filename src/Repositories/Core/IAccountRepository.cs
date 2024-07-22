@@ -1,6 +1,6 @@
 using BankCoreApi.Models.Accounts;
 
-namespace BankCoreApi.Repositories.Accounts
+namespace BankCoreApi.Repositories.Core
 {
     public interface IAccountRepository<T> where T : class
     {

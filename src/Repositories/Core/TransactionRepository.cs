@@ -5,7 +5,7 @@ using BankCoreApi.Models.Transactions;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 
-namespace BankCoreApi.Repositories.Transactions
+namespace BankCoreApi.Repositories.Core
 {
     public class TransactionRepository : IRepository<Transaction>
     {

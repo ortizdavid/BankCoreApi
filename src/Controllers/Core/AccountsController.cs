@@ -1,8 +1,7 @@
 using BankCoreApi.Helpers;
 using BankCoreApi.Models.Accounts;
 using BankCoreApi.Models.Customers;
-using BankCoreApi.Repositories.Accounts;
-using BankCoreApi.Repositories.Customers;
+using BankCoreApi.Repositories.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

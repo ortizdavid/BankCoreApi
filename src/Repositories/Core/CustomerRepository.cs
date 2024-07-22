@@ -5,7 +5,7 @@ using BankCoreApi.Models.Customers;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 
-namespace BankCoreApi.Repositories.Customers
+namespace BankCoreApi.Repositories.Core
 {
     public class CustomerRepository : IRepository<Customer>
     {
@@ -102,6 +102,12 @@ namespace BankCoreApi.Repositories.Customers
         {
             var sql = "SELECT * FROM ViewCustomerData WHERE CustomerId = @Id";
             return await _dapper.QueryFirstAsync<CustomerData>(sql, new { @Id = id });
+        }
+
+        public async Task<CustomerData> GetDataByUniqueIdAsync(Guid uniqueId)
+        {
+            var sql = "SELECT * FROM ViewCustomerData WHERE UniqueId = @Id";
+            return await _dapper.QueryFirstAsync<CustomerData>(sql, new { @Id = uniqueId });
         }
 
         public async Task<Customer?> GetByUniqueIdAsync(Guid uniqueId)

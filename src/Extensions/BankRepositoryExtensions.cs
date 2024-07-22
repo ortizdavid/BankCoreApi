@@ -1,15 +1,13 @@
-using BankCoreApi.Repositories.Accounts;
-using BankCoreApi.Repositories.Customers;
+using BankCoreApi.Repositories.Core;
 using BankCoreApi.Repositories.Reports;
-using BankCoreApi.Repositories.Transactions;
 using BankCoreApi.Repositories.Statistics;
 using BankCoreApi.Repositories.Auth;
 
 namespace BankCoreApi.Extensions
 {
-    public static class RepositoryExtensions
+    public static class BankRepositoryExtensions
     {
-        public static void AddRepositories(this IServiceCollection services)
+        public static void AddBankRepositories(this IServiceCollection services)
         {
             services.AddScoped<CustomerRepository>();
             services.AddScoped<AccountRepository>();

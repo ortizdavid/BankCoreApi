@@ -6,7 +6,7 @@ namespace BankCoreApi.Repositories.Reports
 {
     public class AccountsReportRepository
     {
-         private readonly IDbConnection _dapper;
+        private readonly IDbConnection _dapper;
 
         public AccountsReportRepository(IDbConnection dapper)
         {

@@ -30,13 +30,14 @@ internal class Program
         // Logging
         builder.Logging.AddConsole();
         //Add repositories 
-        builder.Services.AddRepositories();
+        builder.Services.AddBankRepositories();
+        //Add repositories 
+        builder.Services.AddBankServices();
         // Add JWT authentication
         builder.Services.AddJwtAuthentication(configuration);
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
-        //builder.Services.AddSwaggerGen();
         builder.Services.AddSwaggerGen();
         //**************************************************************
 

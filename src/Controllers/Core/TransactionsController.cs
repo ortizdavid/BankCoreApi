@@ -1,7 +1,6 @@
 using BankCoreApi.Helpers;
 using BankCoreApi.Models.Transactions;
-using BankCoreApi.Repositories.Accounts;
-using BankCoreApi.Repositories.Transactions;
+using BankCoreApi.Repositories.Core;
 using Microsoft.AspNetCore.Mvc;
 using Name;
 
@@ -18,7 +17,8 @@ namespace BankCoreApi.Controllers
         private readonly AccountRepository _accountRepository;
        
         public TransactionsController(IConfiguration configuration, ILogger<TransactionsController> logger,
-            TransactionRepository transactionRepository, AccountRepository accountRepository, IHttpContextAccessor httpContextAccessor)    
+            TransactionRepository transactionRepository, AccountRepository accountRepository, 
+            IHttpContextAccessor httpContextAccessor)    
         {
             _configuration = configuration;
             _logger = logger;

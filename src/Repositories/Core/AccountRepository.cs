@@ -5,7 +5,7 @@ using BankCoreApi.Models.Accounts;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
 
-namespace BankCoreApi.Repositories.Accounts
+namespace BankCoreApi.Repositories.Core
 {
     public class AccountRepository : IRepository<Account>, IAccountRepository<Account>
     {
@@ -17,7 +17,6 @@ namespace BankCoreApi.Repositories.Accounts
             _context = context;
             _dapper = dapper;
         }
-
 
         public async Task ChangeStatus(Account account, AccountStatus newStatus)
         {
@@ -148,7 +147,7 @@ namespace BankCoreApi.Repositories.Accounts
             return await _dapper.QueryFirstOrDefaultAsync<AccountData>(sql, new { AccountId = id });
         }
 
-        public async Task<AccountData?> GetDataByUniqueIdAsync(string unqiueId)
+        public async Task<AccountData?> GetDataByUniqueIdAsync(Guid unqiueId)
         {
            var sql = "SELECT * FROM ViewAccountData WHERE UniqueId = @UnqiueId;";
             return await _dapper.QueryFirstOrDefaultAsync<AccountData>(sql, new { UniqueId = unqiueId });

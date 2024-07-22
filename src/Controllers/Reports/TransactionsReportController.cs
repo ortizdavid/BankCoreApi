@@ -1,6 +1,6 @@
 using BankCoreApi.Helpers;
 using BankCoreApi.Models.Reports;
-using BankCoreApi.Repositories.Accounts;
+using BankCoreApi.Repositories.Core;
 using BankCoreApi.Repositories.Reports;
 using Microsoft.AspNetCore.Mvc;
 
