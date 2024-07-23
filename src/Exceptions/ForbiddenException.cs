@@ -1,10 +1,12 @@
+using System.Net;
+
 namespace BankCoreApi.Exceptions
 {
     public class ForbiddenException : ApiException
     {
         public ForbiddenException(string message) : base(message) 
         {
-            StatusCode = 403;
+            StatusCode = (int)HttpStatusCode.Forbidden;
         }
     }
 }

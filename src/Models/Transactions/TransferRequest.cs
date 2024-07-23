@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Name
+namespace BankCoreApi.Models.Transactions
 {
     public class TransferByIbanRequest
     {

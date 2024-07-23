@@ -2,7 +2,6 @@ using BankCoreApi.Exceptions;
 using BankCoreApi.Helpers;
 using BankCoreApi.Models.Transactions;
 using BankCoreApi.Repositories.Core;
-using Name;
 
 namespace BankCoreApi.Services.Core
 {

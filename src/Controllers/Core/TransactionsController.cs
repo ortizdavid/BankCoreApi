@@ -4,7 +4,6 @@ using BankCoreApi.Models.Transactions;
 using BankCoreApi.Repositories.Core;
 using BankCoreApi.Services.Core;
 using Microsoft.AspNetCore.Mvc;
-using Name;
 
 namespace BankCoreApi.Controllers
 {
@@ -14,7 +13,6 @@ namespace BankCoreApi.Controllers
     {
         private readonly ILogger<TransactionsController> _logger;
         private readonly TransactionService _service;
-        
 
         public TransactionsController(ILogger<TransactionsController> logger,TransactionService service)    
         {
