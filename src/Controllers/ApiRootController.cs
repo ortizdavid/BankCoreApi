@@ -42,12 +42,10 @@ namespace BankCoreApi.Controllers
             var fileName = "postman.postman_collection.json";
             var path = _configuration["ApiCollectionPath"] ?? string.Empty;
             var filePath = Path.Combine(path, fileName);
-
             if (!System.IO.File.Exists(filePath))
             {
                 return NotFound("File not found"); // Handle file not found scenario
             }
-
             return new FileContentResult(System.IO.File.ReadAllBytes(filePath), "application/json")
             {
                 FileDownloadName = fileName

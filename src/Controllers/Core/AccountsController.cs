@@ -1,3 +1,4 @@
+using System.Net;
 using BankCoreApi.Exceptions;
 using BankCoreApi.Helpers;
 using BankCoreApi.Models.Accounts;
@@ -28,7 +29,7 @@ namespace BankCoreApi.Controllers
             try
             {
                var accounts = await _service.GetAllAccounts(param);
-               return StatusCode(200, accounts);
+               return StatusCode((int)HttpStatusCode.OK, accounts);
             }
             catch (ApiException ex)
             {
@@ -38,7 +39,7 @@ namespace BankCoreApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -48,7 +49,7 @@ namespace BankCoreApi.Controllers
             try
             {
                 var account = await _service.GetAccountById(id);
-                return StatusCode(200, account);
+                return Ok(account);
             }
             catch (ApiException ex)
             {
@@ -58,7 +59,7 @@ namespace BankCoreApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -122,7 +123,7 @@ namespace BankCoreApi.Controllers
             catch (System.Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -144,7 +145,7 @@ namespace BankCoreApi.Controllers
             catch (System.Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -166,7 +167,7 @@ namespace BankCoreApi.Controllers
             catch (System.Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
     }

@@ -135,7 +135,6 @@ namespace BankCoreApi.Controllers
                 return null;
             }
         }
-        
 
     }
 }

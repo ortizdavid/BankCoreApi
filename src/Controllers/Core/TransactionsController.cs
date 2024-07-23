@@ -1,3 +1,4 @@
+using System.Net;
 using BankCoreApi.Exceptions;
 using BankCoreApi.Helpers;
 using BankCoreApi.Models.Transactions;
@@ -27,7 +28,7 @@ namespace BankCoreApi.Controllers
             try
             {
                var transactions = await _service.GetAllTransactions(param);
-               return StatusCode(200, transactions);
+               return Ok(transactions);
             }
             catch (ApiException ex)
             {
@@ -37,7 +38,7 @@ namespace BankCoreApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
         
@@ -48,7 +49,7 @@ namespace BankCoreApi.Controllers
             try
             {
                var transaction = await _service.GetTransactionById(id);
-               return StatusCode(200, transaction);
+               return Ok(transaction);
             }
             catch (ApiException ex)
             {
@@ -58,7 +59,7 @@ namespace BankCoreApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -69,7 +70,7 @@ namespace BankCoreApi.Controllers
             try
             {
                var transaction = await _service.GetTransactionByUniqueId(uniqueId);
-               return StatusCode(200, transaction);
+               return Ok(transaction);
             }
             catch (ApiException ex)
             {
@@ -102,7 +103,7 @@ namespace BankCoreApi.Controllers
             catch (System.Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
         
@@ -125,7 +126,7 @@ namespace BankCoreApi.Controllers
             catch (System.Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -148,7 +149,7 @@ namespace BankCoreApi.Controllers
             catch (System.Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -171,7 +172,7 @@ namespace BankCoreApi.Controllers
             catch (System.Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -182,7 +183,7 @@ namespace BankCoreApi.Controllers
             try
             {
                 var transactions = await _service.GetAccountTransactionsById(id, param);
-                return StatusCode(200, param);
+                return Ok(200);
             }
             catch (ApiException ex)
             {
@@ -192,7 +193,7 @@ namespace BankCoreApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -203,7 +204,7 @@ namespace BankCoreApi.Controllers
             try
             {
                 var transactions = await _service.GetAccountTransactionsByUniqueId(uniqueId, param);    
-                return StatusCode(200, transactions);
+                return Ok(transactions);
             }
             catch (ApiException ex)
             {
@@ -213,7 +214,7 @@ namespace BankCoreApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 

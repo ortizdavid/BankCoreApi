@@ -127,7 +127,6 @@ namespace BankCoreApi.Services.Core
             await _repository.CreateAsync(transaction);
         }
 
-
         public async Task TransferByNumber(TransferByNumberRequest request)
         {
             if (request is null)
@@ -172,7 +171,6 @@ namespace BankCoreApi.Services.Core
             await _repository.UpdateAsync(transaction);
         }
 
-
         public async Task TransferByIban(TransferByIbanRequest request)
         {
             if (request is null)
@@ -215,7 +213,6 @@ namespace BankCoreApi.Services.Core
             };
             await _repository.UpdateAsync(transaction);
         }
-
 
         public async Task<Pagination<TransactionData>> GetAccountTransactionsById(int transactionId, PaginationParam param)
         {

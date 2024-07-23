@@ -1,3 +1,4 @@
+using System.Net;
 using BankCoreApi.Exceptions;
 using BankCoreApi.Helpers;
 using BankCoreApi.Models.Customers;
@@ -39,7 +40,7 @@ namespace BankCoreApi.Controllers
             catch (System.Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -59,7 +60,7 @@ namespace BankCoreApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -79,7 +80,7 @@ namespace BankCoreApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -99,7 +100,7 @@ namespace BankCoreApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -116,12 +117,12 @@ namespace BankCoreApi.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode(ex.StatusCode, ex.Message);
             }
             catch (System.Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 
@@ -138,12 +139,12 @@ namespace BankCoreApi.Controllers
             catch (ApiException ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode(ex.StatusCode, ex.Message);
             }
             catch (System.Exception ex)
             {
                 _logger.LogError(ex.Message);
-                return StatusCode(500, ex.Message);
+                return StatusCode((int)HttpStatusCode.InternalServerError, ex.Message);
             }
         }
 

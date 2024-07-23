@@ -1,3 +1,4 @@
+using System.Net;
 using BankCoreApi.Models.Accounts;
 using BankCoreApi.Models.Reports;
 using BankCoreApi.Repositories.Reports;
@@ -32,7 +33,7 @@ namespace BankCoreApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred: {ex.Message}");
+                return StatusCode((int)HttpStatusCode.InternalServerError, $"An error occurred: {ex.Message}");
             }
         }
 
@@ -52,7 +53,7 @@ namespace BankCoreApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred: {ex.Message}");
+                return StatusCode((int)HttpStatusCode.InternalServerError, $"An error occurred: {ex.Message}");
             }
         }
 
@@ -72,7 +73,7 @@ namespace BankCoreApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred: {ex.Message}");
+                return StatusCode((int)HttpStatusCode.InternalServerError, $"An error occurred: {ex.Message}");
             }
         }
 
@@ -92,7 +93,7 @@ namespace BankCoreApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred: {ex.Message}");
+                return StatusCode((int)HttpStatusCode.InternalServerError, $"An error occurred: {ex.Message}");
             }
         }
 
@@ -112,7 +113,7 @@ namespace BankCoreApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"An error occurred: {ex.Message}");
+                return StatusCode((int)HttpStatusCode.InternalServerError, $"An error occurred: {ex.Message}");
             }
         }
 
