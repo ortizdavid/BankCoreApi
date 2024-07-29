@@ -18,11 +18,11 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("all-accounts")]
-        public async Task<IActionResult> GeAllAccounts([FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
+        public async Task<IActionResult> GeAllAccounts([FromQuery] DateRangeFilter dateRange, string format="")
         {
             try
             {
-                var accounts = await _repository.GetAllAsync(startDate, endDate);
+                var accounts = await _repository.GetAllAsync(dateRange.StartDate, dateRange.EndDate);
                 if (!accounts.Any())
                 {
                     return NotFound("No records found for this range.");
@@ -37,11 +37,11 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("active-accounts")]
-        public async Task<IActionResult> GetActiveAccounts([FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
+        public async Task<IActionResult> GetActiveAccounts([FromQuery] DateRangeFilter dateRange, string format="")
         {
             try
             {
-                var accounts = await _repository.GetByAccountStatusAsync("Active", startDate, endDate);
+                var accounts = await _repository.GetByAccountStatusAsync("Active", dateRange.StartDate, dateRange.EndDate);
                 if (!accounts.Any())
                 {
                     return NotFound("No records found for this range.");
@@ -57,11 +57,11 @@ namespace BankCoreApi.Controllers
         
         [HttpGet("accounts-by-status")]
         public async Task<IActionResult> GetAccountsByStatus([FromQuery] string status, 
-            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
+            [FromQuery] DateRangeFilter dateRange, string format="")
         {
             try
             {
-                var accounts = await _repository.GetByAccountStatusAsync(status, startDate, endDate);
+                var accounts = await _repository.GetByAccountStatusAsync(status, dateRange.StartDate, dateRange.EndDate);
                 if (!accounts.Any())
                 {
                     return NotFound("No records found for this range.");
@@ -77,11 +77,11 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("accounts-by-type")]
         public async Task<IActionResult> GetAccountsByType([FromQuery] string type, 
-            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
+            [FromQuery] DateRangeFilter dateRange, string format="")
         {
             try
             { 
-                var accounts = await _repository.GetByAccountTypeAsync(type, startDate, endDate);
+                var accounts = await _repository.GetByAccountTypeAsync(type, dateRange.StartDate, dateRange.EndDate);
                 if (!accounts.Any())
                 {
                     return NotFound("No records found for this range.");
@@ -97,11 +97,11 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("accounts-by-customer")]
         public async Task<IActionResult> GetAccountsByCustomer([FromQuery] int customerId, 
-            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
+            [FromQuery] DateRangeFilter dateRange, string format="")
         {
             try
             {
-                var accounts = await _repository.GetByCustomerAsync(customerId, startDate, endDate);
+                var accounts = await _repository.GetByCustomerAsync(customerId, dateRange.StartDate, dateRange.EndDate);
                 if (!accounts.Any())
                 {
                     return NotFound("No records found for this range.");

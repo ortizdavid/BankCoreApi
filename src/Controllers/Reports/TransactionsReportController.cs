@@ -22,12 +22,11 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("all-transactions")]
-        public async Task<IActionResult> GetAllTransactions([FromQuery] DateTime startDate, 
-            [FromQuery] DateTime endDate, string format="")
+        public async Task<IActionResult> GetAllTransactions([FromQuery] DateRangeFilter dateRange, string format="")
         {
             try
             {
-                var transactions = await _repository.GetTransactions(startDate, endDate);
+                var transactions = await _repository.GetTransactions(dateRange.StartDate, dateRange.EndDate);
                 if (!transactions.Any())
                 {
                     return NotFound("No records found for this range.");
@@ -61,12 +60,11 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("transactions-by-type")]
-        public async Task<IActionResult> GetTransactionsByType(int typeId, [FromQuery] DateTime startDate, 
-            [FromQuery] DateTime endDate, string format="")
+        public async Task<IActionResult> GetTransactionsByType(int typeId, [FromQuery] DateRangeFilter dateRange, string format="")
         {
             try
             {
-                var transactions = await _repository.GetTransactionsByType(typeId, startDate, endDate);
+                var transactions = await _repository.GetTransactionsByType(typeId, dateRange.StartDate, dateRange.EndDate);
                 if (!transactions.Any())
                 {
                     return NotFound("No records found for this date.");
@@ -81,12 +79,11 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("transactions-by-status")]
-        public async Task<IActionResult> GetTransactionsByStatus(int statusId, [FromQuery] DateTime startDate, 
-            [FromQuery] DateTime endDate, string format="")
+        public async Task<IActionResult> GetTransactionsByStatus(int statusId, [FromQuery] DateRangeFilter dateRange, string format="")
         {
             try
             {
-                var transactions = await _repository.GetTransactionsByStatus(statusId, startDate, endDate);
+                var transactions = await _repository.GetTransactionsByStatus(statusId, dateRange.StartDate, dateRange.EndDate);
                 if (!transactions.Any())
                 {
                     return NotFound("No records found for this date.");
@@ -101,8 +98,7 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("account-transactions")]
-        public async Task<IActionResult> GetAccountTransactions([FromQuery] int accountId, 
-            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
+        public async Task<IActionResult> GetAccountTransactions([FromQuery] int accountId, [FromQuery] DateRangeFilter dateRange, string format="")
         {
             try
             {
@@ -110,7 +106,7 @@ namespace BankCoreApi.Controllers
                 {
                     return NotFound("Invalid account");
                 }
-                var transactions = await _repository.GetAccountTransactions(accountId, startDate, endDate);
+                var transactions = await _repository.GetAccountTransactions(accountId, dateRange.StartDate, dateRange.EndDate);
                 if (!transactions.Any())
                 {
                     return NotFound("No records found for this account and date range.");
@@ -125,8 +121,7 @@ namespace BankCoreApi.Controllers
 
 
         [HttpGet("account-transactions-by-date")]
-        public async Task<IActionResult> GetAllAccountTransactionsByDate([FromQuery] int accountId, 
-            [FromQuery] DateTime date, string format="")
+        public async Task<IActionResult> GetAllAccountTransactionsByDate([FromQuery] int accountId, [FromQuery] DateTime date, string format="")
         {
             try
             {
@@ -150,7 +145,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("account-transactions-by-type")]
         public async Task<IActionResult> GetAccountTransactionsByType([FromQuery] int accountId, [FromQuery] int typeId, 
-            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
+            [FromQuery] DateRangeFilter dateRange, string format="")
         {
             try
             {
@@ -158,7 +153,7 @@ namespace BankCoreApi.Controllers
                 {
                     return NotFound("Invalid account");
                 }
-                var transactions = await _repository.GetAccountTransactionsByType(accountId, typeId, startDate, endDate);
+                var transactions = await _repository.GetAccountTransactionsByType(accountId, typeId, dateRange.StartDate, dateRange.EndDate);
                 if (!transactions.Any())
                 {
                     return NotFound("No records found for this account and date range.");
@@ -174,7 +169,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("account-transactions-by-status")]
         public async Task<IActionResult> GetAccountTransactionsByStatus([FromQuery] int accountId, [FromQuery] int statusId, 
-            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
+           [FromQuery] DateRangeFilter dateRange, string format="")
         {
             try
             {
@@ -182,7 +177,7 @@ namespace BankCoreApi.Controllers
                 {
                     return NotFound("Invalid account");
                 }
-                var transactions = await _repository.GetAccountTransactionsByStatus(accountId, statusId, startDate, endDate);
+                var transactions = await _repository.GetAccountTransactionsByStatus(accountId, statusId, dateRange.StartDate, dateRange.EndDate);
                 if (!transactions.Any())
                 {
                     return NotFound("No records found for this account and date range.");
@@ -198,7 +193,7 @@ namespace BankCoreApi.Controllers
 
         [HttpGet("account-transactions-by-customer")]
         public async Task<IActionResult> GetAccountTransactionsByCustomer([FromQuery] int customerId, [FromQuery] int accountId, 
-            [FromQuery] DateTime startDate, [FromQuery] DateTime endDate, string format="")
+            [FromQuery] DateRangeFilter dateRange, string format="")
         {
             try
             {
@@ -210,7 +205,7 @@ namespace BankCoreApi.Controllers
                 {
                     return NotFound("Invalid account");
                 }
-                var transactions = await _repository.GetAccountTransactionsByCustomer(customerId, accountId, startDate, endDate);
+                var transactions = await _repository.GetAccountTransactionsByCustomer(customerId, accountId, dateRange.StartDate, dateRange.EndDate);
                 if (!transactions.Any())
                 {
                     return NotFound("No records found for this account and date.");
