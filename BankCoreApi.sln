@@ -1,25 +1,28 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.9.34728.123
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankCoreApi", "BankCoreApi.csproj", "{8DABEEF5-F2D9-4033-B8B2-30F1642AFBCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankCoreApi", "BankCoreApi\BankCoreApi.csproj", "{466410F4-AF45-46A7-B2AD-772FFE4058A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankCoreApi.Tests", "BankCoreApi.Tests\BankCoreApi.Tests.csproj", "{1A125752-2BF3-41D0-889B-94FC0FEFEA49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8DABEEF5-F2D9-4033-B8B2-30F1642AFBCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8DABEEF5-F2D9-4033-B8B2-30F1642AFBCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8DABEEF5-F2D9-4033-B8B2-30F1642AFBCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8DABEEF5-F2D9-4033-B8B2-30F1642AFBCA}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {15261E70-85B6-497B-9924-FC94D4C4FA9C}
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{466410F4-AF45-46A7-B2AD-772FFE4058A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{466410F4-AF45-46A7-B2AD-772FFE4058A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{466410F4-AF45-46A7-B2AD-772FFE4058A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{466410F4-AF45-46A7-B2AD-772FFE4058A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A125752-2BF3-41D0-889B-94FC0FEFEA49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A125752-2BF3-41D0-889B-94FC0FEFEA49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A125752-2BF3-41D0-889B-94FC0FEFEA49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A125752-2BF3-41D0-889B-94FC0FEFEA49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
