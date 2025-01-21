@@ -42,13 +42,13 @@ REST API with Banking System
     ```sh
     git clone https://github.com/ortizdavid/BankCoreApi
     ```
-- Open project directory 
+- Open main project directory 
     ```sh
-    cd BankCoreApi
+    cd BankCoreApi/BankCoreApi
     ```
-- Copy database scripts from [_Database](_Database) folder to SQL Server
-- Change **__DefaultConnection__** from [appsettings.json](appsettings.json) file
-- Import Postman Collections from [_Api_Collections](_Api_Collections)
+- Copy database scripts from [_Database](BankCoreApi/_Database) folder to SQL Server
+- Change **__DefaultConnection__** from [appsettings.json](BankCoreApi/appsettings.json) file
+- Import Postman Collections from [_Api_Collections](BankCoreApi/_Api_Collections)
 - Install Packages: 
     ```sh
     dotnet restore
