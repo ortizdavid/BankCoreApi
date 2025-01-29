@@ -1,12 +1,11 @@
 using System.Net;
 
-namespace BankCoreApi.Exceptions
+namespace BankCoreApi.Exceptions;
+
+public class ConflictException : ApiException
 {
-    public class ConflictException : ApiException
+    public ConflictException(string message) : base(message) 
     {
-        public ConflictException(string message) : base(message) 
-        {
-            StatusCode = (int)HttpStatusCode.Conflict;
-        }
+        StatusCode = (int)HttpStatusCode.Conflict;
     }
 }

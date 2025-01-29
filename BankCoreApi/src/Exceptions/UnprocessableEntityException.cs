@@ -1,12 +1,11 @@
 using System.Net;
 
-namespace BankCoreApi.Exceptions
+namespace BankCoreApi.Exceptions;
+
+public class UnprocessableEntityException : ApiException
 {
-    public class UnprocessableEntityException : ApiException
+    public UnprocessableEntityException(string message) : base(message) 
     {
-        public UnprocessableEntityException(string message) : base(message) 
-        {
-            StatusCode = (int)HttpStatusCode.UnprocessableEntity;
-        }
+        StatusCode = (int)HttpStatusCode.UnprocessableEntity;
     }
 }

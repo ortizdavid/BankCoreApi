@@ -1,15 +1,14 @@
-namespace BankCoreApi.Models.Transactions
+namespace BankCoreApi.Models.Transactions;
+
+public enum TransactionType
 {
-    public enum TransactionType
-    {
-        Deposit = 1,
-        Withdrawal,
-        Transfer,
-        Payment,
-        Purchase,
-        Salary,
-        Expense,
-        Loan,
-        Interest
-    }
+    Deposit = 1,
+    Withdrawal,
+    Transfer,
+    Payment,
+    Purchase,
+    Salary,
+    Expense,
+    Loan,
+    Interest
 }

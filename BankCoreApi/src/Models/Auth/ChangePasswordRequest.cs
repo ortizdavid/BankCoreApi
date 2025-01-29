@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BankCoreApi.Models.Auth
+namespace BankCoreApi.Models.Auth;
+
+public class ChangePasswordRequest
 {
-    public class ChangePasswordRequest
-    {
-        [Required]
-        public string? NewPassword { get; set; }
-    }
+    [Required]
+    public string? NewPassword { get; set; }
 }

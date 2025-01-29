@@ -1,17 +1,16 @@
-namespace BankCoreApi.Models.Accounts
+namespace BankCoreApi.Models.Accounts;
+
+public enum AccountStatus
 {
-    public enum AccountStatus
-    {
-        Active = 1,
-        Inactive,
-        Dormant,
-        Closed,
-        Suspended,
-        Pending,
-        Overdrawn,
-        Frozen,
-        Restricted,
-        Verified,
-        Unverified
-    }
+    Active = 1,
+    Inactive,
+    Dormant,
+    Closed,
+    Suspended,
+    Pending,
+    Overdrawn,
+    Frozen,
+    Restricted,
+    Verified,
+    Unverified
 }

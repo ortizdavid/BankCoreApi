@@ -1,12 +1,11 @@
 using System.Net;
 
-namespace BankCoreApi.Exceptions
+namespace BankCoreApi.Exceptions;
+
+public class UnauthorizedException : ApiException
 {
-    public class UnauthorizedException : ApiException
+    public UnauthorizedException(string message) : base(message) 
     {
-        public UnauthorizedException(string message) : base(message) 
-        {
-            StatusCode = (int)HttpStatusCode.Unauthorized;
-        }
+        StatusCode = (int)HttpStatusCode.Unauthorized;
     }
 }

@@ -1,11 +1,10 @@
-namespace BankCoreApi.Models.Customers
+namespace BankCoreApi.Models.Customers;
+
+public enum CustomerStatus
 {
-    public enum CustomerStatus
-    {
-        Active = 1,
-        Inactive,
-        Suspended,
-        Closed,
-        Pending
-    }
+    Active = 1,
+    Inactive,
+    Suspended,
+    Closed,
+    Pending
 }

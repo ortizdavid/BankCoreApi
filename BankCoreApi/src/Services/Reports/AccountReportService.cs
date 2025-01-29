@@ -1,7 +1,6 @@
-namespace BankCoreApi.Services.Reports
+namespace BankCoreApi.Services.Reports;
+
+public class AccountReportService
 {
-    public class AccountReportService
-    {
-        
-    }
+    
 }

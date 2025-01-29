@@ -1,24 +1,24 @@
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BankCoreApi.Controllers
-{  
-    [Route("")] 
-    [Route("api")]
-    [ApiController]
-    public class ApiRootController : ControllerBase
+namespace BankCoreApi.Controllers;
+
+[Route("")] 
+[Route("api")]
+[ApiController]
+public class ApiRootController : ControllerBase
+{
+    private readonly IConfiguration _configuration;
+
+    public ApiRootController(IConfiguration configuration)
     {
-        private readonly IConfiguration _configuration;
+        _configuration = configuration; 
+    }
 
-        public ApiRootController(IConfiguration configuration)
-        {
-            _configuration = configuration; 
-        }
-
-        [HttpGet]
-        public IActionResult Index()
-        {
-            var htmlContent = @"
+    [HttpGet]
+    public IActionResult Index()
+    {
+        var htmlContent = @"
             <!DOCTYPE html>
                 <html lang='en'>
                 <head>
@@ -33,24 +33,22 @@ namespace BankCoreApi.Controllers
                 </body>
                 </html>
             ";
-            return Content(htmlContent, "text/html", Encoding.UTF8);
-        }
-
-        [HttpGet("download-collections")]
-        public IActionResult DownloadCollections()
-        {
-            var fileName = "postman.postman_collection.json";
-            var path = _configuration["ApiCollectionPath"] ?? string.Empty;
-            var filePath = Path.Combine(path, fileName);
-            if (!System.IO.File.Exists(filePath))
-            {
-                return NotFound("File not found"); // Handle file not found scenario
-            }
-            return new FileContentResult(System.IO.File.ReadAllBytes(filePath), "application/json")
-            {
-                FileDownloadName = fileName
-            };
-        }
+        return Content(htmlContent, "text/html", Encoding.UTF8);
     }
-    
+
+    [HttpGet("download-collections")]
+    public IActionResult DownloadCollections()
+    {
+        var fileName = "postman.postman_collection.json";
+        var path = _configuration["ApiCollectionPath"] ?? string.Empty;
+        var filePath = Path.Combine(path, fileName);
+        if (!System.IO.File.Exists(filePath))
+        {
+            return NotFound("File not found"); // Handle file not found scenario
+        }
+        return new FileContentResult(System.IO.File.ReadAllBytes(filePath), "application/json")
+        {
+            FileDownloadName = fileName
+        };
+    }
 }

@@ -1,9 +1,8 @@
-namespace BankCoreApi.Models
+namespace BankCoreApi.Models;
+
+public interface IModel
 {
-    public interface IModel
-    {
-        public Guid UniqueId { get; }
-        public DateTime CreatedAt { get; set; } 
-        public DateTime UpdatedAt { get; set; }
-    }
+    public Guid UniqueId { get; }
+    public DateTime CreatedAt { get; set; } 
+    public DateTime UpdatedAt { get; set; }
 }

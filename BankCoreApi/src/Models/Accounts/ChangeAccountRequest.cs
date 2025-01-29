@@ -1,22 +1,21 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BankCoreApi.Models.Accounts
+namespace BankCoreApi.Models.Accounts;
+
+public class ChangeAccountStatusRequest
 {
-    public class ChangeAccountStatusRequest
-    {
-        [Required]
-        public string? AccountNumber { get; set; }
+    [Required]
+    public string? AccountNumber { get; set; }
 
-        [Required]
-        public AccountStatus NewStatus { get; set; }
-    }
+    [Required]
+    public AccountStatus NewStatus { get; set; }
+}
 
-    public class ChangeAccountTypeRequest
-    {
-        [Required]
-        public string? AccountNumber { get; set; }
+public class ChangeAccountTypeRequest
+{
+    [Required]
+    public string? AccountNumber { get; set; }
 
-        [Required]
-        public AccountType NewType { get; set; }
-    }
+    [Required]
+    public AccountType NewType { get; set; }
 }

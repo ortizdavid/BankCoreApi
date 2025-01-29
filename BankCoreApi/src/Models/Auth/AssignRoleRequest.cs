@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BankCoreApi.Models.Auth
+namespace BankCoreApi.Models.Auth;
+
+public class AssignRoleRequest
 {
-    public class AssignRoleRequest
-    {
-        [Required]
-        public UserRole NewRole { get; set; }
-    }
+    [Required]
+    public UserRole NewRole { get; set; }
 }

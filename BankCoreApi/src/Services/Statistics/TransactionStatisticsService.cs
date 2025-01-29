@@ -1,7 +1,6 @@
-namespace BankCoreApi.Services.Statistics
+namespace BankCoreApi.Services.Statistics;
+
+public class TransactionStatisticsService
 {
-    public class TransactionStatisticsService
-    {
-        
-    }
+    
 }

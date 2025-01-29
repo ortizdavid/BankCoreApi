@@ -1,9 +1,8 @@
-namespace BankCoreApi.Exceptions
+namespace BankCoreApi.Exceptions;
+
+public class ApiException : Exception
 {
-    public class ApiException : Exception
-    {
-        public int StatusCode { get; set; }
-        
-        public ApiException(string message) : base(message) {}
-    }
+    public int StatusCode { get; set; }
+    
+    public ApiException(string message) : base(message) {}
 }

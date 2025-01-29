@@ -1,11 +1,10 @@
-namespace BankCoreApi.Models.Accounts
+namespace BankCoreApi.Models.Accounts;
+
+public enum AccountType
 {
-    public enum AccountType
-    {
-        Savings = 1,
-        Checking,
-        Business,
-        Student,
-        Joint
-    }
+    Savings = 1,
+    Checking,
+    Business,
+    Student,
+    Joint
 }

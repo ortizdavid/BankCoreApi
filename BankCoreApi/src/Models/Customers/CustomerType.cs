@@ -1,11 +1,10 @@
-namespace BankCoreApi.Models.Customers
+namespace BankCoreApi.Models.Customers;
+
+public enum CustomerType
 {
-    public enum CustomerType
-    {
-        Individual = 1,
-        Business,
-        VIP,
-        NonProfit,
-        Government
-    }
+    Individual = 1,
+    Business,
+    VIP,
+    NonProfit,
+    Government
 }
